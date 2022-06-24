@@ -22,13 +22,9 @@ public class OrderDaoImpl implements OrderDao {
     private static final String INSERT_INTO_ORDER = "INSERT INTO \"BoardGames\".\"Order\"\n" +
             "(total_cost, date_start, user_id, status_id)\n" +
             "VALUES(?, ?, ?, ?);\n";
-    private static final String SELECT_ALL_FROM_ORDER = "SELECT * FROM \"BoardGames\".\"Order\"";
     private static final String UPDATE_STATUS_ORDER = "UPDATE \"BoardGames\".\"Order\" SET  status_id = ? WHERE id = ?";
     private static final String SELECT_ORDERS_BY_USER_ID = "SELECT \"BoardGames\".\"Order\".id,\"BoardGames\".\"Order\".user_id,\"BoardGames\".\"Order\".status_id, \"BoardGames\".\"Order\".date_start, \"BoardGames\".\"Order\".total_cost, \"BoardGames\".\"Status\".name FROM \"BoardGames\".\"Order\" INNER JOIN \"BoardGames\".\"Status\" ON \"BoardGames\".\"Order\".status_id=\"BoardGames\".\"Status\".id WHERE \"BoardGames\".\"Order\".user_id= ?;";
     private static final String SELECT_USERS_ORDERS="SELECT \"BoardGames\".\"Order\".id,\"BoardGames\".\"Order\".user_id,\"BoardGames\".\"Order\".status_id, \"BoardGames\".\"Order\".date_start, \"BoardGames\".\"Order\".total_cost, \"BoardGames\".\"Status\".name, \"BoardGames\".\"User\".email,\"BoardGames\".\"Status\".local_id FROM \"BoardGames\".\"Order\" INNER JOIN \"BoardGames\".\"Status\" ON \"BoardGames\".\"Order\".status_id=\"BoardGames\".\"Status\".id INNER JOIN \"BoardGames\".\"User\" ON \"BoardGames\".\"Order\".user_id=\"BoardGames\".\"User\".id";
-    private static final String DELETE_ORDER_BY_ID = "DELETE FROM \"BoardGames\".\"Order\" WHERE id = ?";
-    private static final String SELECT_ORDER_BY_ID = "SELECT * FROM \"BoardGames\".\"Order\" WHERE id = ?";
-
 
     @Override
     public void createOrder(Order order) throws SQLException, IOException {
@@ -67,30 +63,6 @@ public class OrderDaoImpl implements OrderDao {
         return lastId;
     }
 
-//    @Override
-//    public ArrayList<Order> getAllOrder() throws SQLException, IOException {
-//        ArrayList<Order> orders = new ArrayList<>();
-//        ConnectionPool connectionPool = ConnectionPool.getConnPool();
-//        Connection con = connectionPool.getConn();
-//        try (PreparedStatement pstmt = con.prepareStatement(SELECT_ALL_FROM_ORDER);) {
-//            ResultSet rs = pstmt.executeQuery();
-//            while (rs.next()) {
-//                Order order = new Order();
-//                order.setId(rs.getLong(ID));
-//                order.setTotalCost(rs.getInt("total_cost"));
-//                order.setDateStart(rs.getTimestamp("date_start"));
-//                order.setUserId(rs.getLong("user_id"));
-//                order.setStatusId(rs.getLong("status_id"));
-//
-//                orders.add(order);
-//            }
-//        } catch (Exception e) {
-//            LOGGER.error(e);
-//        } finally {
-//            connectionPool.freeConn(con);
-//        }
-//        return orders;
-//    }
 
     @Override
     public ArrayList<ArrayList<String>> getFrom4Tables() throws SQLException, IOException {
@@ -140,7 +112,7 @@ public class OrderDaoImpl implements OrderDao {
         List<Order> orders = new ArrayList<>();
         ConnectionPool connectionPool = ConnectionPool.getConnPool();
         Connection con = connectionPool.getConn();
-        try (PreparedStatement pstmt = con.prepareStatement(SELECT_ORDERS_BY_USER_ID);) {
+        try (PreparedStatement pstmt = con.prepareStatement(SELECT_ORDERS_BY_USER_ID)) {
             pstmt.setLong(1, userId);
             ResultSet rs = pstmt.executeQuery();
             while (rs.next()) {
@@ -163,44 +135,6 @@ public class OrderDaoImpl implements OrderDao {
         return orders;
     }
 
-//    @Override
-//    public void deleteOrderById(Long orderId) throws SQLException, IOException {
-//        ConnectionPool connectionPool = ConnectionPool.getConnPool();
-//        Connection con = connectionPool.getConn();
-//        try (PreparedStatement pstmt = con.prepareStatement(DELETE_ORDER_BY_ID)) {
-//            pstmt.setLong(1, orderId);
-//            int count = pstmt.executeUpdate();
-//
-//        } catch (Exception e) {
-//            LOGGER.error(e);
-//        } finally {
-//            connectionPool.freeConn(con);
-//        }
-//    }
-//
-//    @Override
-//    public Order getOrderById(Long orderId) throws SQLException, IOException {
-//        Order order = new Order();
-//        ConnectionPool connectionPool = ConnectionPool.getConnPool();
-//        Connection con = connectionPool.getConn();
-//        try (PreparedStatement pstmt = con.prepareStatement(SELECT_ORDER_BY_ID)) {
-//            pstmt.setLong(1, orderId);
-//            ResultSet rs = pstmt.executeQuery();
-//            while (rs.next()) {
-//                order.setId(rs.getLong(ID));
-//                order.setTotalCost(rs.getInt("total_cost"));
-//                order.setDateStart(rs.getTimestamp("date_start"));
-//                order.setUserId(rs.getLong("user_id"));
-//                order.setStatusId(rs.getLong("status_id"));
-//            }
-//
-//
-//        } catch (Exception e) {
-//            LOGGER.error(e);
-//        } finally {
-//            connectionPool.freeConn(con);
-//        }
-//        return order;
-//    }
+
 }
 

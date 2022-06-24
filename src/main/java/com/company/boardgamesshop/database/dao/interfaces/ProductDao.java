@@ -11,6 +11,5 @@ public interface ProductDao {
     Product getProductById(Long id) throws SQLException, IOException;
     void createProduct(Product product) throws SQLException, IOException;
     void updateProduct(Product product) throws SQLException, IOException;
-//    List<Product> getSearchedProducts(String productName) throws SQLException, IOException;
     void deactivateProduct(Long productId, boolean isActive)throws SQLException, IOException;
 }

@@ -11,9 +11,7 @@ public interface BasketDao {
     void addProductToBasket(Basket cart)throws SQLException, IOException;
     List<Long> getProductsIdInBasket(Long userId) throws SQLException, IOException;
     void deleteProductInBasket(Long productId, Long userId) throws SQLException, IOException;
-    Basket getBasket(Basket cart) throws SQLException, IOException;
     List<Basket> getAllFromBasket(long productId) throws SQLException, IOException;
     void deleteProductFromBasketByUserId(Long userId)throws SQLException, IOException;
-    List<Product> getAllProductsInBasket(Long userId) throws SQLException, IOException;
     Integer countOfBasketByUserId(Long userId, Long productId) throws SQLException, IOException;
 }

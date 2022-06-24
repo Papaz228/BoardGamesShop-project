@@ -9,6 +9,4 @@ import java.util.ArrayList;
 
 public interface OrderDetailDao {
    void createOrderDetail(OrderDetail orderDetail)throws SQLException, IOException;
-    ArrayList<Long> getProductsIdFromOrderDetail(Long orderId ) throws SQLException, IOException;
-    void deleteOrderDetailByOrderId(Long orderId) throws SQLException, IOException;
 }

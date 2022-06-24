@@ -34,7 +34,7 @@ public class ProductDaoImpl  implements ProductDao {
         Product product = null;
         ConnectionPool connectionPool=ConnectionPool.getConnPool();
         Connection con=connectionPool.getConn();
-        try(PreparedStatement pstmt = con.prepareStatement(GET_PRODUCT);){
+        try(PreparedStatement pstmt = con.prepareStatement(GET_PRODUCT)){
             pstmt.setLong(1, id);
             ResultSet rs = pstmt.executeQuery();
             while (rs.next()) {
@@ -64,7 +64,7 @@ public class ProductDaoImpl  implements ProductDao {
         Product product = null;
         ConnectionPool connectionPool=ConnectionPool.getConnPool();
         Connection con=connectionPool.getConn();
-        try( PreparedStatement pstmt = con.prepareStatement(GET_ALL_PRODUCTS);){
+        try( PreparedStatement pstmt = con.prepareStatement(GET_ALL_PRODUCTS)){
 
             ResultSet rs = pstmt.executeQuery();
             while (rs.next()) {
@@ -94,7 +94,7 @@ public class ProductDaoImpl  implements ProductDao {
         ConnectionPool connectionPool=ConnectionPool.getConnPool();
         Connection con=connectionPool.getConn();
         System.out.println(product);
-        try(PreparedStatement preparedStatement = con.prepareStatement(UPDATE_PRODUCT);){
+        try(PreparedStatement preparedStatement = con.prepareStatement(UPDATE_PRODUCT)){
             preparedStatement.setString(1,product.getName());
             preparedStatement.setString(2,product.getDescription());
             preparedStatement.setInt(3,product.getCost());
@@ -117,7 +117,7 @@ public class ProductDaoImpl  implements ProductDao {
     public void createProduct(Product product) throws SQLException, IOException{
         ConnectionPool connectionPool=ConnectionPool.getConnPool();
         Connection con=connectionPool.getConn();
-        try(PreparedStatement pstmt = con.prepareStatement(INSERT_PRODUCT);){
+        try(PreparedStatement pstmt = con.prepareStatement(INSERT_PRODUCT)){
             pstmt.setString(1,product.getName());
             pstmt.setString(2,product.getDescription());
             pstmt.setInt(3,product.getCost());
@@ -135,41 +135,6 @@ public class ProductDaoImpl  implements ProductDao {
         }
     }
 
-//    public List<Product> getSearchedProducts(String productName) throws SQLException, IOException{
-//        List<Product> products =new ArrayList<>();
-//        ConnectionPool connectionPool=ConnectionPool.getConnPool();
-//        Connection con=connectionPool.getConn();
-//        try(PreparedStatement pstmt = con.prepareStatement(SELECT_SEARCHED_PRODUCT);){
-//            String newWord = "'%";
-//            newWord+=productName;
-//            newWord+="%'";
-//            System.out.println(newWord);
-//            pstmt.setString(1, productName);
-//            ResultSet rs = pstmt.executeQuery();
-//            while (rs.next()) {
-//                Product product = new Product();
-//                product.setId(rs.getLong(ID));
-//                product.setName(rs.getString(NAME));
-//                product.setDescription(rs.getString(DESCRIPTION));
-//                product.setPrice(rs.getLong(PRICE));
-//                product.setImage_url(rs.getString(IMAGE_URL));
-//                product.setUserId(rs.getLong(ID_USER));
-//                products.add(product);
-//            }
-//            pstmt.close();
-//            releaseConnection(con);
-//
-//        }catch (Exception e) {
-//            try {
-//                if (con != null)
-//                    con.close();
-//            } catch (SQLException e2) {
-//            }
-//            LOGGER.error(e);
-//        }
-//        return products;
-
-//    }
     public void deactivateProduct(Long productId, boolean isActive)throws SQLException, IOException{
     ConnectionPool connectionPool=ConnectionPool.getConnPool();
     Connection con=connectionPool.getConn();

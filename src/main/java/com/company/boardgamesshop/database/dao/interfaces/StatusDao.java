@@ -8,6 +8,4 @@ import java.util.List;
 
 public interface StatusDao  {
     Long getIdByStatusName(String statusName) throws SQLException, IOException;
-    List<Status> getAllStatuses() throws SQLException, IOException;
-    Status getStatusByOrderId(Long orderId) throws SQLException, IOException;
 }

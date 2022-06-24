@@ -23,8 +23,6 @@ public class BasketDaoImpl implements BasketDao {
     private static final String INSERT_PRODUCT_INTO_CART = "INSERT INTO \"BoardGames\".\"Basket\" (product_id, user_id, count) VALUES(?, ?, ?)";
     private static final String GET_PRODUCTS_FROM_CART_BY_USER_ID = "SELECT * FROM \"BoardGames\".\"Basket\" WHERE user_id = ?";
     private static final String DELETE_PRODUCT_FROM_CART = "DELETE FROM \"BoardGames\".\"Basket\" WHERE product_id = ? AND user_id = ?";
-    private static final String UPDATE_BASKET_AFTER ="UPDATE \"BoardGames\".\"Basket\" SET count = ?";
-    private static final String DELETE_PRODUCT_BY_PRODUCT_ID_FROM_CART = "DELETE FROM Basket WHERE product_id = ? AND user_id = ?";
     private static final String GET_CART_ID_FROM_CART = "SELECT id FROM \"BoardGames\".\"Basket\" WHERE product_id = ? AND user_id = ?";
     private static final String GET_ALL_FROM_CART = "SELECT * FROM \"BoardGames\".\"Basket\" WHERE product_id = ?";
     private static final String DELETE_PRODUCTS_FROM_CART_BY_USER = "DELETE FROM \"BoardGames\".\"Basket\" WHERE user_id=?";
@@ -32,7 +30,7 @@ public class BasketDaoImpl implements BasketDao {
     public void addProductToBasket(Basket basket)throws SQLException, IOException {
         ConnectionPool connectionPool=ConnectionPool.getConnPool();
         Connection con=connectionPool.getConn();
-        try(PreparedStatement pstmt = con.prepareStatement(INSERT_PRODUCT_INTO_CART);){
+        try(PreparedStatement pstmt = con.prepareStatement(INSERT_PRODUCT_INTO_CART)){
             pstmt.setLong(1,basket.getProductId());
             pstmt.setLong(2,basket.getUserId());
             pstmt.setInt(3,basket.getCount());
@@ -52,7 +50,7 @@ public class BasketDaoImpl implements BasketDao {
         ConnectionPool connectionPool=ConnectionPool.getConnPool();
         Connection con=connectionPool.getConn();
         List<Long> productsIds = null;
-        try(PreparedStatement preparedStatement = con.prepareStatement(GET_PRODUCTS_FROM_CART_BY_USER_ID);){
+        try(PreparedStatement preparedStatement = con.prepareStatement(GET_PRODUCTS_FROM_CART_BY_USER_ID)){
              productsIds = new ArrayList<>();
             preparedStatement.setLong(1, userId);
             ResultSet resultSet = preparedStatement.executeQuery();
@@ -69,38 +67,7 @@ public class BasketDaoImpl implements BasketDao {
         }
         return productsIds;
     }
-    @Override
-    public List<Product> getAllProductsInBasket(Long userId) throws SQLException, IOException {
-        ConnectionPool connectionPool=ConnectionPool.getConnPool();
-        Connection con=connectionPool.getConn();
-        List<Product> products = null;
-        Product product=null;
-        try(PreparedStatement preparedStatement = con.prepareStatement(GET_PRODUCTS_FROM_CART_BY_USER_ID);){
-            products = new ArrayList<>();
-            preparedStatement.setLong(1, userId);
-            ResultSet resultSet = preparedStatement.executeQuery();
-            while (resultSet.next()) {
-               product=new Product();
-               product.setId(resultSet.getLong("id"));
-               product.setName(resultSet.getString("name"));
-               product.setDescription(resultSet.getString("name"));
-               product.setCost(resultSet.getInt("cost"));
-               product.setCost(resultSet.getInt("count"));
-               product.setCountryId(resultSet.getLong("country_id"));
-               product.setProductCategoryId(resultSet.getLong("product_category_id"));
-               product.setActive(resultSet.getBoolean("is_active"));
-               products.add(product);
-            }
 
-        } catch (Exception e) {
-            LOGGER.error(e);
-        }
-        finally {
-            connectionPool.freeConn(con);
-        }
-        return products;
-
-    }
 
     public Integer countOfBasketByUserId(Long userId,Long productId){
         ConnectionPool connectionPool=ConnectionPool.getConnPool();
@@ -125,7 +92,7 @@ public class BasketDaoImpl implements BasketDao {
     public void deleteProductInBasket(Long productId, Long userId) throws SQLException, IOException{
         ConnectionPool connectionPool=ConnectionPool.getConnPool();
         Connection con=connectionPool.getConn();
-            try (PreparedStatement preparedStatement = con.prepareStatement(DELETE_PRODUCT_FROM_CART);) {
+            try (PreparedStatement preparedStatement = con.prepareStatement(DELETE_PRODUCT_FROM_CART)) {
                 preparedStatement.setLong(1, productId);
                 preparedStatement.setLong(2, userId);
                  preparedStatement.executeUpdate();
@@ -169,7 +136,7 @@ public class BasketDaoImpl implements BasketDao {
         List<Basket> baskets =new ArrayList<>();
         ConnectionPool connectionPool=ConnectionPool.getConnPool();
         Connection con=connectionPool.getConn();
-        try (PreparedStatement pstmt = con.prepareStatement(GET_ALL_FROM_CART);){
+        try (PreparedStatement pstmt = con.prepareStatement(GET_ALL_FROM_CART)){
             pstmt.setLong(1,productId);
             ResultSet rs = pstmt.executeQuery();
             while (rs.next()) {
@@ -197,7 +164,7 @@ public class BasketDaoImpl implements BasketDao {
     public void deleteProductFromBasketByUserId(Long userId)throws SQLException, IOException{
         ConnectionPool connectionPool=ConnectionPool.getConnPool();
         Connection con=connectionPool.getConn();
-        try( PreparedStatement preparedStatement = con.prepareStatement(DELETE_PRODUCTS_FROM_CART_BY_USER);){
+        try( PreparedStatement preparedStatement = con.prepareStatement(DELETE_PRODUCTS_FROM_CART_BY_USER)){
             preparedStatement.setLong(1,userId);
              preparedStatement.executeUpdate();
 
