@@ -23,35 +23,34 @@ public class LoginAction implements Action {
         HttpSession session = request.getSession();
         String login = request.getParameter(Constant.EMAIL);
         String password = request.getParameter(Constant.PASSWORD);
-        User u=(User) session.getAttribute(Constant.USER);
-       if(u==null) {
-           if (login != null && password != null) {
-               String securedPassword = DigestUtils.md5Hex(password);
-               User user = USER_DAO.getUserByLoginPassword(login, securedPassword);
-               if (user != null) {
-                   if (Validator.checkAccess(user)) {
-                       session.setAttribute(Constant.USER, user);
-                       session.setAttribute(Constant.ADMIN, user.isAdmin());
-                       session.setAttribute("localId", 2L);
-                       response.sendRedirect(ConstantPageNamesJSPAndAction.HOME_SERVICE);
-                   } else {
-                       request.setAttribute(Constant.ERROR, Constant.ERROR_USER_BLOCKED);
-                       dispatcher = request.getRequestDispatcher(ConstantPageNamesJSPAndAction.LOGIN_JSP);
-                       dispatcher.forward(request, response);
-                   }
-               } else {
-                   request.setAttribute(Constant.ERROR, Constant.ERROR_EMAIL_OR_PASSWORD);
-                   dispatcher = request.getRequestDispatcher(ConstantPageNamesJSPAndAction.LOGIN_JSP);
-                   dispatcher.forward(request, response);
-               }
-           }
-           else {
+        User currentUser=(User) session.getAttribute(Constant.USER);
+       if(currentUser!=null){
+           response.sendRedirect(ConstantPageNamesJSPAndAction.LOGIN_SERVICE);
+       }
+       else if(login == null || password == null){
+           dispatcher = request.getRequestDispatcher(ConstantPageNamesJSPAndAction.LOGIN_JSP);
+           dispatcher.forward(request, response);
+       }
+       else{
+           String securedPassword = DigestUtils.md5Hex(password);
+           User user = USER_DAO.getUserByLoginPassword(login, securedPassword);
+           if (user == null) {
+               request.setAttribute(Constant.ERROR, Constant.ERROR_USER_BLOCKED);
                dispatcher = request.getRequestDispatcher(ConstantPageNamesJSPAndAction.LOGIN_JSP);
                dispatcher.forward(request, response);
            }
+           else if (!Validator.checkAccess(user)) {
+               request.setAttribute(Constant.ERROR, Constant.ERROR_EMAIL_OR_PASSWORD);
+               dispatcher = request.getRequestDispatcher(ConstantPageNamesJSPAndAction.LOGIN_JSP);
+               dispatcher.forward(request, response);
+           }
+           else {
+               session.setAttribute(Constant.USER, user);
+               session.setAttribute(Constant.ADMIN, user.isAdmin());
+               session.setAttribute("localId", 2L);
+               response.sendRedirect(ConstantPageNamesJSPAndAction.HOME_SERVICE);
+           }
        }
-       else {
-           response.sendRedirect(ConstantPageNamesJSPAndAction.HOME_SERVICE);
        }
     }
-}
+

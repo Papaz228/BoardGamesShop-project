@@ -23,7 +23,7 @@ public class AddAllProductsToShopAction implements Action {
         HttpSession session = request.getSession();
         User currentUser = (User) session.getAttribute(Constant.USER);
         List<Product> products = PRODUCT_DAO.getAllProduct();
-        if(currentUser!=null && !currentUser.isAdmin())  products.removeIf(pr -> !pr.isActive());
+        if(currentUser!=null && !currentUser.isAdmin()){  products.removeIf(pr -> !pr.isActive());}
         request.setAttribute(Constant.PRODUCTS, products);
         dispatcher = request.getRequestDispatcher(ConstantPageNamesJSPAndAction.HOME_JSP);
         dispatcher.forward(request, response);
