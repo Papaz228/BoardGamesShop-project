@@ -1,18 +1,12 @@
 package com.company.boardgamesshop.action.factory;
-
 import com.company.boardgamesshop.action.admin.*;
 import com.company.boardgamesshop.action.common.*;
 import com.company.boardgamesshop.action.user.*;
-
-
 import java.util.HashMap;
 import java.util.Map;
-
 public class FactoryAction {
-
     private static final Map<String, Action> SERVICE_MAP = new HashMap<>();
     private static final FactoryAction SERVICE_FACTORY = new FactoryAction();
-
     static {
         SERVICE_MAP.put("/registration", new RegistrationAction()) ;
         SERVICE_MAP.put("/login", new LoginAction());
@@ -36,14 +30,9 @@ public class FactoryAction {
         SERVICE_MAP.put("/order", new MakeMyOrderAction());
         SERVICE_MAP.put("/myProfile", new CheckMyProfileAction());
         SERVICE_MAP.put("/createNewProductCategory", new CreateNewProductCategory());
-
-
-
     }
-
     public Action getService(String request) {
         Action action = SERVICE_MAP.get("/error");
-
         for (Map.Entry<String, Action> pair : SERVICE_MAP.entrySet()) {
             if (request.equalsIgnoreCase(pair.getKey())) {
                 action = SERVICE_MAP.get(pair.getKey());
@@ -51,9 +40,7 @@ public class FactoryAction {
         }
         return action;
     }
-
     public static FactoryAction getInstance() {
         return SERVICE_FACTORY;
     }
-
 }

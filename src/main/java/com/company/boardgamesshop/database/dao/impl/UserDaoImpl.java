@@ -1,12 +1,10 @@
 package com.company.boardgamesshop.database.dao.impl;
-
 import com.company.boardgamesshop.database.connection.ConnectionPool;
 import com.company.boardgamesshop.database.dao.interfaces.UserDao;
 import com.company.boardgamesshop.entity.User;
 import com.company.boardgamesshop.util.constants.Constant;
 import org.apache.log4j.LogManager;
 import org.apache.log4j.Logger;
-
 import java.io.IOException;
 import java.sql.Connection;
 import java.sql.PreparedStatement;
@@ -14,11 +12,8 @@ import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.List;
-
-
 public class UserDaoImpl implements UserDao {
     private final Logger LOGGER = LogManager.getLogger(this.getClass().getName());
-
     private static final String INSERT_INTO_USERS = "INSERT INTO \"BoardGames\".\"User\"\n" +
             "(first_name, last_name, birthday, phone_number, email, \"password\", is_admin, is_banned)\n" +
             "VALUES(?, ?, ?, ?, ?, ?, ?, ?)";
@@ -27,8 +22,6 @@ public class UserDaoImpl implements UserDao {
     private static final String GET_ALL_USERS = "SELECT * FROM \"BoardGames\".\"User\" WHERE is_admin = false";
     private static final String UPDATE_USER_ACTIVITY = "UPDATE \"BoardGames\".\"User\" SET  is_banned = ? WHERE id = ?";
     private static final String CHECK_LOGIN = "SELECT * FROM \"BoardGames\".\"User\" WHERE email = ?";
-
-
     public void addUser(User user) throws SQLException, IOException {
         ConnectionPool connectionPool=ConnectionPool.getConnPool();
         Connection con=connectionPool.getConn();
@@ -49,7 +42,6 @@ public class UserDaoImpl implements UserDao {
             connectionPool.freeConn(con);
         }
     }
-
     public User getUserByLoginPassword(String login, String password) throws SQLException, IOException {
         ConnectionPool connectionPool=ConnectionPool.getConnPool();
         Connection con=connectionPool.getConn();
@@ -57,9 +49,7 @@ public class UserDaoImpl implements UserDao {
         try(PreparedStatement preparedStatement = con.prepareStatement(GET_USER_BY_LOGIN_PASSWORD)) {
             preparedStatement.setString(1, login);
             preparedStatement.setString(2, password);
-
             ResultSet resultSet = preparedStatement.executeQuery();
-
             while (resultSet.next()) {
                  user = new User();
                 user.setId(resultSet.getLong(Constant.ID));
@@ -72,7 +62,6 @@ public class UserDaoImpl implements UserDao {
                 user.setIsAdmin(resultSet.getBoolean("is_admin"));
                 user.setBanned(resultSet.getBoolean("is_banned"));
             }
-
         }catch (Exception e) {
             LOGGER.error(e);
         }
@@ -81,7 +70,6 @@ public class UserDaoImpl implements UserDao {
         }
         return user;
     }
-
     public boolean isEmailExist(String email) throws SQLException, IOException {
         boolean isExist = false;
         ConnectionPool connectionPool=ConnectionPool.getConnPool();
@@ -89,11 +77,9 @@ public class UserDaoImpl implements UserDao {
         try( PreparedStatement preparedStatement = con.prepareStatement(CHECK_LOGIN)){
             preparedStatement.setString(1, email);
             ResultSet resultSet = preparedStatement.executeQuery();
-
             while (resultSet.next()) {
                 isExist = true;
             }
-
         } catch (Exception e) {
             LOGGER.error(e);
         }
@@ -102,14 +88,12 @@ public class UserDaoImpl implements UserDao {
         }
         return isExist;
     }
-
     public List<User> getUsers() throws SQLException, IOException{
         List<User> users = new ArrayList<>();
         ConnectionPool connectionPool=ConnectionPool.getConnPool();
         Connection con=connectionPool.getConn();
         try(PreparedStatement preparedStatement = con.prepareStatement(GET_ALL_USERS);) {
             ResultSet resultSet = preparedStatement.executeQuery();
-
             while (resultSet.next()) {
                 User user = new User();
                 user.setId(resultSet.getLong(Constant.ID));
@@ -121,7 +105,6 @@ public class UserDaoImpl implements UserDao {
                 user.setBanned(resultSet.getBoolean("is_banned"));
                 users.add(user);
             }
-
         } catch (Exception e) {
             LOGGER.error(e);
         }
@@ -129,15 +112,14 @@ public class UserDaoImpl implements UserDao {
             connectionPool.freeConn(con);
         }
         return users;
-
-    }public void BannedUser(Long userId,boolean isBanned) throws SQLException, IOException{
+    }
+    public void BannedUser(Long userId,boolean isBanned) throws SQLException, IOException{
         ConnectionPool connectionPool=ConnectionPool.getConnPool();
         Connection con=connectionPool.getConn();
         try( PreparedStatement preparedStatement = con.prepareStatement(UPDATE_USER_ACTIVITY)){
             preparedStatement.setBoolean(1,isBanned);
             preparedStatement.setLong(2,userId);
             preparedStatement.executeUpdate();
-
         }catch (Exception e) {
             LOGGER.error(e);
         }
@@ -159,7 +141,5 @@ public class UserDaoImpl implements UserDao {
         finally {
             connectionPool.freeConn(con);
         }
-
     }
-
 }

@@ -8,7 +8,7 @@
 
   <servlet>
     <servlet-name>BoardGamesServlet</servlet-name>
-    <servlet-class>com.company.boardgamesshop.controller.Servlet</servlet-class>
+    <servlet-class>com.company.boardgamesshop.controller.BoardGamesShopController</servlet-class>
     <load-on-startup>0</load-on-startup>
   </servlet>
   <servlet-mapping>

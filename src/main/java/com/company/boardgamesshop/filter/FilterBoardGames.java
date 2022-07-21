@@ -1,5 +1,4 @@
 package com.company.boardgamesshop.filter;
-
 import javax.servlet.*;
 import java.io.IOException;
 import java.util.TimeZone;

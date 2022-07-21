@@ -1,12 +1,8 @@
 package com.company.boardgamesshop.database.dao.interfaces;
-
-
 import com.company.boardgamesshop.entity.User;
-
 import java.io.IOException;
 import java.sql.SQLException;
 import java.util.List;
-
 public interface UserDao {
     void addUser(User user) throws SQLException, IOException;
     List<User> getUsers() throws SQLException, IOException;

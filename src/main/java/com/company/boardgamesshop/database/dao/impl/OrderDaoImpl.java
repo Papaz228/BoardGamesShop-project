@@ -1,19 +1,15 @@
 package com.company.boardgamesshop.database.dao.impl;
-
 import com.company.boardgamesshop.database.connection.ConnectionPool;
 import com.company.boardgamesshop.entity.Order;
 import com.company.boardgamesshop.util.constants.Constant;
 import com.company.boardgamesshop.database.dao.interfaces.OrderDao;
 import org.apache.log4j.LogManager;
 import org.apache.log4j.Logger;
-
 import java.io.IOException;
 import java.sql.*;
 import java.util.ArrayList;
 import java.util.List;
-
 public class OrderDaoImpl implements OrderDao {
-
     private final Logger LOGGER = LogManager.getLogger(this.getClass().getName());
     private static final String SELECT_LAST_ID_FROM_ORDER = "SELECT id \n" +
             "FROM \"BoardGames\".\"Order\" \n" +
@@ -25,26 +21,21 @@ public class OrderDaoImpl implements OrderDao {
     private static final String UPDATE_STATUS_ORDER = "UPDATE \"BoardGames\".\"Order\" SET  status_id = ? WHERE id = ?";
     private static final String SELECT_ORDERS_BY_USER_ID = "SELECT \"BoardGames\".\"Order\".id,\"BoardGames\".\"Order\".user_id,\"BoardGames\".\"Order\".status_id, \"BoardGames\".\"Order\".date_start, \"BoardGames\".\"Order\".total_cost, \"BoardGames\".\"Status\".name FROM \"BoardGames\".\"Order\" INNER JOIN \"BoardGames\".\"Status\" ON \"BoardGames\".\"Order\".status_id=\"BoardGames\".\"Status\".id WHERE \"BoardGames\".\"Order\".user_id= ?;";
     private static final String SELECT_USERS_ORDERS="SELECT \"BoardGames\".\"Order\".id,\"BoardGames\".\"Order\".user_id,\"BoardGames\".\"Order\".status_id, \"BoardGames\".\"Order\".date_start, \"BoardGames\".\"Order\".total_cost, \"BoardGames\".\"Status\".name, \"BoardGames\".\"User\".email,\"BoardGames\".\"Status\".local_id FROM \"BoardGames\".\"Order\" INNER JOIN \"BoardGames\".\"Status\" ON \"BoardGames\".\"Order\".status_id=\"BoardGames\".\"Status\".id INNER JOIN \"BoardGames\".\"User\" ON \"BoardGames\".\"Order\".user_id=\"BoardGames\".\"User\".id";
-
     @Override
     public void createOrder(Order order) throws SQLException, IOException {
         ConnectionPool connectionPool = ConnectionPool.getConnPool();
         Connection con = connectionPool.getConn();
         try (PreparedStatement pstmt = con.prepareStatement(INSERT_INTO_ORDER)) {
-
             pstmt.setInt(1, order.getTotalCost());
             pstmt.setTimestamp(2,  order.getDateStart());
             pstmt.setLong(3, order.getUserId());
             pstmt.setLong(4, order.getStatusId());
             pstmt.executeUpdate();
-
         } catch (Exception e) {
             LOGGER.error(e);
         } finally {
             connectionPool.freeConn(con);
-        }
-    }
-
+        }}
     @Override
     public Long takeLastID() throws SQLException {
         long lastId = 0;
@@ -62,8 +53,6 @@ public class OrderDaoImpl implements OrderDao {
         }
         return lastId;
     }
-
-
     @Override
     public ArrayList<ArrayList<String>> getFrom4Tables() throws SQLException, IOException {
         ArrayList<ArrayList<String>> orders =new ArrayList<>();
@@ -80,8 +69,6 @@ public class OrderDaoImpl implements OrderDao {
                 order.add(rs.getString("local_id"));
                 orders.add(order);
             }
-
-
         } catch (Exception e) {
             LOGGER.error(e);
         } finally {
@@ -89,7 +76,6 @@ public class OrderDaoImpl implements OrderDao {
         }
         return orders;
     }
-
     @Override
     public void changeOrderStatus(Long orderId, Long statusId) throws SQLException, IOException {
         ConnectionPool connectionPool = ConnectionPool.getConnPool();
@@ -98,15 +84,11 @@ public class OrderDaoImpl implements OrderDao {
             pstmt.setLong(1, statusId);
             pstmt.setLong(2, orderId);
             pstmt.executeUpdate();
-
-
         } catch (Exception e) {
             LOGGER.error(e);
         } finally {
             connectionPool.freeConn(con);
-        }
-    }
-
+        }}
     @Override
     public List<Order> getOrderByUserId(Long userId) throws SQLException, IOException {
         List<Order> orders = new ArrayList<>();
@@ -125,16 +107,11 @@ public class OrderDaoImpl implements OrderDao {
                 order.setStatusName(rs.getString("name"));
                 orders.add(order);
             }
-
-
         } catch (Exception e) {
             LOGGER.error(e);
         } finally {
             connectionPool.freeConn(con);
         }
         return orders;
-    }
-
-
-}
+    }}
 

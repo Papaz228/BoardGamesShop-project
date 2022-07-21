@@ -1,17 +1,14 @@
 package com.company.boardgamesshop.action.admin;
-
 import com.company.boardgamesshop.action.factory.Action;
 import com.company.boardgamesshop.util.constants.Constant;
 import com.company.boardgamesshop.database.dao.impl.UserDaoImpl;
 import com.company.boardgamesshop.database.dao.interfaces.UserDao;
-
 import javax.servlet.ServletException;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
 import java.sql.SQLException;
 import java.text.ParseException;
-
 public class BanUserAction implements Action {
     UserDao userDao = new UserDaoImpl();
     @Override

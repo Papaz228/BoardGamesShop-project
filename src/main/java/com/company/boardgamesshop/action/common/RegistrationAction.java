@@ -6,7 +6,6 @@ import com.company.boardgamesshop.util.constants.ConstantPageNamesJSPAndAction;
 import com.company.boardgamesshop.database.dao.impl.UserDaoImpl;
 import com.company.boardgamesshop.database.dao.interfaces.UserDao;
 import org.apache.commons.codec.digest.DigestUtils;
-
 import javax.servlet.RequestDispatcher;
 import javax.servlet.ServletException;
 import javax.servlet.http.HttpServletRequest;
@@ -16,10 +15,8 @@ import java.io.IOException;
 import java.sql.SQLException;
 import java.text.ParseException;
 import static com.company.boardgamesshop.validator.Validator.*;
-
 public class RegistrationAction implements Action {
     private UserDao userDao = new UserDaoImpl();
-
     @Override
     public void execute(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException, ParseException, SQLException {
         HttpSession session = request.getSession();
@@ -29,7 +26,6 @@ public class RegistrationAction implements Action {
             if (request.getParameter(Constant.EMAIL) != null) {
                 String email = request.getParameter(Constant.EMAIL);
                 if (userDao.isEmailExist(email)) {
-
                     request.setAttribute(Constant.ERROR, Constant.ERROR_EMAIL_EXIST);
                     dispatcher = request.getRequestDispatcher(ConstantPageNamesJSPAndAction.REGISTRATION_JSP);
                     dispatcher.forward(request, response);
@@ -53,16 +49,12 @@ public class RegistrationAction implements Action {
                     newUser.setPassword(securedPassword);
                     newUser.setIsAdmin(false);
                     newUser.setBanned(false);
-
-
                     userDao.addUser(newUser);
-
                     newUser.setId(userDao.getUserByLoginPassword(newUser.getEmail(), newUser.getPassword()).getId());
                     session.setAttribute(Constant.USER, newUser);
                     session.setAttribute(Constant.ADMIN, newUser.isAdmin());
                     response.sendRedirect(ConstantPageNamesJSPAndAction.HOME_SERVICE);
                 }
-
             } else {
                 dispatcher = request.getRequestDispatcher(ConstantPageNamesJSPAndAction.REGISTRATION_JSP);
                 dispatcher.forward(request, response);

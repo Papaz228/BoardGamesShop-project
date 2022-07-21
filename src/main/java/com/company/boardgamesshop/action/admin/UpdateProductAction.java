@@ -1,5 +1,4 @@
 package com.company.boardgamesshop.action.admin;
-
 import com.company.boardgamesshop.action.factory.Action;
 import com.company.boardgamesshop.entity.Country;
 import com.company.boardgamesshop.entity.Product;
@@ -13,8 +12,6 @@ import com.company.boardgamesshop.database.dao.impl.ProductDaoImpl;
 import com.company.boardgamesshop.database.dao.interfaces.CountryDao;
 import com.company.boardgamesshop.database.dao.interfaces.ProductCategoryDao;
 import com.company.boardgamesshop.database.dao.interfaces.ProductDao;
-
-
 import javax.servlet.RequestDispatcher;
 import javax.servlet.ServletException;
 import javax.servlet.http.HttpServletRequest;
@@ -24,20 +21,16 @@ import java.io.IOException;
 import java.sql.SQLException;
 import java.text.ParseException;
 import java.util.List;
-
-
 public class UpdateProductAction implements Action {
     ProductDao productDao = new ProductDaoImpl();
     CountryDao countryDao=new CountryDaoImpl();
     ProductCategoryDao productCategoryDao=new ProductCategoryDaoImpl();
-
     @Override
     public void execute(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException, ParseException, SQLException {
         RequestDispatcher dispatcher;
         HttpSession session = request.getSession();
         User currentUser = (User) session.getAttribute(Constant.USER);
         String productName = request.getParameter("product_name");
-
         if (currentUser.isAdmin()) {
             if (productName != null) {
                 Product product = new Product();

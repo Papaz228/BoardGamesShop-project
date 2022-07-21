@@ -1,5 +1,4 @@
 package com.company.boardgamesshop.action.user;
-
 import com.company.boardgamesshop.util.constants.Constant;
 import com.company.boardgamesshop.util.constants.ConstantPageNamesJSPAndAction;
 import com.company.boardgamesshop.database.dao.impl.UserDaoImpl;
@@ -7,7 +6,6 @@ import com.company.boardgamesshop.database.dao.interfaces.UserDao;
 import com.company.boardgamesshop.entity.User;
 import com.company.boardgamesshop.action.factory.Action;
 import org.apache.commons.codec.digest.DigestUtils;
-
 import javax.servlet.RequestDispatcher;
 import javax.servlet.ServletException;
 import javax.servlet.http.HttpServletRequest;
@@ -16,9 +14,7 @@ import javax.servlet.http.HttpSession;
 import java.io.IOException;
 import java.sql.SQLException;
 import java.text.ParseException;
-
 import static com.company.boardgamesshop.validator.Validator.*;
-
 public class CheckMyProfileAction implements Action {
     UserDao userDao=new UserDaoImpl();
     @Override
@@ -43,7 +39,6 @@ public class CheckMyProfileAction implements Action {
                 }
             }
             else{
-
                 dispatcher = request.getRequestDispatcher(ConstantPageNamesJSPAndAction.MY_PROFILE_JSP);
                 dispatcher.forward(request, response);
             }
@@ -51,8 +46,6 @@ public class CheckMyProfileAction implements Action {
         else {
             dispatcher = request.getRequestDispatcher(Constant.LOGIN);
             dispatcher.forward(request, response);
-
         }
-
     }
 }

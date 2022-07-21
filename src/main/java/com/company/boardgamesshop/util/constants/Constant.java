@@ -1,5 +1,4 @@
 package com.company.boardgamesshop.util.constants;
-
 public class Constant {
     public static final String ID = "id";
     public static final String USER_ID = "userId";
@@ -27,14 +26,10 @@ public class Constant {
     public static final String USER_ID_TABLE = "user_id";
     public static final String FIRST_NAME_TABLE = "first_name";
     public static final String LAST_NAME_TABLE = "last_name";
-
-
-
     public static final String PRODUCT_ID_TABLE = "product_id";
     public static final String ERROR_USER_BLOCKED = "You are blocked";
     public static final String ERROR_EMAIL_EXIST = "Email already exist";
     public static final String ERROR_EMAIL_FORMAT = "Not correct format of mail, please type it again";
     public static final String ERROR_PASSWORD_FORMAT = "Not correct format of password, please type it again";
     public static final String ERROR_EMAIL_OR_PASSWORD = "Email or password is wrong";
-
 }

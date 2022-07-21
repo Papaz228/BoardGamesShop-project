@@ -1,12 +1,10 @@
 package com.company.boardgamesshop.database.dao.impl;
-
 import com.company.boardgamesshop.database.connection.ConnectionPool;
 import com.company.boardgamesshop.database.dao.interfaces.ProductDao;
 import com.company.boardgamesshop.entity.Product;
 import com.company.boardgamesshop.util.constants.Constant;
 import org.apache.log4j.LogManager;
 import org.apache.log4j.Logger;
-
 import java.io.IOException;
 import java.sql.Connection;
 import java.sql.PreparedStatement;
@@ -14,11 +12,8 @@ import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.List;
-
-public class ProductDaoImpl  implements ProductDao {
-
+public class ProductDaoImpl implements ProductDao {
     private final Logger LOGGER = LogManager.getLogger(this.getClass().getName());
-
     private static final String GET_ALL_PRODUCTS = "SELECT * FROM \"BoardGames\".\"Product\"";
     private static final String GET_PRODUCT = "SELECT * FROM \"BoardGames\".\"Product\" WHERE id = ?";
     private static final String INSERT_PRODUCT = "INSERT INTO \"BoardGames\".\"Product\"\n" +
@@ -28,8 +23,6 @@ public class ProductDaoImpl  implements ProductDao {
             "SET \"name\"=?, description=?, \"cost\"=?, count=?, country_id=?, product_category_id=?, is_active=true, photo_url=?\n" +
             "WHERE id=?";
     private static final String DELETE_PRODUCT = "UPDATE \"BoardGames\".\"Product\" SET is_active= ? WHERE id = ? ";
-
-
     public Product getProductById(Long id) throws SQLException, IOException{
         Product product = null;
         ConnectionPool connectionPool=ConnectionPool.getConnPool();
@@ -49,7 +42,6 @@ public class ProductDaoImpl  implements ProductDao {
                 product.setActive(rs.getBoolean("is_active"));
                 product.setPhotoUrl(rs.getString("photo_url"));
             }
-
         }catch (Exception e) {
             LOGGER.error(e);
         }
@@ -58,14 +50,12 @@ public class ProductDaoImpl  implements ProductDao {
         }
         return product;
     }
-
     public List<Product> getAllProduct() throws SQLException, IOException{
         List<Product> products =new ArrayList<>();
         Product product = null;
         ConnectionPool connectionPool=ConnectionPool.getConnPool();
         Connection con=connectionPool.getConn();
         try( PreparedStatement pstmt = con.prepareStatement(GET_ALL_PRODUCTS)){
-
             ResultSet rs = pstmt.executeQuery();
             while (rs.next()) {
                 product = new Product();
@@ -80,7 +70,6 @@ public class ProductDaoImpl  implements ProductDao {
                 product.setPhotoUrl(rs.getString("photo_url"));
                 products.add(product);
             }
-
         }catch (Exception e) {
             LOGGER.error(e);
         }
@@ -89,7 +78,6 @@ public class ProductDaoImpl  implements ProductDao {
         }
         return products;
     }
-
     public void updateProduct(Product product) throws SQLException, IOException{
         ConnectionPool connectionPool=ConnectionPool.getConnPool();
         Connection con=connectionPool.getConn();
@@ -103,9 +91,7 @@ public class ProductDaoImpl  implements ProductDao {
             preparedStatement.setLong(6,product.getProductCategoryId());
             preparedStatement.setString(7,product.getPhotoUrl());
             preparedStatement.setLong(8,product.getId());
-
             preparedStatement.executeUpdate();
-
         }catch (Exception e) {
             LOGGER.error(e);
         }
@@ -113,7 +99,6 @@ public class ProductDaoImpl  implements ProductDao {
             connectionPool.freeConn(con);
         }
     }
-
     public void createProduct(Product product) throws SQLException, IOException{
         ConnectionPool connectionPool=ConnectionPool.getConnPool();
         Connection con=connectionPool.getConn();
@@ -126,7 +111,6 @@ public class ProductDaoImpl  implements ProductDao {
             pstmt.setLong(6,product.getProductCategoryId());
             pstmt.setString(7,product.getPhotoUrl());
             pstmt.executeUpdate();
-
         }catch (Exception e) {
             LOGGER.error(e);
         }
@@ -134,7 +118,6 @@ public class ProductDaoImpl  implements ProductDao {
             connectionPool.freeConn(con);
         }
     }
-
     public void deactivateProduct(Long productId, boolean isActive)throws SQLException, IOException{
     ConnectionPool connectionPool=ConnectionPool.getConnPool();
     Connection con=connectionPool.getConn();
@@ -142,12 +125,10 @@ public class ProductDaoImpl  implements ProductDao {
             preparedStatement.setBoolean(1, isActive);
             preparedStatement.setLong(2,productId);
             preparedStatement.executeUpdate();
-
         }catch (Exception e) {
             LOGGER.error(e);
         }
         finally {
             connectionPool.freeConn(con);
         }
-    }
-}
+    }}
