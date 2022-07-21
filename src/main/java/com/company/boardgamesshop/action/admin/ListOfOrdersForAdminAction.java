@@ -1,11 +1,9 @@
 package com.company.boardgamesshop.action.admin;
 import com.company.boardgamesshop.action.factory.Action;
-import com.company.boardgamesshop.database.dao.interfaces.UserDao;
 import com.company.boardgamesshop.entity.User;
 import com.company.boardgamesshop.util.constants.Constant;
 import com.company.boardgamesshop.util.constants.ConstantPageNamesJSPAndAction;
 import com.company.boardgamesshop.database.dao.impl.OrderDaoImpl;
-import com.company.boardgamesshop.database.dao.impl.UserDaoImpl;
 import com.company.boardgamesshop.database.dao.interfaces.OrderDao;
 import javax.servlet.RequestDispatcher;
 import javax.servlet.ServletException;
@@ -17,7 +15,6 @@ import java.sql.SQLException;
 import java.text.ParseException;
 import java.util.ArrayList;
 public class ListOfOrdersForAdminAction implements Action {
-    UserDao userDao = new UserDaoImpl();
     OrderDao orderDao = new OrderDaoImpl();
     @Override
     public void execute(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException, ParseException, SQLException {

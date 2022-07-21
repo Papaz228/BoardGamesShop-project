@@ -5,11 +5,9 @@ import com.company.boardgamesshop.entity.User;
 import com.company.boardgamesshop.util.constants.Constant;
 import org.apache.log4j.LogManager;
 import org.apache.log4j.Logger;
-import java.io.IOException;
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
-import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.List;
 public class UserDaoImpl implements UserDao {
@@ -22,19 +20,19 @@ public class UserDaoImpl implements UserDao {
     private static final String GET_ALL_USERS = "SELECT * FROM \"BoardGames\".\"User\" WHERE is_admin = false";
     private static final String UPDATE_USER_ACTIVITY = "UPDATE \"BoardGames\".\"User\" SET  is_banned = ? WHERE id = ?";
     private static final String CHECK_LOGIN = "SELECT * FROM \"BoardGames\".\"User\" WHERE email = ?";
-    public void addUser(User user) throws SQLException, IOException {
+    public void addUser(User user) {
         ConnectionPool connectionPool=ConnectionPool.getConnPool();
         Connection con=connectionPool.getConn();
-        try(PreparedStatement pstmt = con.prepareStatement(INSERT_INTO_USERS)) {
-            pstmt.setString(1, user.getFirstName());
-            pstmt.setString(2, user.getLastName());
-            pstmt.setString(3, user.getBirthday());
-            pstmt.setString(4, user.getPhoneNumber());
-            pstmt.setString(5, user.getEmail());
-            pstmt.setString(6, user.getPassword());
-            pstmt.setBoolean(7, user.isAdmin());
-            pstmt.setBoolean(8, user.isBanned());
-            pstmt.executeUpdate();
+        try(PreparedStatement preparedStatement = con.prepareStatement(INSERT_INTO_USERS)) {
+            preparedStatement.setString(1, user.getFirstName());
+            preparedStatement.setString(2, user.getLastName());
+            preparedStatement.setString(3, user.getBirthday());
+            preparedStatement.setString(4, user.getPhoneNumber());
+            preparedStatement.setString(5, user.getEmail());
+            preparedStatement.setString(6, user.getPassword());
+            preparedStatement.setBoolean(7, user.isAdmin());
+            preparedStatement.setBoolean(8, user.isBanned());
+            preparedStatement.executeUpdate();
         } catch (Exception e) {
             LOGGER.error(e);
         }
@@ -42,7 +40,7 @@ public class UserDaoImpl implements UserDao {
             connectionPool.freeConn(con);
         }
     }
-    public User getUserByLoginPassword(String login, String password) throws SQLException, IOException {
+    public User getUserByLoginPassword(String login, String password) {
         ConnectionPool connectionPool=ConnectionPool.getConnPool();
         Connection con=connectionPool.getConn();
         User user=null;
@@ -70,7 +68,7 @@ public class UserDaoImpl implements UserDao {
         }
         return user;
     }
-    public boolean isEmailExist(String email) throws SQLException, IOException {
+    public boolean isEmailExist(String email) {
         boolean isExist = false;
         ConnectionPool connectionPool=ConnectionPool.getConnPool();
         Connection con=connectionPool.getConn();
@@ -88,11 +86,11 @@ public class UserDaoImpl implements UserDao {
         }
         return isExist;
     }
-    public List<User> getUsers() throws SQLException, IOException{
+    public List<User> getUsers() {
         List<User> users = new ArrayList<>();
         ConnectionPool connectionPool=ConnectionPool.getConnPool();
         Connection con=connectionPool.getConn();
-        try(PreparedStatement preparedStatement = con.prepareStatement(GET_ALL_USERS);) {
+        try(PreparedStatement preparedStatement = con.prepareStatement(GET_ALL_USERS)) {
             ResultSet resultSet = preparedStatement.executeQuery();
             while (resultSet.next()) {
                 User user = new User();
@@ -113,7 +111,7 @@ public class UserDaoImpl implements UserDao {
         }
         return users;
     }
-    public void BannedUser(Long userId,boolean isBanned) throws SQLException, IOException{
+    public void BannedUser(Long userId,boolean isBanned) {
         ConnectionPool connectionPool=ConnectionPool.getConnPool();
         Connection con=connectionPool.getConn();
         try( PreparedStatement preparedStatement = con.prepareStatement(UPDATE_USER_ACTIVITY)){

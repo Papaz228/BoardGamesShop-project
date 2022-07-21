@@ -28,7 +28,7 @@ public class CreateNewProductCategory implements Action {
         public void execute(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException, ParseException, SQLException {
             RequestDispatcher dispatcher;
             HttpSession session = request.getSession();
-            ProductCategory productCategory=null;
+            ProductCategory productCategory;
             List<ProductCategory> productCategories=new ArrayList<>();
             String productCategoryName = request.getParameter("category_name");
             User currentUser = (User) session.getAttribute(Constant.USER);

@@ -1,6 +1,5 @@
 package com.company.boardgamesshop.action.common;
 import com.company.boardgamesshop.action.factory.Action;
-import com.company.boardgamesshop.action.factory.FactoryAction;
 import com.company.boardgamesshop.database.dao.impl.ProductDaoImpl;
 import com.company.boardgamesshop.database.dao.interfaces.ProductDao;
 import com.company.boardgamesshop.entity.Product;
@@ -17,14 +16,13 @@ import java.sql.SQLException;
 import java.text.ParseException;
 import java.util.List;
 public class AddAllProductsToShopAction implements Action {
-    private FactoryAction factoryAction = FactoryAction.getInstance();
-    private ProductDao productDao = new ProductDaoImpl();
+    private final ProductDao PRODUCT_DAO = new ProductDaoImpl();
     @Override
     public void execute(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException, ParseException, SQLException {
         RequestDispatcher dispatcher;
         HttpSession session = request.getSession();
         User currentUser = (User) session.getAttribute(Constant.USER);
-        List<Product> products = productDao.getAllProduct();
+        List<Product> products = PRODUCT_DAO.getAllProduct();
         if(currentUser!=null && !currentUser.isAdmin())  products.removeIf(pr -> !pr.isActive());
         request.setAttribute(Constant.PRODUCTS, products);
         dispatcher = request.getRequestDispatcher(ConstantPageNamesJSPAndAction.HOME_JSP);

@@ -6,7 +6,6 @@ import com.company.boardgamesshop.util.constants.Constant;
 import com.company.boardgamesshop.util.constants.ConstantPageNamesJSPAndAction;
 import com.company.boardgamesshop.validator.Validator;
 import com.company.boardgamesshop.database.dao.impl.UserDaoImpl;
-import com.company.boardgamesshop.action.factory.FactoryAction;
 import org.apache.commons.codec.digest.DigestUtils;
 import javax.servlet.RequestDispatcher;
 import javax.servlet.ServletException;
@@ -17,8 +16,7 @@ import java.io.IOException;
 import java.sql.SQLException;
 import java.text.ParseException;
 public class LoginAction implements Action {
-    private FactoryAction factoryAction = FactoryAction.getInstance();
-    private UserDao userDao = new UserDaoImpl();
+    private final UserDao USER_DAO = new UserDaoImpl();
     @Override
     public void execute(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException, ParseException, SQLException {
         RequestDispatcher dispatcher;
@@ -29,7 +27,7 @@ public class LoginAction implements Action {
        if(u==null) {
            if (login != null && password != null) {
                String securedPassword = DigestUtils.md5Hex(password);
-               User user = userDao.getUserByLoginPassword(login, securedPassword);
+               User user = USER_DAO.getUserByLoginPassword(login, securedPassword);
                if (user != null) {
                    if (Validator.checkAccess(user)) {
                        session.setAttribute(Constant.USER, user);

@@ -5,7 +5,6 @@ import com.company.boardgamesshop.database.dao.interfaces.*;
 import com.company.boardgamesshop.entity.*;
 import com.company.boardgamesshop.util.constants.Constant;
 import com.company.boardgamesshop.util.constants.ConstantPageNamesJSPAndAction;
-import javax.servlet.RequestDispatcher;
 import javax.servlet.ServletException;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
@@ -15,7 +14,6 @@ import java.sql.SQLException;
 import java.sql.Timestamp;
 import java.text.ParseException;
 import java.time.LocalDateTime;
-import java.util.ArrayList;
 import java.util.List;
 public class CreateOrderFromMyBasketAction implements Action {
     BasketDao basketDao = new BasketDaoImpl();
@@ -25,7 +23,6 @@ public class CreateOrderFromMyBasketAction implements Action {
     OrderDetailDao orderItemDao = new OrderDetailDaoImpl();
     @Override
     public void execute(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException, ParseException, SQLException {
-        RequestDispatcher dispatcher;
         HttpSession session = request.getSession();
         long userId = ((User)session.getAttribute(Constant.USER)).getId();
         Status status = new Status();
@@ -51,7 +48,6 @@ public class CreateOrderFromMyBasketAction implements Action {
         orderDao.createOrder(order);
         Long orderId=orderDao.takeLastID();
         if(orderId==null||orderId==0) orderId= 1L;
-        List<Product> products_in_cart = new ArrayList<>();
         for(long productId : productIdsInCart) {
             OrderDetail orderDetail = new OrderDetail();
             Product product = productDao.getProductById(productId);
@@ -59,7 +55,6 @@ public class CreateOrderFromMyBasketAction implements Action {
             product.setCount(product.getCount() - count);
             productDao.updateProduct(product);
             product.setCount(count);
-            products_in_cart.add(product);
             orderDetail.setProductId(product.getId());
             orderDetail.setCost(product.getCost());
             orderDetail.setCount(product.getCount());

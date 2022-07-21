@@ -16,7 +16,6 @@ public class Constant {
     public static final String USERS = "users";
     public static final String ERROR = "error";
     public static final String LOGIN = "login";
-    public static final String ALL_USER = "allUsers";
     public static final String IS_ACTIVE="isActive";
     public static final String LANGUAGE = "language";
     public static final String ORDER_ID = "orderId";

@@ -16,7 +16,7 @@ import java.sql.SQLException;
 import java.text.ParseException;
 import static com.company.boardgamesshop.validator.Validator.*;
 public class RegistrationAction implements Action {
-    private UserDao userDao = new UserDaoImpl();
+    private final UserDao USER_DAO = new UserDaoImpl();
     @Override
     public void execute(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException, ParseException, SQLException {
         HttpSession session = request.getSession();
@@ -25,7 +25,7 @@ public class RegistrationAction implements Action {
         if(u==null) {
             if (request.getParameter(Constant.EMAIL) != null) {
                 String email = request.getParameter(Constant.EMAIL);
-                if (userDao.isEmailExist(email)) {
+                if (USER_DAO.isEmailExist(email)) {
                     request.setAttribute(Constant.ERROR, Constant.ERROR_EMAIL_EXIST);
                     dispatcher = request.getRequestDispatcher(ConstantPageNamesJSPAndAction.REGISTRATION_JSP);
                     dispatcher.forward(request, response);
@@ -49,8 +49,8 @@ public class RegistrationAction implements Action {
                     newUser.setPassword(securedPassword);
                     newUser.setIsAdmin(false);
                     newUser.setBanned(false);
-                    userDao.addUser(newUser);
-                    newUser.setId(userDao.getUserByLoginPassword(newUser.getEmail(), newUser.getPassword()).getId());
+                    USER_DAO.addUser(newUser);
+                    newUser.setId(USER_DAO.getUserByLoginPassword(newUser.getEmail(), newUser.getPassword()).getId());
                     session.setAttribute(Constant.USER, newUser);
                     session.setAttribute(Constant.ADMIN, newUser.isAdmin());
                     response.sendRedirect(ConstantPageNamesJSPAndAction.HOME_SERVICE);
