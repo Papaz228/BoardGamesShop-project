@@ -58,7 +58,7 @@ public class UpdateProductAction implements Action {
             }
         }
         else{
-            response.sendRedirect("/login");
+            response.sendRedirect(ConstantPageNamesJSPAndAction.LOGIN_SERVICE);
         }
     }
 }

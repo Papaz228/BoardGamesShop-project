@@ -17,10 +17,10 @@ public class BoardGamesShopController extends HttpServlet {
     protected void doGet(HttpServletRequest request, HttpServletResponse response){
         String path = request.getServletPath();
         FactoryAction factoryAction = FactoryAction.getInstance();
-        Action action = factoryAction.getService(path);
         try {
+            Action action = factoryAction.getService(path);
             action.execute(request, response);
-        } catch (ParseException | SQLException | ServletException | IOException e) {
+        } catch (ParseException | SQLException | ServletException | IOException  | NullPointerException | ClassCastException e) {
             LOGGER.error(e);
         }
     }
