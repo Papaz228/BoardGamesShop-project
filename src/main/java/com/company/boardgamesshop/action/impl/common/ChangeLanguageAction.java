@@ -1,5 +1,5 @@
-package com.company.boardgamesshop.action.common;
-import com.company.boardgamesshop.action.factory.Action;
+package com.company.boardgamesshop.action.impl.common;
+import com.company.boardgamesshop.action.Action;
 import com.company.boardgamesshop.util.constants.Constant;
 import com.company.boardgamesshop.util.constants.ConstantPageNamesJSPAndAction;
 import javax.servlet.http.HttpSession;

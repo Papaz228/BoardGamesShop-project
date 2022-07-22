@@ -1,5 +1,5 @@
-package com.company.boardgamesshop.action.common;
-import com.company.boardgamesshop.action.factory.Action;
+package com.company.boardgamesshop.action.impl.common;
+import com.company.boardgamesshop.action.Action;
 import com.company.boardgamesshop.database.dao.interfaces.UserDao;
 import com.company.boardgamesshop.entity.User;
 import com.company.boardgamesshop.util.constants.Constant;
@@ -23,11 +23,7 @@ public class LoginAction implements Action {
         HttpSession session = request.getSession();
         String login = request.getParameter(Constant.EMAIL);
         String password = request.getParameter(Constant.PASSWORD);
-        User currentUser=(User) session.getAttribute(Constant.USER);
-       if(currentUser!=null){
-           response.sendRedirect(ConstantPageNamesJSPAndAction.LOGIN_SERVICE);
-       }
-       else if(login == null || password == null){
+       if(login == null || password == null){
            dispatcher = request.getRequestDispatcher(ConstantPageNamesJSPAndAction.LOGIN_JSP);
            dispatcher.forward(request, response);
        }

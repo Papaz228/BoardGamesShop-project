@@ -1,5 +1,5 @@
-package com.company.boardgamesshop.action.admin;
-import com.company.boardgamesshop.action.factory.Action;
+package com.company.boardgamesshop.action.impl.admin;
+import com.company.boardgamesshop.action.Action;
 import com.company.boardgamesshop.database.dao.interfaces.ProductDao;
 import com.company.boardgamesshop.entity.Basket;
 import com.company.boardgamesshop.entity.User;

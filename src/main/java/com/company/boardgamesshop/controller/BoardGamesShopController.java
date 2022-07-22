@@ -1,6 +1,6 @@
 package com.company.boardgamesshop.controller;
-import com.company.boardgamesshop.action.factory.Action;
-import com.company.boardgamesshop.action.factory.FactoryAction;
+import com.company.boardgamesshop.action.Action;
+import com.company.boardgamesshop.action.impl.factory.FactoryAction;
 import javax.servlet.ServletException;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;

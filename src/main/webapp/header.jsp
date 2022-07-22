@@ -58,12 +58,7 @@
                         <div class="login-sr">
                             <div class="login-signup">
                                 <ul>
-
-
-                                    <c:if test="${sessionScope.user == null}">
-                                    <li>
                                         <li><a href="login"><fmt:message key="button.login"/></a></li>
-                                    </c:if>
                                     <c:if test="${sessionScope.user != null}">
                                         <li><a href="myProfile"><fmt:message key="label.profile"/> </a> </li>
                                         <li><a href="logout"><fmt:message key="button.logout"/></a></li>

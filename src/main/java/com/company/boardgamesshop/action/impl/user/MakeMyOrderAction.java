@@ -1,5 +1,5 @@
-package com.company.boardgamesshop.action.user;
-import com.company.boardgamesshop.action.factory.Action;
+package com.company.boardgamesshop.action.impl.user;
+import com.company.boardgamesshop.action.Action;
 import com.company.boardgamesshop.database.dao.interfaces.ProductDao;
 import com.company.boardgamesshop.entity.Product;
 import com.company.boardgamesshop.entity.User;
@@ -25,20 +25,26 @@ public class MakeMyOrderAction implements Action {
     public void execute(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException, ParseException, SQLException {
         RequestDispatcher dispatcher;
         HttpSession session = request.getSession();
-        long userId = ((User)session.getAttribute(Constant.USER)).getId();
-        List<Long> productIdsInCart = basketDao.getProductsIdInBasket(userId);
-        long totalPrice = 0;
-        List<Product> products_in_cart = new ArrayList<>();
-        for(long productId: productIdsInCart){
-            Product product = productDao.getProductById(productId);
-            Integer count=basketDao.countOfBasketByUserIdAndProductId(userId,product.getId());
-            product.setCount(count);
-            products_in_cart.add(product);
-            totalPrice += (long) product.getCost()*product.getCount();
+        User currentUser = (User) session.getAttribute(Constant.USER);
+        if(currentUser!=null) {
+            long userId = currentUser.getId();
+            List<Long> productIdsInCart = basketDao.getProductsIdInBasket(userId);
+            long totalPrice = 0;
+            List<Product> products_in_cart = new ArrayList<>();
+            for (long productId : productIdsInCart) {
+                Product product = productDao.getProductById(productId);
+                Integer count = basketDao.countOfBasketByUserIdAndProductId(userId, product.getId());
+                product.setCount(count);
+                products_in_cart.add(product);
+                totalPrice += (long) product.getCost() * product.getCount();
+            }
+            request.setAttribute(Constant.PRODUCT_IDS_IN_CART, products_in_cart);
+            request.setAttribute(Constant.TOTAL_PRICE, totalPrice);
+            dispatcher = request.getRequestDispatcher(ConstantPageNamesJSPAndAction.ORDER_JSP);
+            dispatcher.forward(request, response);
         }
-        request.setAttribute(Constant.PRODUCT_IDS_IN_CART,products_in_cart);
-        request.setAttribute(Constant.TOTAL_PRICE, totalPrice);
-        dispatcher = request.getRequestDispatcher(ConstantPageNamesJSPAndAction.ORDER_JSP);
-        dispatcher.forward(request, response);
+        else{
+            response.sendRedirect(ConstantPageNamesJSPAndAction.LOGIN_SERVICE);
+        }
     }
 }

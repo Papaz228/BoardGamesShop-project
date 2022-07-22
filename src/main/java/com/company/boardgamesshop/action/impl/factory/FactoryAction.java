@@ -1,7 +1,8 @@
-package com.company.boardgamesshop.action.factory;
-import com.company.boardgamesshop.action.admin.*;
-import com.company.boardgamesshop.action.common.*;
-import com.company.boardgamesshop.action.user.*;
+package com.company.boardgamesshop.action.impl.factory;
+import com.company.boardgamesshop.action.Action;
+import com.company.boardgamesshop.action.impl.admin.*;
+import com.company.boardgamesshop.action.impl.common.*;
+import com.company.boardgamesshop.action.impl.user.*;
 import java.util.HashMap;
 import java.util.Map;
 public class FactoryAction {

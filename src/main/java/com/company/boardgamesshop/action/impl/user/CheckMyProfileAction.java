@@ -1,10 +1,10 @@
-package com.company.boardgamesshop.action.user;
+package com.company.boardgamesshop.action.impl.user;
 import com.company.boardgamesshop.util.constants.Constant;
 import com.company.boardgamesshop.util.constants.ConstantPageNamesJSPAndAction;
 import com.company.boardgamesshop.database.dao.impl.UserDaoImpl;
 import com.company.boardgamesshop.database.dao.interfaces.UserDao;
 import com.company.boardgamesshop.entity.User;
-import com.company.boardgamesshop.action.factory.Action;
+import com.company.boardgamesshop.action.Action;
 import org.apache.commons.codec.digest.DigestUtils;
 import javax.servlet.RequestDispatcher;
 import javax.servlet.ServletException;
@@ -44,8 +44,7 @@ public class CheckMyProfileAction implements Action {
             }
         }
         else {
-            dispatcher = request.getRequestDispatcher(Constant.LOGIN);
-            dispatcher.forward(request, response);
+            response.sendRedirect(ConstantPageNamesJSPAndAction.LOGIN_SERVICE);
         }
     }
 }

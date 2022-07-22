@@ -1,4 +1,4 @@
-package com.company.boardgamesshop.action.factory;
+package com.company.boardgamesshop.action;
 import javax.servlet.ServletException;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
