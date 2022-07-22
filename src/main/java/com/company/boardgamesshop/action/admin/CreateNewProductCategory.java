@@ -44,7 +44,7 @@ public class CreateNewProductCategory implements Action {
                     productCategoryDao.createAll(productCategories);
                     response.sendRedirect(ConstantPageNamesJSPAndAction.CREATE_PRODUCT_ACTION);
                 } else {
-                    languages = languageDao.getAllLocal();
+                    languages = languageDao.getAllLanguages();
                     request.setAttribute("locals", languages);
                     dispatcher = request.getRequestDispatcher(ConstantPageNamesJSPAndAction.CREATE_NEW_CATEGORY_JSP);
                     dispatcher.forward(request, response);

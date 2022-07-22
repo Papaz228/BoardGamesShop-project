@@ -5,7 +5,7 @@ public interface BasketDao {
     void addProductToBasket(Basket cart);
     List<Long> getProductsIdInBasket(Long userId);
     void deleteProductInBasket(Long productId, Long userId);
-    List<Basket> getAllFromBasket(long productId);
+    List<Basket> getAllFromBasket(Long productId);
     void deleteProductFromBasketByUserId(Long userId);
-    Integer countOfBasketByUserId(Long userId, Long productId);
+    Integer countOfBasketByUserIdAndProductId(Long userId, Long productId);
 }

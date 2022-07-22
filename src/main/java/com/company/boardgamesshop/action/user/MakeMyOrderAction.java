@@ -31,7 +31,7 @@ public class MakeMyOrderAction implements Action {
         List<Product> products_in_cart = new ArrayList<>();
         for(long productId: productIdsInCart){
             Product product = productDao.getProductById(productId);
-            Integer count=basketDao.countOfBasketByUserId(userId,product.getId());
+            Integer count=basketDao.countOfBasketByUserIdAndProductId(userId,product.getId());
             product.setCount(count);
             products_in_cart.add(product);
             totalPrice += (long) product.getCost()*product.getCount();

@@ -51,7 +51,7 @@ public class CreateOrderFromMyBasketAction implements Action {
         for(long productId : productIdsInCart) {
             OrderDetail orderDetail = new OrderDetail();
             Product product = productDao.getProductById(productId);
-            Integer count = basketDao.countOfBasketByUserId(userId, product.getId());
+            Integer count = basketDao.countOfBasketByUserIdAndProductId(userId, product.getId());
             product.setCount(product.getCount() - count);
             productDao.updateProduct(product);
             product.setCount(count);

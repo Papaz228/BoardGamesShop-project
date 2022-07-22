@@ -18,6 +18,7 @@ public class BasketDaoImpl implements BasketDao {
     private static final String GET_ALL_FROM_CART = "SELECT * FROM \"BoardGames\".\"Basket\" WHERE product_id = ?";
     private static final String DELETE_PRODUCTS_FROM_CART_BY_USER = "DELETE FROM \"BoardGames\".\"Basket\" WHERE user_id=?";
     private static final String GET_COUNT_FROM_BASKET_BY_USER_ID="SELECT count FROM \"BoardGames\".\"Basket\" WHERE user_id=? AND product_id=?";
+    @Override
     public void addProductToBasket(Basket basket) {
         ConnectionPool connectionPool = ConnectionPool.getConnPool();
         Connection con = connectionPool.getConn();
@@ -33,6 +34,7 @@ public class BasketDaoImpl implements BasketDao {
         finally {
             connectionPool.freeConn(con);
         }}
+    @Override
     public List<Long> getProductsIdInBasket(Long userId) {
         ConnectionPool connectionPool = ConnectionPool.getConnPool();
         Connection con=connectionPool.getConn();
@@ -53,7 +55,8 @@ public class BasketDaoImpl implements BasketDao {
         }
         return productsIds;
     }
-    public Integer countOfBasketByUserId(Long userId,Long productId){
+    @Override
+    public Integer countOfBasketByUserIdAndProductId(Long userId,Long productId){
         ConnectionPool connectionPool = ConnectionPool.getConnPool();
         Connection con=connectionPool.getConn();
         int count=0;
@@ -72,6 +75,7 @@ public class BasketDaoImpl implements BasketDao {
         }
         return count;
     }
+    @Override
     public void deleteProductInBasket(Long productId, Long userId) {
         ConnectionPool connectionPool = ConnectionPool.getConnPool();
         Connection con=connectionPool.getConn();
@@ -85,7 +89,8 @@ public class BasketDaoImpl implements BasketDao {
                 connectionPool.freeConn(con);
             }
         }
-    public List<Basket> getAllFromBasket(long productId) {
+    @Override
+    public List<Basket> getAllFromBasket(Long productId) {
         List<Basket> baskets =new ArrayList<>();
         ConnectionPool connectionPool=ConnectionPool.getConnPool();
         Connection con=connectionPool.getConn();

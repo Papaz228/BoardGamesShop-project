@@ -21,7 +21,7 @@ public class OrderDaoImpl implements OrderDao {
             "VALUES(?, ?, ?, ?);\n";
     private static final String UPDATE_STATUS_ORDER = "UPDATE \"BoardGames\".\"Order\" SET  status_id = ? WHERE id = ?";
     private static final String SELECT_ORDERS_BY_USER_ID = "SELECT \"BoardGames\".\"Order\".id,\"BoardGames\".\"Order\".user_id,\"BoardGames\".\"Order\".status_id, \"BoardGames\".\"Order\".date_start, \"BoardGames\".\"Order\".total_cost, \"BoardGames\".\"Status\".name FROM \"BoardGames\".\"Order\" INNER JOIN \"BoardGames\".\"Status\" ON \"BoardGames\".\"Order\".status_id=\"BoardGames\".\"Status\".id WHERE \"BoardGames\".\"Order\".user_id= ?;";
-    private static final String SELECT_USERS_ORDERS="SELECT \"BoardGames\".\"Order\".id,\"BoardGames\".\"Order\".user_id,\"BoardGames\".\"Order\".status_id, \"BoardGames\".\"Order\".date_start, \"BoardGames\".\"Order\".total_cost, \"BoardGames\".\"Status\".name, \"BoardGames\".\"User\".email,\"BoardGames\".\"Status\".local_id FROM \"BoardGames\".\"Order\" INNER JOIN \"BoardGames\".\"Status\" ON \"BoardGames\".\"Order\".status_id=\"BoardGames\".\"Status\".id INNER JOIN \"BoardGames\".\"User\" ON \"BoardGames\".\"Order\".user_id=\"BoardGames\".\"User\".id";
+    private static final String SELECT_USER_ORDER_STATUS="SELECT \"BoardGames\".\"Order\".id,\"BoardGames\".\"Order\".user_id,\"BoardGames\".\"Order\".status_id, \"BoardGames\".\"Order\".date_start, \"BoardGames\".\"Order\".total_cost, \"BoardGames\".\"Status\".name, \"BoardGames\".\"User\".email,\"BoardGames\".\"Status\".local_id FROM \"BoardGames\".\"Order\" INNER JOIN \"BoardGames\".\"Status\" ON \"BoardGames\".\"Order\".status_id=\"BoardGames\".\"Status\".id INNER JOIN \"BoardGames\".\"User\" ON \"BoardGames\".\"Order\".user_id=\"BoardGames\".\"User\".id";
     @Override
     public void createOrder(Order order) {
         ConnectionPool connectionPool = ConnectionPool.getConnPool();
@@ -55,11 +55,11 @@ public class OrderDaoImpl implements OrderDao {
         return lastId;
     }
     @Override
-    public ArrayList<ArrayList<String>> getFrom4Tables() {
+    public ArrayList<ArrayList<String>> getFromOrdersAndUsersAndStatus() {
         ArrayList<ArrayList<String>> orders =new ArrayList<>();
         ConnectionPool connectionPool = ConnectionPool.getConnPool();
         Connection con = connectionPool.getConn();
-        try(PreparedStatement preparedStatement = con.prepareStatement( SELECT_USERS_ORDERS)){
+        try(PreparedStatement preparedStatement = con.prepareStatement(SELECT_USER_ORDER_STATUS)){
             ResultSet rs = preparedStatement.executeQuery();
             while (rs.next()) {
                 ArrayList<String> order =new ArrayList<>();

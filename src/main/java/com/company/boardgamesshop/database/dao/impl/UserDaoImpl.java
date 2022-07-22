@@ -20,6 +20,7 @@ public class UserDaoImpl implements UserDao {
     private static final String GET_ALL_USERS = "SELECT * FROM \"BoardGames\".\"User\" WHERE is_admin = false";
     private static final String UPDATE_USER_ACTIVITY = "UPDATE \"BoardGames\".\"User\" SET  is_banned = ? WHERE id = ?";
     private static final String CHECK_LOGIN = "SELECT * FROM \"BoardGames\".\"User\" WHERE email = ?";
+    @Override
     public void addUser(User user) {
         ConnectionPool connectionPool=ConnectionPool.getConnPool();
         Connection con=connectionPool.getConn();
@@ -40,6 +41,7 @@ public class UserDaoImpl implements UserDao {
             connectionPool.freeConn(con);
         }
     }
+    @Override
     public User getUserByLoginPassword(String login, String password) {
         ConnectionPool connectionPool=ConnectionPool.getConnPool();
         Connection con=connectionPool.getConn();
@@ -68,6 +70,7 @@ public class UserDaoImpl implements UserDao {
         }
         return user;
     }
+    @Override
     public boolean isEmailExist(String email) {
         boolean isExist = false;
         ConnectionPool connectionPool=ConnectionPool.getConnPool();
@@ -86,6 +89,7 @@ public class UserDaoImpl implements UserDao {
         }
         return isExist;
     }
+    @Override
     public List<User> getUsers() {
         List<User> users = new ArrayList<>();
         ConnectionPool connectionPool=ConnectionPool.getConnPool();
@@ -111,6 +115,7 @@ public class UserDaoImpl implements UserDao {
         }
         return users;
     }
+    @Override
     public void bannedUser(Long userId,boolean isBanned) {
         ConnectionPool connectionPool=ConnectionPool.getConnPool();
         Connection con=connectionPool.getConn();
@@ -125,6 +130,7 @@ public class UserDaoImpl implements UserDao {
             connectionPool.freeConn(con);
         }
     }
+    @Override
     public void changePassword(Long userId, String newPassword){
         ConnectionPool connectionPool=ConnectionPool.getConnPool();
         Connection con=connectionPool.getConn();

@@ -22,7 +22,7 @@ public class ListOfOrdersForAdminAction implements Action {
         RequestDispatcher dispatcher;
         User currentUser = (User)session.getAttribute(Constant.USER);
         if(currentUser.isAdmin()){
-            ArrayList<ArrayList<String>> orders = orderDao.getFrom4Tables();
+            ArrayList<ArrayList<String>> orders = orderDao.getFromOrdersAndUsersAndStatus();
             request.setAttribute(Constant.ORDERS, orders);
             dispatcher = request.getRequestDispatcher(ConstantPageNamesJSPAndAction.ORDERS_ADMIN_JSP);
             dispatcher.forward(request, response);

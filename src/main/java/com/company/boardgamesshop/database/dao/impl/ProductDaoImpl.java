@@ -21,6 +21,7 @@ public class ProductDaoImpl implements ProductDao {
             "SET \"name\"=?, description=?, \"cost\"=?, count=?, country_id=?, product_category_id=?, is_active=true, photo_url=?\n" +
             "WHERE id=?";
     private static final String DELETE_PRODUCT = "UPDATE \"BoardGames\".\"Product\" SET is_active= ? WHERE id = ? ";
+    @Override
     public Product getProductById(Long id) {
         Product product = null;
         ConnectionPool connectionPool=ConnectionPool.getConnPool();
@@ -48,6 +49,7 @@ public class ProductDaoImpl implements ProductDao {
         }
         return product;
     }
+    @Override
     public List<Product> getAllProduct() {
         List<Product> products =new ArrayList<>();
         Product product;
@@ -76,6 +78,7 @@ public class ProductDaoImpl implements ProductDao {
         }
         return products;
     }
+    @Override
     public void updateProduct(Product product) {
         ConnectionPool connectionPool=ConnectionPool.getConnPool();
         Connection con=connectionPool.getConn();
@@ -97,6 +100,7 @@ public class ProductDaoImpl implements ProductDao {
             connectionPool.freeConn(con);
         }
     }
+    @Override
     public void createProduct(Product product) {
         ConnectionPool connectionPool=ConnectionPool.getConnPool();
         Connection con=connectionPool.getConn();
@@ -116,6 +120,7 @@ public class ProductDaoImpl implements ProductDao {
             connectionPool.freeConn(con);
         }
     }
+    @Override
     public void deactivateProduct(Long productId, boolean isActive) {
     ConnectionPool connectionPool=ConnectionPool.getConnPool();
     Connection con=connectionPool.getConn();
