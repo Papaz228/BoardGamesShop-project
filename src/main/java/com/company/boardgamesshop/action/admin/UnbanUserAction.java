@@ -20,7 +20,7 @@ public class UnbanUserAction implements Action {
         User currentUser = (User)session.getAttribute(Constant.USER);
         if(currentUser.isAdmin()) {
             long userId = Long.parseLong(request.getParameter(Constant.USER_ID));
-            userDao.BannedUser(userId, false);
+            userDao.bannedUser(userId, false);
             response.sendRedirect(ConstantPageNamesJSPAndAction.ALL_USERS_SERVICE);
         }
         else{

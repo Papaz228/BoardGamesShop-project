@@ -168,9 +168,9 @@
                 <fmt:message key="label.orders.orderStatus"/>
 
 
-        <c:forEach items="${locals}" var="local">
+        <c:forEach items="${languages}" var="language">
 
-            <input name="category_name" type="text"  required autofocus>  ${local.getShortName()}
+            <input name="category_name" type="text"  required autofocus>  ${language.getShortName()}
 
         </c:forEach>
 

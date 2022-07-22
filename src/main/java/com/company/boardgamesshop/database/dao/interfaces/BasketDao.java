@@ -1,13 +1,11 @@
 package com.company.boardgamesshop.database.dao.interfaces;
 import com.company.boardgamesshop.entity.Basket;
-import java.io.IOException;
-import java.sql.SQLException;
 import java.util.List;
 public interface BasketDao {
-    void addProductToBasket(Basket cart)throws SQLException, IOException;
-    List<Long> getProductsIdInBasket(Long userId) throws SQLException, IOException;
-    void deleteProductInBasket(Long productId, Long userId) throws SQLException, IOException;
-    List<Basket> getAllFromBasket(long productId) throws SQLException, IOException;
-    void deleteProductFromBasketByUserId(Long userId)throws SQLException, IOException;
-    Integer countOfBasketByUserId(Long userId, Long productId) throws SQLException, IOException;
+    void addProductToBasket(Basket cart);
+    List<Long> getProductsIdInBasket(Long userId);
+    void deleteProductInBasket(Long productId, Long userId);
+    List<Basket> getAllFromBasket(long productId);
+    void deleteProductFromBasketByUserId(Long userId);
+    Integer countOfBasketByUserId(Long userId, Long productId);
 }

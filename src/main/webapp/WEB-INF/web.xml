@@ -34,7 +34,7 @@
   </servlet-mapping>
   <filter>
     <filter-name>FilterBoardGames</filter-name>
-    <filter-class>com.company.boardgamesshop.filter.FilterBoardGames</filter-class>
+    <filter-class>com.company.boardgamesshop.filter.FilterTimeZone</filter-class>
     <init-param>
       <param-name>timeZone</param-name>
       <param-value>UTC</param-value>

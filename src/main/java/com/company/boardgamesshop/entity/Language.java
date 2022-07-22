@@ -1,6 +1,6 @@
 package com.company.boardgamesshop.entity;
 
-public class Local {
+public class Language {
     private Long id;
     private String shortName;
     private String name;
@@ -24,7 +24,7 @@ public class Local {
     }
     @Override
     public String toString() {
-        return "Local{" +
+        return "Language{" +
                 "id=" + id +
                 ", shortName='" + shortName + '\'' +
                 ", name='" + name + '\'' +

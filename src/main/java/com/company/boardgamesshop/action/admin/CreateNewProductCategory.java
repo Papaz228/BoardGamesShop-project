@@ -1,10 +1,10 @@
 package com.company.boardgamesshop.action.admin;
 import com.company.boardgamesshop.action.factory.Action;
-import com.company.boardgamesshop.database.dao.impl.LocalDaoImpl;
+import com.company.boardgamesshop.database.dao.impl.LanguageDaoImpl;
 import com.company.boardgamesshop.database.dao.impl.ProductCategoryDaoImpl;
-import com.company.boardgamesshop.database.dao.interfaces.LocalDao;
+import com.company.boardgamesshop.database.dao.interfaces.LanguageDao;
 import com.company.boardgamesshop.database.dao.interfaces.ProductCategoryDao;
-import com.company.boardgamesshop.entity.Local;
+import com.company.boardgamesshop.entity.Language;
 import com.company.boardgamesshop.entity.ProductCategory;
 import com.company.boardgamesshop.entity.User;
 import com.company.boardgamesshop.util.constants.Constant;
@@ -22,8 +22,8 @@ import java.util.Arrays;
 import java.util.List;
 public class CreateNewProductCategory implements Action {
         ProductCategoryDao productCategoryDao=new ProductCategoryDaoImpl();
-        LocalDao localDao=new LocalDaoImpl();
-        List<Local> locals = null;
+        LanguageDao languageDao =new LanguageDaoImpl();
+        List<Language> languages = null;
         @Override
         public void execute(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException, ParseException, SQLException {
             RequestDispatcher dispatcher;
@@ -38,14 +38,14 @@ public class CreateNewProductCategory implements Action {
                     for (int i=0;i<categoryNames.size();i++){
                         productCategory = new ProductCategory();
                         productCategory.setCategoryName(categoryNames.get(i));
-                        productCategory.setLocalId(locals.get(i).getId());
+                        productCategory.setLocalId(languages.get(i).getId());
                         productCategories.add(productCategory);
                     }
                     productCategoryDao.createAll(productCategories);
                     response.sendRedirect(ConstantPageNamesJSPAndAction.CREATE_PRODUCT_ACTION);
                 } else {
-                    locals =localDao.getAllLocal();
-                    request.setAttribute("locals",locals);
+                    languages = languageDao.getAllLocal();
+                    request.setAttribute("locals", languages);
                     dispatcher = request.getRequestDispatcher(ConstantPageNamesJSPAndAction.CREATE_NEW_CATEGORY_JSP);
                     dispatcher.forward(request, response);
                 }

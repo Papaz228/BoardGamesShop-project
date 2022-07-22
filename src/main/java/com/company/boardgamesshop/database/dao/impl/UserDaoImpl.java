@@ -111,7 +111,7 @@ public class UserDaoImpl implements UserDao {
         }
         return users;
     }
-    public void BannedUser(Long userId,boolean isBanned) {
+    public void bannedUser(Long userId,boolean isBanned) {
         ConnectionPool connectionPool=ConnectionPool.getConnPool();
         Connection con=connectionPool.getConn();
         try( PreparedStatement preparedStatement = con.prepareStatement(UPDATE_USER_ACTIVITY)){

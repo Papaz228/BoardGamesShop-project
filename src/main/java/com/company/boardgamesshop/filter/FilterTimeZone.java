@@ -2,7 +2,7 @@ package com.company.boardgamesshop.filter;
 import javax.servlet.*;
 import java.io.IOException;
 import java.util.TimeZone;
-public class FilterBoardGames implements Filter {
+public class FilterTimeZone implements Filter {
     private String timeZone;
     private static final String TIME_ZONE = "timeZone";
     private static final String TIME_ZONE_ENCODE = "UTC";
