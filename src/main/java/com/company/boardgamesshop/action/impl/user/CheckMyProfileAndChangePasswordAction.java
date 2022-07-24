@@ -15,7 +15,7 @@ import java.io.IOException;
 import java.sql.SQLException;
 import java.text.ParseException;
 import static com.company.boardgamesshop.validator.Validator.*;
-public class CheckMyProfileAction implements Action {
+public class CheckMyProfileAndChangePasswordAction implements Action {
     UserDao userDao=new UserDaoImpl();
     @Override
     public void execute(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException, ParseException, SQLException {
@@ -25,7 +25,6 @@ public class CheckMyProfileAction implements Action {
         String password = request.getParameter(Constant.PASSWORD);
         if(currentUser!=null) {
             if (password != null) {
-                System.out.println(password);
                 if (!validatePasswordWithRegex(request.getParameter(Constant.PASSWORD))) {
                     String newPassword = request.getParameter(Constant.PASSWORD);
                     String securedPassword = DigestUtils.md5Hex(newPassword);

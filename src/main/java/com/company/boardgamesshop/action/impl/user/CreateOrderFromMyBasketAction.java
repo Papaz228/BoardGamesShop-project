@@ -25,7 +25,9 @@ public class CreateOrderFromMyBasketAction implements Action {
     public void execute(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException, ParseException, SQLException {
         HttpSession session = request.getSession();
         User currentUser = (User) session.getAttribute(Constant.USER);
-        if (currentUser != null) {
+        if (currentUser == null) {
+            response.sendRedirect(ConstantPageNamesJSPAndAction.LOGIN_SERVICE);
+        }
             Long userId = currentUser.getId();
             Status status = new Status();
             Long localId = (Long) session.getAttribute("localId");
@@ -64,10 +66,5 @@ public class CreateOrderFromMyBasketAction implements Action {
             }
             basketDao.deleteProductFromBasketByUserId(userId);
             response.sendRedirect(ConstantPageNamesJSPAndAction.HOME_SERVICE);
-        }
-        else{
-            response.sendRedirect(ConstantPageNamesJSPAndAction.LOGIN_SERVICE);
-        }
     }
-
 }

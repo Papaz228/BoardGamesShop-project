@@ -1,152 +1,236 @@
-DROP DATABASE postgres;
+-- DROP SCHEMA "BoardGames";
 
-CREATE DATABASE IF NOT EXISTS postgres;
+CREATE SCHEMA "BoardGames";
 
+-- DROP SEQUENCE "BoardGames".basket_id_seq;
 
-create schema IF NOT EXISTS "BoardGames";
+CREATE SEQUENCE "BoardGames".basket_id_seq
+    INCREMENT BY 1
+    MINVALUE 1
+    MAXVALUE 9223372036854775807
+    START 1
+    CACHE 1
+    NO CYCLE;
+-- DROP SEQUENCE "BoardGames".country_id_seq;
 
+CREATE SEQUENCE "BoardGames".country_id_seq
+    INCREMENT BY 1
+    MINVALUE 1
+    MAXVALUE 9223372036854775807
+    START 1
+    CACHE 1
+    NO CYCLE;
+-- DROP SEQUENCE "BoardGames".local_id_seq;
 
-create sequence status_id_seq;
+CREATE SEQUENCE "BoardGames".local_id_seq
+    INCREMENT BY 1
+    MINVALUE 1
+    MAXVALUE 9223372036854775807
+    START 1
+    CACHE 1
+    NO CYCLE;
+-- DROP SEQUENCE "BoardGames".order_detail_id_seq;
 
-create sequence order_detail_id_seq;
+CREATE SEQUENCE "BoardGames".order_detail_id_seq
+    INCREMENT BY 1
+    MINVALUE 1
+    MAXVALUE 9223372036854775807
+    START 1
+    CACHE 1
+    NO CYCLE;
+-- DROP SEQUENCE "BoardGames".order_id_seq;
 
-create sequence product_id_seq;
+CREATE SEQUENCE "BoardGames".order_id_seq
+    INCREMENT BY 1
+    MINVALUE 1
+    MAXVALUE 2147483647
+    START 1
+    CACHE 1
+    NO CYCLE;
+-- DROP SEQUENCE "BoardGames".product_category_id_seq;
 
-create sequence country_id_seq;
+CREATE SEQUENCE "BoardGames".product_category_id_seq
+    INCREMENT BY 1
+    MINVALUE 1
+    MAXVALUE 9223372036854775807
+    START 1
+    CACHE 1
+    NO CYCLE;
+-- DROP SEQUENCE "BoardGames".product_id_seq;
 
-create sequence product_category_id_seq;
+CREATE SEQUENCE "BoardGames".product_id_seq
+    INCREMENT BY 1
+    MINVALUE 1
+    MAXVALUE 9223372036854775807
+    START 1
+    CACHE 1
+    NO CYCLE;
+-- DROP SEQUENCE "BoardGames".status_id_seq;
 
-create table if not exists "User"
-(
-    id           bigint generated always as identity (maxvalue 2147483647),
-    first_name   varchar not null,
-    last_name    varchar not null,
-    birthday     varchar not null,
-    phone_number varchar not null,
-    email        varchar not null,
-    password     varchar not null,
-    is_admin     boolean not null,
-    is_banned    boolean not null,
-    constraint user_pk
-        primary key (id)
+CREATE SEQUENCE "BoardGames".status_id_seq
+    INCREMENT BY 1
+    MINVALUE 1
+    MAXVALUE 9223372036854775807
+    START 1
+    CACHE 1
+    NO CYCLE;
+-- DROP SEQUENCE "BoardGames".user_id_seq;
+
+CREATE SEQUENCE "BoardGames".user_id_seq
+    INCREMENT BY 1
+    MINVALUE 1
+    MAXVALUE 2147483647
+    START 1
+    CACHE 1
+    NO CYCLE;-- "BoardGames"."Local" definition
+
+-- Drop table
+
+-- DROP TABLE "Local";
+
+CREATE TABLE "Local" (
+                         id int8 NOT NULL GENERATED ALWAYS AS IDENTITY,
+                         short_name varchar NOT NULL,
+                         "name" varchar NOT NULL,
+                         CONSTRAINT local_pk PRIMARY KEY (id)
 );
 
-create table if not exists "Local"
-(
-    id         bigint generated always as identity,
-    short_name varchar not null,
-    name       varchar not null,
-    constraint local_pk
-        primary key (id)
+
+-- "BoardGames"."User" definition
+
+-- Drop table
+
+-- DROP TABLE "User";
+
+CREATE TABLE "User" (
+                        id int8 NOT NULL GENERATED ALWAYS AS IDENTITY,
+                        first_name varchar NOT NULL,
+                        last_name varchar NOT NULL,
+                        birthday varchar NOT NULL,
+                        phone_number varchar NOT NULL,
+                        email varchar NOT NULL,
+                        "password" varchar NOT NULL,
+                        is_admin bool NOT NULL,
+                        is_banned bool NOT NULL,
+                        CONSTRAINT user_pk PRIMARY KEY (id)
 );
 
-create table if not exists "Status"
-(
-    id       bigint generated always as identity,
-    local_id bigint  not null,
-    name     varchar not null,
-    constraint status_pk
-        primary key (id),
-    constraint status_local_id_fk
-        foreign key (local_id) references "Local"
+
+-- "BoardGames"."Country" definition
+
+-- Drop table
+
+-- DROP TABLE "Country";
+
+CREATE TABLE "Country" (
+                           id int8 NOT NULL GENERATED ALWAYS AS IDENTITY,
+                           local_id int8 NOT NULL,
+                           "name" varchar NOT NULL,
+                           CONSTRAINT country_pk PRIMARY KEY (id),
+                           CONSTRAINT country_local_id_fk FOREIGN KEY (local_id) REFERENCES "Local"(id)
 );
 
-alter sequence status_id_seq owned by "Status".id;
 
-create table if not exists "Order"
-(
-    id          bigint generated always as identity,
-    total_cost  integer not null,
-    date_start  date    not null,
-    date_finish date    not null,
-    user_id     bigint  not null,
-    status_id   bigint  not null,
-    constraint order_pk
-        primary key (id),
-    constraint order_un
-        unique (id),
-    constraint "order_fkUser"
-        foreign key (user_id) references "User"
-            on update set default on delete set default,
-    constraint order_fk
-        foreign key (status_id) references "Status"
-            on update set default on delete set default
+-- "BoardGames"."Product_category" definition
+
+-- Drop table
+
+-- DROP TABLE "Product_category";
+
+CREATE TABLE "Product_category" (
+                                    id int8 NOT NULL GENERATED ALWAYS AS IDENTITY,
+                                    local_id int8 NOT NULL,
+                                    category_name varchar NOT NULL,
+                                    CONSTRAINT product_category_pk PRIMARY KEY (id),
+                                    CONSTRAINT product_category_local_id_fk FOREIGN KEY (local_id) REFERENCES "Local"(id)
 );
 
-create table if not exists "Country"
-(
-    id       bigint generated always as identity,
-    local_id bigint  not null,
-    name     varchar not null,
-    constraint country_pk
-        primary key (id),
-    constraint country_local_id_fk
-        foreign key (local_id) references "Local"
+
+-- "BoardGames"."Status" definition
+
+-- Drop table
+
+-- DROP TABLE "Status";
+
+CREATE TABLE "Status" (
+                          id int8 NOT NULL GENERATED ALWAYS AS IDENTITY,
+                          local_id int8 NOT NULL,
+                          "name" varchar NOT NULL,
+                          CONSTRAINT status_pk PRIMARY KEY (id),
+                          CONSTRAINT status_local_id_fk FOREIGN KEY (local_id) REFERENCES "Local"(id)
 );
 
-alter sequence country_id_seq owned by "Country".id;
 
-create table if not exists "Product_category"
-(
-    id            bigint generated always as identity,
-    local_id      bigint  not null,
-    category_name varchar not null,
-    constraint product_category_pk
-        primary key (id),
-    constraint product_category_local_id_fk
-        foreign key (local_id) references "Local"
+-- "BoardGames"."Order" definition
+
+-- Drop table
+
+-- DROP TABLE "Order";
+
+CREATE TABLE "Order" (
+                         id int8 NOT NULL GENERATED ALWAYS AS IDENTITY,
+                         total_cost int4 NOT NULL,
+                         date_start date NOT NULL,
+                         user_id int8 NOT NULL,
+                         status_id int8 NOT NULL,
+                         CONSTRAINT order_pk PRIMARY KEY (id),
+                         CONSTRAINT order_fk FOREIGN KEY (status_id) REFERENCES "Status"(id) ON DELETE SET DEFAULT ON UPDATE SET DEFAULT,
+                         CONSTRAINT "order_fkUser" FOREIGN KEY (user_id) REFERENCES "User"(id) ON DELETE SET DEFAULT ON UPDATE SET DEFAULT
 );
 
-alter sequence product_category_id_seq owned by "Product_category".id;
 
-create table if not exists "Product"
-(
-    id                  bigint generated always as identity,
-    name                varchar not null,
-    description         varchar not null,
-    cost                integer not null,
-    count               integer not null,
-    country_id          bigint  not null,
-    product_category_id bigint  not null,
-    isactive            boolean not null,
-    constraint product_pk
-        primary key (id),
-    constraint product_country_id_fk
-        foreign key (country_id) references "Country",
-    constraint product_product_category_id_fk
-        foreign key (product_category_id) references "Product_category"
-            on update set default on delete set default
+-- "BoardGames"."Product" definition
+
+-- Drop table
+
+-- DROP TABLE "Product";
+
+CREATE TABLE "Product" (
+                           id int8 NOT NULL GENERATED ALWAYS AS IDENTITY,
+                           "name" varchar NOT NULL,
+                           description varchar NOT NULL,
+                           "cost" int4 NOT NULL,
+                           count int4 NOT NULL,
+                           country_id int8 NOT NULL,
+                           product_category_id int8 NOT NULL,
+                           is_active bool NOT NULL,
+                           photo_url varchar NULL,
+                           CONSTRAINT product_pk PRIMARY KEY (id),
+                           CONSTRAINT product_country_id_fk FOREIGN KEY (country_id) REFERENCES "Country"(id),
+                           CONSTRAINT product_product_category_id_fk FOREIGN KEY (product_category_id) REFERENCES "Product_category"(id) ON DELETE SET DEFAULT ON UPDATE SET DEFAULT
 );
 
-alter sequence product_id_seq owned by "Product".id;
 
-create table if not exists "Order_detail"
-(
-    id         bigint generated always as identity,
-    order_id   bigint  not null,
-    product_id bigint  not null,
-    count      integer not null,
-    cost       integer not null,
-    constraint order_detail_pk
-        primary key (id),
-    constraint order_detail_order_id_fk
-        foreign key (order_id) references "Order",
-    constraint order_detail_fk
-        foreign key (product_id) references "Product"
+-- "BoardGames"."Basket" definition
+
+-- Drop table
+
+-- DROP TABLE "Basket";
+
+CREATE TABLE "Basket" (
+                          user_id int8 NOT NULL,
+                          product_id int8 NOT NULL,
+                          count int4 NOT NULL,
+                          id int8 NOT NULL GENERATED ALWAYS AS IDENTITY,
+                          CONSTRAINT basket_pk PRIMARY KEY (id),
+                          CONSTRAINT basket_product_id_fk FOREIGN KEY (product_id) REFERENCES "Product"(id),
+                          CONSTRAINT basket_user_id_fk FOREIGN KEY (user_id) REFERENCES "User"(id)
 );
 
-alter sequence order_detail_id_seq owned by "Order_detail".id;
 
-create table if not exists "Basket"
-(
-    user_id    bigint  not null,
-    product_id bigint  not null,
-    count      integer not null,
-    id         bigint generated always as identity,
-    constraint basket_pk
-        primary key (id),
-    constraint basket_user_id_fk
-        foreign key (user_id) references "User",
-    constraint basket_product_id_fk
-        foreign key (product_id) references "Product"
+-- "BoardGames"."Order_detail" definition
+
+-- Drop table
+
+-- DROP TABLE "Order_detail";
+
+CREATE TABLE "Order_detail" (
+                                id int8 NOT NULL GENERATED ALWAYS AS IDENTITY,
+                                order_id int8 NOT NULL,
+                                product_id int8 NOT NULL,
+                                count int4 NOT NULL,
+                                "cost" int4 NOT NULL,
+                                CONSTRAINT order_detail_pk PRIMARY KEY (id),
+                                CONSTRAINT order_detail_fk FOREIGN KEY (product_id) REFERENCES "Product"(id),
+                                CONSTRAINT order_detail_order_id_fk FOREIGN KEY (order_id) REFERENCES "Order"(id)
 );

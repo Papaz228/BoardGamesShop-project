@@ -83,7 +83,7 @@
                                         <li><div class="form-sh"> <a role="button" class="btn btn-lg" href="createProduct"><fmt:message key="button.createProduct"/></a> </div></li>
                                         <li> <div class="form-sh"> <a class="btn btn-lg" href="allUsers"><fmt:message key="button.manageUsers"/></a> </div></li>
                                         <li> <div class="form-sh"> <a class="btn btn-lg" href="ordersAdmin"><fmt:message key="button.orders"/></a> </div></li>
-                                        <li> <div class="form-sh"> <a class="btn btn-lg" href="createNewProductCategory"><fmt:message key="button.CreateCategory"/></a> </div></li>
+                                        <li> <div class="form-sh"> <a class="btn btn-lg" href="createNewProductCategory"><fmt:message key="button.createProductCategory"/></a> </div></li>
                                     </c:if>
 
 

@@ -29,7 +29,7 @@ public class FactoryAction {
         SERVICE_MAP.put("/changeStatus", new ChangeStatusToOrderAction());
         SERVICE_MAP.put("/changeLanguage", new ChangeLanguageAction());
         SERVICE_MAP.put("/order", new MakeMyOrderAction());
-        SERVICE_MAP.put("/myProfile", new CheckMyProfileAction());
+        SERVICE_MAP.put("/myProfile", new CheckMyProfileAndChangePasswordAction());
         SERVICE_MAP.put("/createNewProductCategory", new CreateNewProductCategory());
     }
     public Action getService(String request) throws ClassCastException, NullPointerException{

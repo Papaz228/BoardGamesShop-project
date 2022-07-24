@@ -21,48 +21,46 @@ public class RegistrationAction implements Action {
     public void execute(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException, ParseException, SQLException {
         HttpSession session = request.getSession();
         RequestDispatcher dispatcher;
-        User u=(User) session.getAttribute(Constant.USER);
-        if(u==null) {
-            if (request.getParameter(Constant.EMAIL) != null) {
-                String email = request.getParameter(Constant.EMAIL);
-                if (USER_DAO.isEmailExist(email)) {
-                    request.setAttribute(Constant.ERROR, Constant.ERROR_EMAIL_EXIST);
-                    dispatcher = request.getRequestDispatcher(ConstantPageNamesJSPAndAction.REGISTRATION_JSP);
-                    dispatcher.forward(request, response);
-                } else if (!validateMailWithRegex(email)) {
-                    request.setAttribute(Constant.ERROR, Constant.ERROR_EMAIL_FORMAT);
-                    dispatcher = request.getRequestDispatcher(ConstantPageNamesJSPAndAction.REGISTRATION_JSP);
-                    dispatcher.forward(request, response);
-                } else if (!validatePasswordWithRegex(request.getParameter(Constant.PASSWORD))) {
-                    request.setAttribute(Constant.ERROR, Constant.ERROR_PASSWORD_FORMAT);
-                    dispatcher = request.getRequestDispatcher(ConstantPageNamesJSPAndAction.REGISTRATION_JSP);
-                    dispatcher.forward(request, response);
-                } else {
-                    User newUser = new User();
-                    newUser.setFirstName(request.getParameter("first_name"));
-                    newUser.setLastName(request.getParameter("last_name"));
-                    newUser.setBirthday(request.getParameter("birthday"));
-                    newUser.setPhoneNumber(request.getParameter("phone_number"));
-                    newUser.setEmail(request.getParameter("email"));
-                    String password = request.getParameter(Constant.PASSWORD);
-                    String securedPassword = DigestUtils.md5Hex(password);
-                    newUser.setPassword(securedPassword);
-                    newUser.setIsAdmin(false);
-                    newUser.setBanned(false);
-                    USER_DAO.addUser(newUser);
-                    newUser.setId(USER_DAO.getUserByLoginPassword(newUser.getEmail(), newUser.getPassword()).getId());
-                    session.setAttribute(Constant.USER, newUser);
-                    session.setAttribute(Constant.ADMIN, newUser.isAdmin());
-                    response.sendRedirect(ConstantPageNamesJSPAndAction.HOME_SERVICE);
-                }
-            } else {
+        String email = request.getParameter(Constant.EMAIL);
+        if (email == null) {
+            dispatcher = request.getRequestDispatcher(ConstantPageNamesJSPAndAction.REGISTRATION_JSP);
+            dispatcher.forward(request, response);
+        }
+        else if (USER_DAO.isEmailExist(email)) {
+                request.setAttribute(Constant.ERROR, Constant.ERROR_EMAIL_EXIST);
                 dispatcher = request.getRequestDispatcher(ConstantPageNamesJSPAndAction.REGISTRATION_JSP);
                 dispatcher.forward(request, response);
             }
-        }
+        else if (!validateMailWithRegex(email)) {
+                request.setAttribute(Constant.ERROR, Constant.ERROR_EMAIL_FORMAT);
+                dispatcher = request.getRequestDispatcher(ConstantPageNamesJSPAndAction.REGISTRATION_JSP);
+                dispatcher.forward(request, response);
+            }
+        else if (!validatePasswordWithRegex(request.getParameter(Constant.PASSWORD))) {
+                request.setAttribute(Constant.ERROR, Constant.ERROR_PASSWORD_FORMAT);
+                dispatcher = request.getRequestDispatcher(ConstantPageNamesJSPAndAction.REGISTRATION_JSP);
+                dispatcher.forward(request, response);
+            }
         else {
-            dispatcher=request.getRequestDispatcher(ConstantPageNamesJSPAndAction.HOME_JSP);
-            dispatcher.forward(request,response);
-        }
+                User newUser = new User();
+                newUser.setFirstName(request.getParameter("first_name"));
+                newUser.setLastName(request.getParameter("last_name"));
+                newUser.setBirthday(request.getParameter("birthday"));
+                newUser.setPhoneNumber(request.getParameter("phone_number"));
+                newUser.setEmail(request.getParameter("email"));
+                String password = request.getParameter(Constant.PASSWORD);
+                String securedPassword = DigestUtils.md5Hex(password);
+                newUser.setPassword(securedPassword);
+                newUser.setIsAdmin(false);
+                newUser.setBanned(false);
+                USER_DAO.addUser(newUser);
+                newUser.setId(USER_DAO.getUserByLoginPassword(newUser.getEmail(), newUser.getPassword()).getId());
+                session.setAttribute(Constant.USER, newUser);
+                session.setAttribute(Constant.ADMIN, newUser.isAdmin());
+                response.sendRedirect(ConstantPageNamesJSPAndAction.HOME_SERVICE);
+            }
     }
+
+
+
 }
