@@ -12,7 +12,7 @@ import java.util.ArrayList;
 import java.util.List;
 public class UserDaoImpl implements UserDao {
     private final Logger LOGGER = LogManager.getLogger(this.getClass().getName());
-    private static final String INSERT_INTO_USERS = "INSERT INTO users (first_name, last_name, birthday, phone_number, email, \"password\", is_admin, is_banned) VALUES(?, ?, ?, ?, ?, ?, ?, ?)";
+    private static final String INSERT_INTO_USERS = "INSERT INTO users (first_name, last_name, birthday, phone_number, email, password, is_admin, is_banned) VALUES(?, ?, ?, ?, ?, ?, ?, ?)";
     private static final String GET_USER_BY_LOGIN_PASSWORD = "SELECT id, first_name, last_name, birthday,phone_number, email, password, is_admin, is_banned FROM users WHERE email = ? AND password = ?";
     private static final String GET_ALL_USERS = "SELECT * FROM users WHERE is_admin = false";
     private static final String UPDATE_USER_ACTIVITY = "UPDATE users SET is_banned = ? WHERE id = ?";

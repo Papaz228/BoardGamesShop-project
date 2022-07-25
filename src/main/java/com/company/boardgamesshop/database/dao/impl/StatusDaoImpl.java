@@ -8,7 +8,7 @@ import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 public class StatusDaoImpl implements StatusDao {
     private final Logger LOGGER = LogManager.getLogger(this.getClass().getName());
-    private static final String SELECT_ID_BY_STATUS_NAME = "SELECT id FROM status WHERE name = ? ";
+    private static final String SELECT_ID_BY_STATUS_NAME = "SELECT id FROM status WHERE name = ?";
     @Override
     public Long getIdByStatusName(String statusName) {
         long id = 0;

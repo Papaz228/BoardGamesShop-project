@@ -4,7 +4,7 @@ CREATE SCHEMA "BoardGames";
 
 -- DROP SEQUENCE "BoardGames".basket_id_seq;
 
-CREATE SEQUENCE "BoardGames".basket_id_seq
+CREATE SEQUENCE BoardGame.basket_id_seq
     INCREMENT BY 1
     MINVALUE 1
     MAXVALUE 9223372036854775807
@@ -13,7 +13,7 @@ CREATE SEQUENCE "BoardGames".basket_id_seq
     NO CYCLE;
 -- DROP SEQUENCE "BoardGames".country_id_seq;
 
-CREATE SEQUENCE "BoardGames".country_id_seq
+CREATE SEQUENCE BoardGame.country_id_seq
     INCREMENT BY 1
     MINVALUE 1
     MAXVALUE 9223372036854775807
@@ -22,7 +22,7 @@ CREATE SEQUENCE "BoardGames".country_id_seq
     NO CYCLE;
 -- DROP SEQUENCE "BoardGames".local_id_seq;
 
-CREATE SEQUENCE "BoardGames".local_id_seq
+CREATE SEQUENCE BoardGame.local_id_seq
     INCREMENT BY 1
     MINVALUE 1
     MAXVALUE 9223372036854775807
@@ -31,7 +31,7 @@ CREATE SEQUENCE "BoardGames".local_id_seq
     NO CYCLE;
 -- DROP SEQUENCE "BoardGames".order_detail_id_seq;
 
-CREATE SEQUENCE "BoardGames".order_detail_id_seq
+CREATE SEQUENCE BoardGame.order_detail_id_seq
     INCREMENT BY 1
     MINVALUE 1
     MAXVALUE 9223372036854775807
@@ -40,7 +40,7 @@ CREATE SEQUENCE "BoardGames".order_detail_id_seq
     NO CYCLE;
 -- DROP SEQUENCE "BoardGames".order_id_seq;
 
-CREATE SEQUENCE "BoardGames".order_id_seq
+CREATE SEQUENCE BoardGame.order_id_seq
     INCREMENT BY 1
     MINVALUE 1
     MAXVALUE 2147483647
@@ -49,7 +49,7 @@ CREATE SEQUENCE "BoardGames".order_id_seq
     NO CYCLE;
 -- DROP SEQUENCE "BoardGames".product_category_id_seq;
 
-CREATE SEQUENCE "BoardGames".product_category_id_seq
+CREATE SEQUENCE BoardGame.product_category_id_seq
     INCREMENT BY 1
     MINVALUE 1
     MAXVALUE 9223372036854775807
@@ -58,7 +58,7 @@ CREATE SEQUENCE "BoardGames".product_category_id_seq
     NO CYCLE;
 -- DROP SEQUENCE "BoardGames".product_id_seq;
 
-CREATE SEQUENCE "BoardGames".product_id_seq
+CREATE SEQUENCE BoardGame.product_id_seq
     INCREMENT BY 1
     MINVALUE 1
     MAXVALUE 9223372036854775807
@@ -67,7 +67,7 @@ CREATE SEQUENCE "BoardGames".product_id_seq
     NO CYCLE;
 -- DROP SEQUENCE "BoardGames".status_id_seq;
 
-CREATE SEQUENCE "BoardGames".status_id_seq
+CREATE SEQUENCE BoardGame.status_id_seq
     INCREMENT BY 1
     MINVALUE 1
     MAXVALUE 9223372036854775807
@@ -76,7 +76,7 @@ CREATE SEQUENCE "BoardGames".status_id_seq
     NO CYCLE;
 -- DROP SEQUENCE "BoardGames".user_id_seq;
 
-CREATE SEQUENCE "BoardGames".user_id_seq
+CREATE SEQUENCE BoardGame.user_id_seq
     INCREMENT BY 1
     MINVALUE 1
     MAXVALUE 2147483647

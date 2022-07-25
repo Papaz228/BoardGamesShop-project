@@ -6,7 +6,7 @@ import java.util.Enumeration;
 import java.util.Vector;
 public class ConnectionPool {
     private static final ConnectionPool POOL=new ConnectionPool();
-    private final String URL="jdbc:postgresql://localhost:5432/postgres";
+    private final String URL="jdbc:postgresql://localhost:5432/postgres?currentSchema=boardgames";
     private final String USERNAME="postgres";
     private final String PASSWORD="postgres";
     private int maxConn=10;
