@@ -11,7 +11,7 @@ import java.sql.ResultSet;
 import java.util.ArrayList;
 import java.util.List;
 public class CountryDaoImpl implements CountryDao {
-    private static final String GET_ALL_COUNTRIES = "SELECT * FROM \"BoardGames\".\"Country\" WHERE local_id = ?";
+    private static final String GET_ALL_COUNTRIES = "SELECT * FROM country WHERE local_id = ?";
     private final Logger LOGGER = LogManager.getLogger(this.getClass().getName());
     @Override
     public List<Country> getAllCountriesByLocalId(Long localId) {

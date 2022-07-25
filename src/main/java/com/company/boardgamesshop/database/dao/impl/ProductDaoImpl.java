@@ -12,15 +12,11 @@ import java.util.ArrayList;
 import java.util.List;
 public class ProductDaoImpl implements ProductDao {
     private final Logger LOGGER = LogManager.getLogger(this.getClass().getName());
-    private static final String GET_ALL_PRODUCTS = "SELECT * FROM \"BoardGames\".\"Product\"";
-    private static final String GET_PRODUCT = "SELECT * FROM \"BoardGames\".\"Product\" WHERE id = ?";
-    private static final String INSERT_PRODUCT = "INSERT INTO \"BoardGames\".\"Product\"\n" +
-            "(name, description, \"cost\", count, country_id, product_category_id, is_active, photo_url)\n" +
-            "VALUES(?, ?, ?, ?, ?, ?, true,?);";
-    private static final String UPDATE_PRODUCT = "UPDATE \"BoardGames\".\"Product\"\n" +
-            "SET \"name\"=?, description=?, \"cost\"=?, count=?, country_id=?, product_category_id=?, is_active=true, photo_url=?\n" +
-            "WHERE id=?";
-    private static final String DELETE_PRODUCT = "UPDATE \"BoardGames\".\"Product\" SET is_active= ? WHERE id = ? ";
+    private static final String GET_ALL_PRODUCTS = "SELECT * FROM product";
+    private static final String GET_PRODUCT = "SELECT * FROM product WHERE id = ?";
+    private static final String INSERT_PRODUCT = "INSERT INTO product (name, description, \"cost\", count, country_id, product_category_id, is_active, photo_url) VALUES(?, ?, ?, ?, ?, ?, true,?)";
+    private static final String UPDATE_PRODUCT = "UPDATE product SET \"name\"=?, description=?, \"cost\"=?, count=?, country_id=?, product_category_id=?, is_active=true, photo_url=? WHERE id=?";
+    private static final String DELETE_PRODUCT = "UPDATE product SET is_active= ? WHERE id = ? ";
     @Override
     public Product getProductById(Long id) {
         Product product = null;

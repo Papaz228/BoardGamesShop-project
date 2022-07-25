@@ -12,16 +12,11 @@ import java.util.ArrayList;
 import java.util.List;
 public class OrderDaoImpl implements OrderDao {
     private final Logger LOGGER = LogManager.getLogger(this.getClass().getName());
-    private static final String SELECT_LAST_ID_FROM_ORDER = "SELECT id \n" +
-            "FROM \"BoardGames\".\"Order\" \n" +
-            "ORDER BY id DESC \n" +
-            "LIMIT 1 ";
-    private static final String INSERT_INTO_ORDER = "INSERT INTO \"BoardGames\".\"Order\"\n" +
-            "(total_cost, date_start, user_id, status_id)\n" +
-            "VALUES(?, ?, ?, ?);\n";
-    private static final String UPDATE_STATUS_ORDER = "UPDATE \"BoardGames\".\"Order\" SET  status_id = ? WHERE id = ?";
-    private static final String SELECT_ORDERS_BY_USER_ID = "SELECT \"BoardGames\".\"Order\".id,\"BoardGames\".\"Order\".user_id,\"BoardGames\".\"Order\".status_id, \"BoardGames\".\"Order\".date_start, \"BoardGames\".\"Order\".total_cost, \"BoardGames\".\"Status\".name FROM \"BoardGames\".\"Order\" INNER JOIN \"BoardGames\".\"Status\" ON \"BoardGames\".\"Order\".status_id=\"BoardGames\".\"Status\".id WHERE \"BoardGames\".\"Order\".user_id= ?;";
-    private static final String SELECT_USER_ORDER_STATUS="SELECT \"BoardGames\".\"Order\".id,\"BoardGames\".\"Order\".user_id,\"BoardGames\".\"Order\".status_id, \"BoardGames\".\"Order\".date_start, \"BoardGames\".\"Order\".total_cost, \"BoardGames\".\"Status\".name, \"BoardGames\".\"User\".email,\"BoardGames\".\"Status\".local_id FROM \"BoardGames\".\"Order\" INNER JOIN \"BoardGames\".\"Status\" ON \"BoardGames\".\"Order\".status_id=\"BoardGames\".\"Status\".id INNER JOIN \"BoardGames\".\"User\" ON \"BoardGames\".\"Order\".user_id=\"BoardGames\".\"User\".id";
+    private static final String SELECT_LAST_ID_FROM_ORDER = "SELECT id FROM orders ORDER BY id DESC LIMIT 1";
+    private static final String INSERT_INTO_ORDER = "INSERT INTO orders (total_cost, date_start, user_id, status_id) VALUES(?, ?, ?, ?)";
+    private static final String UPDATE_STATUS_ORDER = "UPDATE orders SET status_id = ? WHERE id = ?";
+    private static final String SELECT_ORDERS_BY_USER_ID = "SELECT orders.id, orders.user_id, orders.status_id, orders.date_start, orders.total_cost FROM orders INNER JOIN status ON orders.status_id=status.id WHERE orders.user_id= ?";
+    private static final String SELECT_USER_ORDER_STATUS="SELECT orders.id, orders.user_id, orders.status_id, orders.date_start, orders.total_cost, status.name, users.email, status.local_id FROM orders INNER JOIN status ON orders.status_id=status.id INNER JOIN users ON orders.user_id=users.id";
     @Override
     public void createOrder(Order order) {
         ConnectionPool connectionPool = ConnectionPool.getConnPool();

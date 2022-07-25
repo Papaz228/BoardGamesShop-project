@@ -11,7 +11,7 @@ import java.sql.ResultSet;
 import java.util.ArrayList;
 import java.util.List;
 public class LanguageDaoImpl implements LanguageDao {
-    private static final String GET_ALL_LOCALS = "SELECT * FROM \"BoardGames\".\"Local\"";
+    private static final String GET_ALL_LOCALS = "SELECT * FROM local";
     private final Logger LOGGER = LogManager.getLogger(this.getClass().getName());
     @Override
     public List<Language> getAllLanguages() {

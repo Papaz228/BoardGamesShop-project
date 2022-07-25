@@ -12,12 +12,12 @@ import java.util.ArrayList;
 import java.util.List;
 public class BasketDaoImpl implements BasketDao {
     private final Logger LOGGER = LogManager.getLogger(this.getClass().getName());
-    private static final String INSERT_PRODUCT_INTO_CART = "INSERT INTO \"BoardGames\".\"Basket\" (product_id, user_id, count) VALUES(?, ?, ?)";
-    private static final String GET_PRODUCTS_FROM_CART_BY_USER_ID = "SELECT * FROM \"BoardGames\".\"Basket\" WHERE user_id = ?";
-    private static final String DELETE_PRODUCT_FROM_CART = "DELETE FROM \"BoardGames\".\"Basket\" WHERE product_id = ? AND user_id = ?";
-    private static final String GET_ALL_FROM_CART = "SELECT * FROM \"BoardGames\".\"Basket\" WHERE product_id = ?";
-    private static final String DELETE_PRODUCTS_FROM_CART_BY_USER = "DELETE FROM \"BoardGames\".\"Basket\" WHERE user_id=?";
-    private static final String GET_COUNT_FROM_BASKET_BY_USER_ID="SELECT count FROM \"BoardGames\".\"Basket\" WHERE user_id=? AND product_id=?";
+    private static final String INSERT_PRODUCT_INTO_CART = "INSERT INTO basket (product_id, user_id, count) VALUES(?, ?, ?)";
+    private static final String GET_PRODUCTS_FROM_CART_BY_USER_ID = "SELECT * FROM basket WHERE user_id = ?";
+    private static final String DELETE_PRODUCT_FROM_CART = "DELETE FROM basket WHERE product_id = ? AND user_id = ?";
+    private static final String GET_ALL_FROM_CART = "SELECT * FROM basket WHERE product_id = ?";
+    private static final String DELETE_PRODUCTS_FROM_CART_BY_USER = "DELETE FROM basket WHERE user_id=?";
+    private static final String GET_COUNT_FROM_BASKET_BY_USER_ID="SELECT count FROM basket WHERE user_id=? AND product_id=?";
     @Override
     public void addProductToBasket(Basket basket) {
         ConnectionPool connectionPool = ConnectionPool.getConnPool();
