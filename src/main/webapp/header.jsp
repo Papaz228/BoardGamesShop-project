@@ -78,7 +78,7 @@
                                         </li>
                                         </form>
                                     </c:if>
-
+                                    <h3 style="color:red"><c:out value="${error}" /> </h3>
                                     <c:if test="${sessionScope.user.isAdmin() == true}">
                                         <li><div class="form-sh"> <a role="button" class="btn btn-lg" href="createProduct"><fmt:message key="button.createProduct"/></a> </div></li>
                                         <li> <div class="form-sh"> <a class="btn btn-lg" href="allUsers"><fmt:message key="button.manageUsers"/></a> </div></li>

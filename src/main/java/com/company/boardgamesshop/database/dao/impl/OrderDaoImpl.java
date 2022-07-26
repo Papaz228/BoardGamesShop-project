@@ -15,7 +15,7 @@ public class OrderDaoImpl implements OrderDao {
     private static final String SELECT_LAST_ID_FROM_ORDER = "SELECT id FROM orders ORDER BY id DESC LIMIT 1";
     private static final String INSERT_INTO_ORDER = "INSERT INTO orders (total_cost, date_start, user_id, status_id) VALUES(?, ?, ?, ?)";
     private static final String UPDATE_STATUS_ORDER = "UPDATE orders SET status_id = ? WHERE id = ?";
-    private static final String SELECT_ORDERS_BY_USER_ID = "SELECT orders.id, orders.user_id, orders.status_id, orders.date_start, orders.total_cost FROM orders INNER JOIN status ON orders.status_id=status.id WHERE orders.user_id= ?";
+    private static final String SELECT_ORDERS_BY_USER_ID = "SELECT orders.id, orders.user_id, orders.status_id, orders.date_start, orders.total_cost, status.name FROM orders INNER JOIN status ON orders.status_id=status.id WHERE orders.user_id=  ?";
     private static final String SELECT_USER_ORDER_STATUS="SELECT orders.id, orders.user_id, orders.status_id, orders.date_start, orders.total_cost, status.name, users.email, status.local_id FROM orders INNER JOIN status ON orders.status_id=status.id INNER JOIN users ON orders.user_id=users.id";
     @Override
     public void createOrder(Order order) {

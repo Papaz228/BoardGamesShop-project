@@ -13,7 +13,7 @@ import java.util.List;
 public class ProductCategoryDaoImpl implements ProductCategoryDao {
     private final Logger LOGGER = LogManager.getLogger(this.getClass().getName());
     private static final String INSERT_PRODUCT_CATEGORY = "INSERT INTO product_category (local_id, category_name) VALUES(?,?)";
-    private static final String GET_ALL_PRODUCT_CATEGORIES = "SELECT * FROM product_category WHERE local_id=?";
+    private static final String GET_ALL_PRODUCT_CATEGORIES = "SELECT * FROM product_category WHERE local_id = ?";
     @Override
     public void create(ProductCategory productCategory)  {
         ConnectionPool connectionPool=ConnectionPool.getConnPool();

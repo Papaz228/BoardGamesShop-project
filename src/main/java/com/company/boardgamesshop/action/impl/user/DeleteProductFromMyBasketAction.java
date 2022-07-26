@@ -1,5 +1,8 @@
 package com.company.boardgamesshop.action.impl.user;
 import com.company.boardgamesshop.action.Action;
+import com.company.boardgamesshop.database.dao.impl.ProductDaoImpl;
+import com.company.boardgamesshop.database.dao.interfaces.ProductDao;
+import com.company.boardgamesshop.entity.Product;
 import com.company.boardgamesshop.entity.User;
 import com.company.boardgamesshop.util.constants.Constant;
 import com.company.boardgamesshop.util.constants.ConstantPageNamesJSPAndAction;
@@ -29,3 +32,4 @@ public class DeleteProductFromMyBasketAction implements Action {
         }
     }
 }
+

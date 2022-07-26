@@ -31,4 +31,5 @@ public class Constant {
     public static final String ERROR_EMAIL_FORMAT = "Not correct format of mail, please type it again";
     public static final String ERROR_PASSWORD_FORMAT = "Not correct format of password, please type it again";
     public static final String ERROR_EMAIL_OR_PASSWORD = "Email or password is wrong";
+    public static final String ERROR_PRODUCT_ALREADY_IN_BASKET="Product already in your basket";
 }
