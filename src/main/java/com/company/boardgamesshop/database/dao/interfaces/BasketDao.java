@@ -8,4 +8,5 @@ public interface BasketDao {
     List<Basket> getAllFromBasket(Long productId);
     void deleteProductFromBasketByUserId(Long userId);
     Integer countOfBasketByUserIdAndProductId(Long userId, Long productId);
+    void updateProductCountInBasketByUserIdAndProductId(Long userId, Long productId,Integer count);
 }

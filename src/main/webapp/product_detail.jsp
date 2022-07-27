@@ -90,7 +90,14 @@
 <%--                                    <option value="${count}">${count}</option>--%>
 <%--                                </c:forEach>--%>
 <%--                            </select>--%>
-                            <input type="number" name="productCount" value="${product.getCount()}" />
+        <label>
+            <select name="productCount" required>
+                Select country for product
+                <c:forEach var="i" begin="1" end="${product.getCount()}" step="+1">
+                    <option value="${i}">${i}</option>
+                </c:forEach>
+            </select>
+        </label>
                             <input type="hidden" name="productId" value="<c:out value="${product.getId()}"/>" />
                             <button class=""><fmt:message key="button.addToCart"/></button>
 

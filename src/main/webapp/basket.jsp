@@ -42,8 +42,20 @@
             </div>
 
             <div class="row clearfix">
-                <c:forEach var = "product" items="${productIdsInCart }">
+                <c:forEach var = "product" items="${productsInCart }">
                 <div class="col-lg-3 col-sm-6 col-md-3">
+                    <form action="updateProductCountInBasket" method="post">
+                        <label>
+                            <select name="changedProductCount" required>
+                                Select country for product
+                                <c:forEach var="i" begin="1" end="${productCount}" step="+1">
+                                    <option value="${i}">${i}</option>
+                                </c:forEach>
+                            </select>
+                        </label>
+                        <input type="hidden" name="productId" value="<c:out value="${product.getId()}"/>" />
+                        <button  class="btn btn-danger" data-submit="...Sending"><fmt:message key="button.changeCount"/></button>
+                    </form>
                     <a href="product?id=${product.getId() }">
                         <div class="box-img">
                             <h4>${product.getName()}</h4>
@@ -52,7 +64,9 @@
 
                             <form action="deleteProductFromCart" method="post">
                                 <input type="hidden" name="productId" value="<c:out value="${product.getId()}"/>" />
-                                <button  class="btn btn-danger"><fmt:message key="button.deleteProductFromCart"/></button>
+                                <input type="hidden" name="productCount" value="<c:out value="${product.getCount()}"/>"/>
+
+                                <button class="btn btn-danger" ><fmt:message key="button.deleteProductFromCart"/></button>
                             </form>
                         </div>
                     </a>

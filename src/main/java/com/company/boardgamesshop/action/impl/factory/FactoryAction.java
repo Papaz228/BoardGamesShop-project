@@ -31,7 +31,10 @@ public class FactoryAction {
         SERVICE_MAP.put("/order", new MakeMyOrderAction());
         SERVICE_MAP.put("/myProfile", new CheckMyProfileAndChangePasswordAction());
         SERVICE_MAP.put("/createNewProductCategory", new CreateNewProductCategory());
+        SERVICE_MAP.put("/updateProductCountInBasket", new UpdateProductCountInBasket());
+
     }
+
     public Action getService(String request) throws ClassCastException, NullPointerException{
         Action action = SERVICE_MAP.get("/home");
         for (Map.Entry<String, Action> pair : SERVICE_MAP.entrySet()) {

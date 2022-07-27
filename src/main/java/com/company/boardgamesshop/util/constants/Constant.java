@@ -12,6 +12,8 @@ public class Constant {
     public static final String PRODUCT = "product";
     public static final String SUM_OF_PRICE = "sumOfPrice";
     public static final String PRODUCT_ID= "productId";
+    public static final String PRODUCT_COUNT="productCount";
+    public static final String PRODUCTS_IN_CART="productsInCart";
     public static final String USER = "user";
     public static final String USERS = "users";
     public static final String ERROR = "error";

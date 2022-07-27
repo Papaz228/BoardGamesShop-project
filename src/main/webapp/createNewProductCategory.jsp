@@ -157,7 +157,7 @@
 <div class="container">
 
     <form id="contact" action="createNewProductCategory" method="post" accept-charset="UTF-8">
-        <h3><fmt:message key="label.createProductCategory"/></h3>
+        <h3><fmt:message key="button.createProductCategory"/></h3>
 
         <fieldset>
             <input placeholder="<fmt:message key="label.product"/>" name="name" type="text" tabindex="1" required autofocus>

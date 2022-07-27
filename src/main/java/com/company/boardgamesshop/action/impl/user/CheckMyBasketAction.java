@@ -27,9 +27,12 @@ public class CheckMyBasketAction implements Action {
         RequestDispatcher dispatcher;
         HttpSession session = request.getSession();
         User currentUser = (User) session.getAttribute(Constant.USER);
+        Integer productCount=0;
         if (currentUser == null) {
             response.sendRedirect(ConstantPageNamesJSPAndAction.LOGIN_SERVICE);
         }
+
+
         Long userId= currentUser != null ? currentUser.getId() : null;
         List<Long> productIdsInCart = basketDao.getProductsIdInBasket(userId);
         if (productIdsInCart != null) {
@@ -41,13 +44,15 @@ public class CheckMyBasketAction implements Action {
                         basketDao.deleteProductInBasket(productId, userId);
                         continue;
                     }
+                    productCount=product.getCount();
                     Integer count = basketDao.countOfBasketByUserIdAndProductId(userId, product.getId());
                     product.setCount(count);
                     productsInCart.add(product);
                     sumOfPrice += (double) product.getCost() * product.getCount();
                 }
-                request.setAttribute(Constant.PRODUCT_IDS_IN_CART, productsInCart);
+                request.setAttribute(Constant.PRODUCTS_IN_CART, productsInCart);
                 request.setAttribute(Constant.SUM_OF_PRICE, sumOfPrice);
+                request.setAttribute(Constant.PRODUCT_COUNT, productCount);
                 dispatcher = request.getRequestDispatcher(ConstantPageNamesJSPAndAction.BASKET_JSP);
                 dispatcher.forward(request, response);
             } else {

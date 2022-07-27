@@ -17,8 +17,10 @@ public class BasketDaoImpl implements BasketDao {
     private static final String DELETE_PRODUCT_FROM_CART = "DELETE FROM basket WHERE product_id = ? AND user_id = ?";
     private static final String GET_ALL_FROM_CART = "SELECT * FROM basket WHERE product_id = ?";
     private static final String DELETE_PRODUCTS_FROM_CART_BY_USER = "DELETE FROM basket WHERE user_id=?";
+    private static final String UPDATE_PRODUCT_COUNT_IN_BASKET_BY_USER_AND_PRODUCT_ID="UPDATE basket SET count = ? WHERE user_id = ? AND product_id = ?";
     private static final String GET_COUNT_FROM_BASKET_BY_USER_ID="SELECT count FROM basket WHERE user_id=? AND product_id=?";
     @Override
+
     public void addProductToBasket(Basket basket) {
         ConnectionPool connectionPool = ConnectionPool.getConnPool();
         Connection con = connectionPool.getConn();
@@ -126,4 +128,21 @@ public class BasketDaoImpl implements BasketDao {
         finally {
             connectionPool.freeConn(con);
         }
-    }}
+    }
+    @Override
+    public void updateProductCountInBasketByUserIdAndProductId(Long userId, Long productId, Integer count) {
+        ConnectionPool connectionPool=ConnectionPool.getConnPool();
+        Connection con=connectionPool.getConn();
+        try (PreparedStatement preparedStatement = con.prepareStatement(UPDATE_PRODUCT_COUNT_IN_BASKET_BY_USER_AND_PRODUCT_ID)) {
+            preparedStatement.setLong(1, count);
+            preparedStatement.setLong(2, userId);
+            preparedStatement.setLong(3, productId);
+            preparedStatement.executeUpdate();
+        } catch (Exception e) {
+            LOGGER.error(e);
+        }
+        finally {
+            connectionPool.freeConn(con);
+        }
+    }
+}
