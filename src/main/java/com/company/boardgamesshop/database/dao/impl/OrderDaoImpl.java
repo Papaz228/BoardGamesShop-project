@@ -23,7 +23,7 @@ public class OrderDaoImpl implements OrderDao {
         Connection con = connectionPool.getConn();
         try (PreparedStatement preparedStatement = con.prepareStatement(INSERT_INTO_ORDER)) {
             preparedStatement.setInt(1, order.getTotalCost());
-            preparedStatement.setTimestamp(2,  order.getDateStart());
+            preparedStatement.setDate(2,  order.getDateStart());
             preparedStatement.setLong(3, order.getUserId());
             preparedStatement.setLong(4, order.getStatusId());
             preparedStatement.executeUpdate();
@@ -97,7 +97,7 @@ public class OrderDaoImpl implements OrderDao {
                 Order order = new Order();
                 order.setId(rs.getLong(Constant.ID));
                 order.setTotalCost(rs.getInt("total_cost"));
-                order.setDateStart(rs.getTimestamp("date_start"));
+                order.setDateStart(rs.getDate("date_start"));
                 order.setUserId(rs.getLong("user_id"));
                 order.setStatusId(rs.getLong("status_id"));
                 order.setStatusName(rs.getString("name"));

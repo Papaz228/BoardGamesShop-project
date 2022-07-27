@@ -1,10 +1,11 @@
 package com.company.boardgamesshop.entity;
-import java.sql.Timestamp;
+import java.sql.Date;
+
 public class Order {
     private Long id;
     private Integer totalCost;
-    private Timestamp dateStart;
-    private Timestamp dateFinish;
+    private Date dateStart;
+    private Date dateFinish;
     private Long userId;
     private Long statusId;
     private String statusName;
@@ -20,16 +21,16 @@ public class Order {
     public void setTotalCost(Integer totalCost) {
         this.totalCost = totalCost;
     }
-    public Timestamp getDateStart() {
+    public Date getDateStart() {
         return dateStart;
     }
-    public void setDateStart(Timestamp dateStart) {
+    public void setDateStart(Date dateStart) {
         this.dateStart = dateStart;
     }
-    public Timestamp getDateFinish() {
+    public Date getDateFinish() {
         return dateFinish;
     }
-    public void setDateFinish(Timestamp dateFinish) {
+    public void setDateFinish(Date dateFinish) {
         this.dateFinish = dateFinish;
     }
     public Long getUserId() {

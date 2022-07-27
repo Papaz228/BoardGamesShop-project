@@ -10,9 +10,11 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 import java.io.IOException;
+import java.sql.Date;
 import java.sql.SQLException;
 import java.sql.Timestamp;
 import java.text.ParseException;
+import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.util.List;
 public class CreateOrderFromMyBasketAction implements Action {
@@ -40,9 +42,9 @@ public class CreateOrderFromMyBasketAction implements Action {
                 status.setName("Выполняется");
             }
             Order order = new Order();
-            LocalDateTime now = LocalDateTime.now();
-            Timestamp dateTime = Timestamp.valueOf(now);
-            order.setDateStart(dateTime);
+            LocalDate now = LocalDate.now();
+            Date date=Date.valueOf(now);
+            order.setDateStart(date);
             order.setUserId(userId);
             order.setStatusId(status.getId());
             List<Long> productIdsInCart = basketDao.getProductsIdInBasket(userId);

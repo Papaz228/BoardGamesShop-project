@@ -10,7 +10,7 @@
                     <table class="table">
                         <thead>
                         <tr>
-                            <th><fmt:message key="label.orders.orderedTime"/></th>
+                            <th><fmt:message key="label.orders.orderedDate"/></th>
                             <th><fmt:message key="label.orders.orderStatus"/></th>
 
 
