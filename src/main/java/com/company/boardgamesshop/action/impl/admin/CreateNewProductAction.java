@@ -33,7 +33,7 @@ public class CreateNewProductAction implements Action {
     public void execute(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException, ParseException, SQLException {
         RequestDispatcher dispatcher;
         HttpSession session = request.getSession();
-        String productName = request.getParameter("product_name");
+        String productName = request.getParameter(Constant.PRODUCT_NAME);
         User currentUser = (User) session.getAttribute(Constant.USER);
         CountryDao countryDao=new CountryDaoImpl();
         ProductCategoryDao productCategoryDao=new ProductCategoryDaoImpl();
@@ -45,24 +45,24 @@ public class CreateNewProductAction implements Action {
         else if(productName == null) {
             checkErrors=false;
         }
-        else if(validateNameWithRegex(request.getParameter("product_name"))){
-                    request.setAttribute(Constant.ERROR, "Name format error");
+        else if(validateNameWithRegex(request.getParameter(Constant.PRODUCT_NAME))){
+                    request.setAttribute(Constant.ERROR, Constant.ERROR_FIRST_NAME_FORMAT);
                     checkErrors=false;
         }
-        else if(!validateDigitWithRegex(request.getParameter("cost"))){
-                    request.setAttribute(Constant.ERROR, "Cost format error");
+        else if(!validateDigitWithRegex(request.getParameter(Constant.COST_TABLE))){
+                    request.setAttribute(Constant.ERROR, Constant.ERROR_COST_FORMAT);
                     checkErrors=false;
 
         }
-        else if(!validateDigitWithRegex(request.getParameter("count"))){
-                    request.setAttribute(Constant.ERROR, "Count format error");
+        else if(!validateDigitWithRegex(request.getParameter(Constant.COUNT_TABLE))){
+                    request.setAttribute(Constant.ERROR, Constant.ERROR_COUNT_FORMAT);
                     checkErrors=false;
         }
-        Long localId=(Long)session.getAttribute("localId");
+        Long localId=(Long)session.getAttribute(Constant.LOCAL_ID);
         List<Country> countries = countryDao.getAllCountriesByLocalId(localId);
-        request.setAttribute("countries",countries);
+        request.setAttribute(Constant.COUNTRIES,countries);
         List<ProductCategory> productCategories= productCategoryDao.getAllProductCategoriesByLocalId(localId);
-        request.setAttribute("productCategories", productCategories);
+        request.setAttribute(Constant.PRODUCT_CATEGORIES, productCategories);
         if(checkErrors){
             Product newProduct = productFactory.fillProduct(request);
             productDao.createProduct(newProduct);

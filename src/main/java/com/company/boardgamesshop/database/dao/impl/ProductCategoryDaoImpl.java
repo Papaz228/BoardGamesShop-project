@@ -39,8 +39,8 @@ public class ProductCategoryDaoImpl implements ProductCategoryDao {
             while (rs.next()) {
                 ProductCategory productCategory = new ProductCategory();
                 productCategory.setId(rs.getLong(Constant.ID));
-                productCategory.setCategoryName(rs.getString("category_name"));
-                productCategory.setLocalId(rs.getLong("local_id"));
+                productCategory.setCategoryName(rs.getString(Constant.PRODUCT_CATEGORY_NAME_TABLE));
+                productCategory.setLocalId(rs.getLong(Constant.LOCAL_ID_TABLE));
                 productCategories.add(productCategory);
             }
         }catch (Exception e) {

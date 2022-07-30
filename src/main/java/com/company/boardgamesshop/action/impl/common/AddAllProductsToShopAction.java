@@ -29,10 +29,10 @@ public class AddAllProductsToShopAction implements Action {
         HttpSession session = request.getSession();
         User currentUser = (User) session.getAttribute(Constant.USER);
         if(currentUser!=null) {
-            Long localId= (Long) session.getAttribute("localId");
+            Long localId= (Long) session.getAttribute(Constant.LOCAL_ID);
             List<Product> products = PRODUCT_DAO.getAllProduct();
             List<ProductCategory> productCategories = PRODUCT_CATEGORY_DAO.getAllProductCategoriesByLocalId(localId);
-            String productCategoryIdString=request.getParameter("productCategoryId");
+            String productCategoryIdString=request.getParameter(Constant.PRODUCT_CATEGORY_ID);
             if (productCategoryIdString!=null) {
                 Long productCategoryId=Long.parseLong(productCategoryIdString);
                 products.removeIf(pr -> !pr.isActive() || pr.getCount() == 0 || !Objects.equals(pr.getProductCategoryId(), productCategoryId));
@@ -40,7 +40,7 @@ public class AddAllProductsToShopAction implements Action {
             else if(!currentUser.isAdmin()){
                 products.removeIf(pr -> !pr.isActive() || pr.getCount() == 0);
             }
-            request.setAttribute("productCategories", productCategories);
+            request.setAttribute(Constant.PRODUCT_CATEGORIES, productCategories);
             request.setAttribute(Constant.PRODUCTS, products);
             dispatcher = request.getRequestDispatcher(ConstantPageNamesJSPAndAction.HOME_JSP);
             dispatcher.forward(request, response);

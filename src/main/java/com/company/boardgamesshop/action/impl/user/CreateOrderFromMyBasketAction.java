@@ -37,27 +37,27 @@ public class CreateOrderFromMyBasketAction implements Action {
             response.sendRedirect(ConstantPageNamesJSPAndAction.LOGIN_SERVICE);
         }
         Long userId = currentUser != null ? currentUser.getId() : null;
-        String bankCardCVV = request.getParameter("bankCardCVV");
-        String bankCardNumber = request.getParameter("bankCardNumber");
-        double totalPrice = Double.parseDouble(request.getParameter("totalCost"));
+        String bankCardCVV = request.getParameter(Constant.BANK_CVV);
+        String bankCardNumber = request.getParameter(Constant.BANK_CARD_NUMBER);
+        double totalPrice = Double.parseDouble(request.getParameter(Constant.TOTAL_COST));
         request.setAttribute(Constant.TOTAL_PRICE, totalPrice);
         if (bankCardCVV == null) {
             dispatcher = request.getRequestDispatcher(ConstantPageNamesJSPAndAction.ORDER_JSP);
             dispatcher.forward(request, response);
         } 
         else if (!validateCardNumberWithRegex(bankCardNumber)) {
-            request.setAttribute(Constant.ERROR, "Incorrect card number format");
+            request.setAttribute(Constant.ERROR, Constant.ERROR_CARD_FORMAT);
             dispatcher = request.getRequestDispatcher(ConstantPageNamesJSPAndAction.ORDER_JSP);
             dispatcher.forward(request, response);
         } 
         else if (!validateCVVWithRegex(bankCardCVV)) {
-            request.setAttribute(Constant.ERROR, "Incorrect CVV format");
+            request.setAttribute(Constant.ERROR, Constant.ERROR_CVV_FORMAT);
             dispatcher = request.getRequestDispatcher(ConstantPageNamesJSPAndAction.ORDER_JSP);
             dispatcher.forward(request, response);
         } 
         else {
             Status status = new Status();
-            Long localId = (Long) session.getAttribute("localId");
+            Long localId = (Long) session.getAttribute(Constant.LOCAL_ID);
             status.setLocalId(localId);
             if (localId == 1) {
                 status.setId(statusDao.getIdByStatusName("Pending"));

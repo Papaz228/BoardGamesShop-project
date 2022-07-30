@@ -23,7 +23,7 @@ public class UpdateProductCountInBasket implements Action {
         User currentUser = (User) session.getAttribute(Constant.USER);
         if (currentUser!=null) {
             Long userId = currentUser.getId();
-            Integer count = Integer.parseInt(request.getParameter("changedProductCount"));
+            Integer count = Integer.parseInt(request.getParameter(Constant.CHANGED_PRODUCT_COUNT));
             Long productId = Long.parseLong(request.getParameter(Constant.PRODUCT_ID));
             basketDao.updateProductCountInBasketByUserIdAndProductId(userId, productId, count);
             response.sendRedirect(ConstantPageNamesJSPAndAction.MY_BASKET);

@@ -67,7 +67,7 @@ public class BasketDaoImpl implements BasketDao {
             preparedStatement.setLong(2, productId);
             ResultSet resultSet = preparedStatement.executeQuery();
             while (resultSet.next()){
-                count=resultSet.getInt("count");
+                count=resultSet.getInt(Constant.COUNT_TABLE);
             }
         }catch (Exception e) {
             LOGGER.error(e);
@@ -104,7 +104,7 @@ public class BasketDaoImpl implements BasketDao {
                 basket.setId(rs.getLong(Constant.ID));
                 basket.setProductId(rs.getLong(Constant.PRODUCT_ID_TABLE));
                 basket.setUserId(rs.getLong(Constant.USER_ID_TABLE));
-                basket.setCount(rs.getInt("count"));
+                basket.setCount(rs.getInt(Constant.COUNT_TABLE));
                 baskets.add(basket);
             }
         }catch (Exception e) {

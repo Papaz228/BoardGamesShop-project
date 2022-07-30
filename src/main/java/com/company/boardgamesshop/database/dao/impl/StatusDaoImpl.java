@@ -1,6 +1,7 @@
 package com.company.boardgamesshop.database.dao.impl;
 import com.company.boardgamesshop.database.connection.ConnectionPool;
 import com.company.boardgamesshop.database.dao.interfaces.StatusDao;
+import com.company.boardgamesshop.util.constants.Constant;
 import org.apache.log4j.LogManager;
 import org.apache.log4j.Logger;
 import java.sql.Connection;
@@ -18,7 +19,7 @@ public class StatusDaoImpl implements StatusDao {
             preparedStatement.setString(1, statusName);
             ResultSet rs = preparedStatement.executeQuery();
             while (rs.next()) {
-                id = rs.getLong("id");
+                id = rs.getLong(Constant.ID);
             }
         }catch (Exception e) {
             LOGGER.error(e);

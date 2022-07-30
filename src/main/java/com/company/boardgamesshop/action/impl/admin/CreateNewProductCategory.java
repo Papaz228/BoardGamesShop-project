@@ -32,14 +32,14 @@ public class CreateNewProductCategory implements Action {
             User currentUser = (User) session.getAttribute(Constant.USER);
             if (currentUser.isAdmin()) {
             List<ProductCategory> productCategories=new ArrayList<>();
-            String productCategoryName = request.getParameter("category_name");
+            String productCategoryName = request.getParameter(Constant.PRODUCT_CATEGORY_NAME_TABLE);
                 if (productCategoryName == null) {
                     languages = languageDao.getAllLanguages();
-                    request.setAttribute("languages", languages);
+                    request.setAttribute(Constant.LANGUAGES, languages);
                     dispatcher = request.getRequestDispatcher(ConstantPageNamesJSPAndAction.CREATE_NEW_CATEGORY_JSP);
                     dispatcher.forward(request, response);
                 } else {
-                    List<String> categoryNames = Arrays.asList(request.getParameterValues("category_name"));
+                    List<String> categoryNames = Arrays.asList(request.getParameterValues(Constant.PRODUCT_CATEGORY_NAME_TABLE));
                     for (int i=0;i<categoryNames.size();i++){
                         productCategory = new ProductCategory();
                         productCategory.setCategoryName(categoryNames.get(i));

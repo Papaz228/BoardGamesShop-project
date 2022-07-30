@@ -24,8 +24,8 @@ public class CountryDaoImpl implements CountryDao {
             while (rs.next()) {
                 Country country = new Country();
                 country.setId(rs.getLong(Constant.ID));
-                country.setName(rs.getString("name"));
-                country.setLocalId(rs.getLong("local_id"));
+                country.setName(rs.getString(Constant.NAME));
+                country.setLocalId(rs.getLong(Constant.LOCAL_ID_TABLE));
                 countries.add(country);
             }
         }catch (Exception e) {

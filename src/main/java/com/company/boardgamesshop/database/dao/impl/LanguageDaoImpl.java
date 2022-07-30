@@ -23,8 +23,8 @@ public class LanguageDaoImpl implements LanguageDao {
             while (rs.next()) {
                 Language language = new Language();
                 language.setId(rs.getLong(Constant.ID));
-                language.setName(rs.getString("name"));
-                language.setShortName(rs.getString("short_name"));
+                language.setName(rs.getString(Constant.NAME));
+                language.setShortName(rs.getString(Constant.SHORT_NAME_TABLE));
                 languages.add(language);
             }
         }catch (Exception e) {

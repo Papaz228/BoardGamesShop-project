@@ -23,7 +23,7 @@ public class AddProductToMyBasketAction implements Action {
         HttpSession session = request.getSession();
         RequestDispatcher dispatcher;
         long productId = Long.parseLong(request.getParameter(Constant.PRODUCT_ID));
-        Integer productCount=Integer.parseInt(request.getParameter("productCount"));
+        Integer productCount=Integer.parseInt(request.getParameter(Constant.PRODUCT_COUNT));
         long userId = ((User)session.getAttribute(Constant.USER)).getId();
         List<Long> productInCart =basketDao.getProductsIdInBasket(userId);
         boolean alreadyInCart = false;
@@ -39,7 +39,7 @@ public class AddProductToMyBasketAction implements Action {
             basket.setProductId(productId);
             basket.setCount(productCount);
             basketDao.addProductToBasket(basket);
-            response.sendRedirect("myBasket");
+            response.sendRedirect(ConstantPageNamesJSPAndAction.MY_BASKET);
         }else{
             request.setAttribute(Constant.ERROR, Constant.ERROR_PRODUCT_ALREADY_IN_BASKET);
             dispatcher = request.getRequestDispatcher(ConstantPageNamesJSPAndAction.HOME_SERVICE);

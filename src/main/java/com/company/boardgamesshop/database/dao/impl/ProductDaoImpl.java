@@ -30,12 +30,12 @@ public class ProductDaoImpl implements ProductDao {
                 product.setId(rs.getLong(Constant.ID));
                 product.setName(rs.getString(Constant.NAME));
                 product.setDescription(rs.getString(Constant.DESCRIPTION));
-                product.setCost(rs.getInt("cost"));
-                product.setCount(rs.getInt("count"));
-                product.setCountryId(rs.getLong("country_Id"));
-                product.setProductCategoryId(rs.getLong("product_Category_Id"));
-                product.setActive(rs.getBoolean("is_active"));
-                product.setPhotoUrl(rs.getString("photo_url"));
+                product.setCost(rs.getInt(Constant.COST_TABLE));
+                product.setCount(rs.getInt(Constant.COUNT_TABLE));
+                product.setCountryId(rs.getLong(Constant.COUNTRY_ID_TABLE));
+                product.setProductCategoryId(rs.getLong(Constant.PRODUCT_CATEGORY_ID_TABLE));
+                product.setActive(rs.getBoolean(Constant.IS_ACTIVE_TABLE));
+                product.setPhotoUrl(rs.getString(Constant.PHOTO_URL_TABLE));
             }
         }catch (Exception e) {
             LOGGER.error(e);
@@ -58,12 +58,12 @@ public class ProductDaoImpl implements ProductDao {
                 product.setId(rs.getLong(Constant.ID));
                 product.setName(rs.getString(Constant.NAME));
                 product.setDescription(rs.getString(Constant.DESCRIPTION));
-                product.setCost(rs.getInt("cost"));
-                product.setCount(rs.getInt("count"));
-                product.setCountryId(rs.getLong("country_Id"));
-                product.setProductCategoryId(rs.getLong("product_category_Id"));
-                product.setActive(rs.getBoolean("is_active"));
-                product.setPhotoUrl(rs.getString("photo_url"));
+                product.setCost(rs.getInt(Constant.COST_TABLE));
+                product.setCount(rs.getInt(Constant.COUNT_TABLE));
+                product.setCountryId(rs.getLong(Constant.COUNTRY_ID_TABLE));
+                product.setProductCategoryId(rs.getLong(Constant.PRODUCT_CATEGORY_ID_TABLE));
+                product.setActive(rs.getBoolean(Constant.IS_ACTIVE_TABLE));
+                product.setPhotoUrl(rs.getString(Constant.PHOTO_URL_TABLE));
                 products.add(product);
             }
         }catch (Exception e) {

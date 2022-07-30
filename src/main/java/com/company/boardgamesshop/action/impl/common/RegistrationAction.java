@@ -38,23 +38,23 @@ public class RegistrationAction implements Action {
                 dispatcher = request.getRequestDispatcher(ConstantPageNamesJSPAndAction.REGISTRATION_JSP);
                 dispatcher.forward(request, response);
             }
-        else if(validateNameWithRegex(request.getParameter("first_name"))){
-            request.setAttribute(Constant.ERROR, "Name format error");
+        else if(validateNameWithRegex(request.getParameter(Constant.FIRST_NAME_TABLE))){
+            request.setAttribute(Constant.ERROR, Constant.ERROR_FIRST_NAME_FORMAT);
             dispatcher = request.getRequestDispatcher(ConstantPageNamesJSPAndAction.REGISTRATION_JSP);
             dispatcher.forward(request, response);
         }
-        else if(validateNameWithRegex(request.getParameter("last_name"))){
-            request.setAttribute(Constant.ERROR, "Last Name format error");
+        else if(validateNameWithRegex(request.getParameter(Constant.LAST_NAME_TABLE))){
+            request.setAttribute(Constant.ERROR, Constant.ERROR_LAST_NAME_FORMAT);
             dispatcher = request.getRequestDispatcher(ConstantPageNamesJSPAndAction.REGISTRATION_JSP);
             dispatcher.forward(request, response);
         }
-        else if(!validatePhoneWithRegex(request.getParameter("phone_number"))){
-            request.setAttribute(Constant.ERROR, "Phone Number format error");
+        else if(!validatePhoneWithRegex(request.getParameter(Constant.PHONE_NUMBER_TABLE))){
+            request.setAttribute(Constant.ERROR, Constant.ERROR_PHONE_NUMBER_FORMAT);
             dispatcher = request.getRequestDispatcher(ConstantPageNamesJSPAndAction.REGISTRATION_JSP);
             dispatcher.forward(request, response);
         }
-        else if(!validateBirthdayWithRegex(request.getParameter("birthday"))){
-            request.setAttribute(Constant.ERROR, "Birthday format error");
+        else if(!validateBirthdayWithRegex(request.getParameter(Constant.BIRTHDAY_TABLE))){
+            request.setAttribute(Constant.ERROR, Constant.ERROR_BIRTHDAY_FORMAT);
             dispatcher = request.getRequestDispatcher(ConstantPageNamesJSPAndAction.REGISTRATION_JSP);
             dispatcher.forward(request, response);
         }

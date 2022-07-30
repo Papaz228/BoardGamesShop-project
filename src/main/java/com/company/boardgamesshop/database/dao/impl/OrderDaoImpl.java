@@ -40,7 +40,7 @@ public class OrderDaoImpl implements OrderDao {
         try (PreparedStatement preparedStatement = con.prepareStatement(SELECT_LAST_ID_FROM_ORDER)) {
             ResultSet rs = preparedStatement.executeQuery();
             while (rs.next()) {
-                lastId = rs.getLong("id");
+                lastId = rs.getLong(Constant.ID);
             }
         } catch (Exception e) {
             LOGGER.error(e);
@@ -58,11 +58,11 @@ public class OrderDaoImpl implements OrderDao {
             ResultSet rs = preparedStatement.executeQuery();
             while (rs.next()) {
                 ArrayList<String> order =new ArrayList<>();
-                order.add(String.valueOf(rs.getLong("id")));
-                order.add(String.valueOf(rs.getTimestamp("date_start")));
-                order.add(rs.getString("email"));
-                order.add(rs.getString("name"));
-                order.add(rs.getString("local_id"));
+                order.add(String.valueOf(rs.getLong(Constant.ID)));
+                order.add(String.valueOf(rs.getTimestamp(Constant.DATE_START_TABLE)));
+                order.add(rs.getString(Constant.EMAIL));
+                order.add(rs.getString(Constant.NAME));
+                order.add(rs.getString(Constant.LOCAL_ID_TABLE));
                 orders.add(order);
             }
         } catch (Exception e) {
@@ -96,11 +96,11 @@ public class OrderDaoImpl implements OrderDao {
             while (rs.next()) {
                 Order order = new Order();
                 order.setId(rs.getLong(Constant.ID));
-                order.setTotalCost(rs.getInt("total_cost"));
-                order.setDateStart(rs.getDate("date_start"));
-                order.setUserId(rs.getLong("user_id"));
-                order.setStatusId(rs.getLong("status_id"));
-                order.setStatusName(rs.getString("name"));
+                order.setTotalCost(rs.getInt(Constant.TOTAL_COST_TABLE));
+                order.setDateStart(rs.getDate(Constant.DATE_START_TABLE));
+                order.setUserId(rs.getLong(Constant.USER_ID_TABLE));
+                order.setStatusId(rs.getLong(Constant.STATUS_ID_TABLE));
+                order.setStatusName(rs.getString(Constant.NAME));
                 orders.add(order);
             }
         } catch (Exception e) {

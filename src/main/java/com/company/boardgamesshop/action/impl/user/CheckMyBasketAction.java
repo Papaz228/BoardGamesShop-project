@@ -31,8 +31,6 @@ public class CheckMyBasketAction implements Action {
         if (currentUser == null) {
             response.sendRedirect(ConstantPageNamesJSPAndAction.LOGIN_SERVICE);
         }
-
-
         Long userId= currentUser != null ? currentUser.getId() : null;
         List<Long> productIdsInCart = basketDao.getProductsIdInBasket(userId);
         if (productIdsInCart != null) {

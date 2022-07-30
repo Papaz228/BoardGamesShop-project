@@ -43,7 +43,7 @@ public class LoginAction implements Action {
            else {
                session.setAttribute(Constant.USER, user);
                session.setAttribute(Constant.ADMIN, user.isAdmin());
-               session.setAttribute("localId", 2L);
+               session.setAttribute(Constant.LOCAL_ID, 2L);
                response.sendRedirect(ConstantPageNamesJSPAndAction.HOME_SERVICE);
            }
        }

@@ -53,12 +53,12 @@ public class UserDaoImpl implements UserDao {
                 user.setId(resultSet.getLong(Constant.ID));
                 user.setFirstName(resultSet.getString(Constant.FIRST_NAME_TABLE));
                 user.setLastName(resultSet.getString(Constant.LAST_NAME_TABLE));
-                user.setBirthday(resultSet.getString("birthday"));
-                user.setPhoneNumber(resultSet.getString("phone_number"));
+                user.setBirthday(resultSet.getString(Constant.BIRTHDAY_TABLE));
+                user.setPhoneNumber(resultSet.getString(Constant.PHONE_NUMBER_TABLE));
                 user.setEmail(resultSet.getString(Constant.EMAIL));
                 user.setPassword(resultSet.getString(Constant.PASSWORD));
-                user.setIsAdmin(resultSet.getBoolean("is_admin"));
-                user.setBanned(resultSet.getBoolean("is_banned"));
+                user.setIsAdmin(resultSet.getBoolean(Constant.IS_ADMIN_TABLE));
+                user.setBanned(resultSet.getBoolean(Constant.IS_BANNED_TABLE));
             }
         }catch (Exception e) {
             LOGGER.error(e);
@@ -101,8 +101,8 @@ public class UserDaoImpl implements UserDao {
                 user.setLastName(resultSet.getString(Constant.LAST_NAME_TABLE));
                 user.setEmail(resultSet.getString(Constant.EMAIL));
                 user.setPassword(resultSet.getString(Constant.PASSWORD));
-                user.setIsAdmin(resultSet.getBoolean("is_admin"));
-                user.setBanned(resultSet.getBoolean("is_banned"));
+                user.setIsAdmin(resultSet.getBoolean(Constant.IS_ADMIN_TABLE));
+                user.setBanned(resultSet.getBoolean(Constant.IS_BANNED_TABLE));
                 users.add(user);
             }
         } catch (Exception e) {

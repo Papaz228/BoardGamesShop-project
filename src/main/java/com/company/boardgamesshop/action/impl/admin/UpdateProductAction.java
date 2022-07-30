@@ -4,6 +4,7 @@ import com.company.boardgamesshop.entity.Country;
 import com.company.boardgamesshop.entity.Product;
 import com.company.boardgamesshop.entity.ProductCategory;
 import com.company.boardgamesshop.entity.User;
+import com.company.boardgamesshop.entity.factory.ProductFactory;
 import com.company.boardgamesshop.util.constants.Constant;
 import com.company.boardgamesshop.util.constants.ConstantPageNamesJSPAndAction;
 import com.company.boardgamesshop.database.dao.impl.CountryDaoImpl;
@@ -25,32 +26,25 @@ public class UpdateProductAction implements Action {
     ProductDao productDao = new ProductDaoImpl();
     CountryDao countryDao=new CountryDaoImpl();
     ProductCategoryDao productCategoryDao=new ProductCategoryDaoImpl();
+    ProductFactory productFactory=ProductFactory.getInstance();
     @Override
     public void execute(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException, ParseException, SQLException {
         RequestDispatcher dispatcher;
         HttpSession session = request.getSession();
         User currentUser = (User) session.getAttribute(Constant.USER);
-        String productName = request.getParameter("product_name");
+        String productName = request.getParameter(Constant.PRODUCT_NAME);
         if (currentUser.isAdmin()) {
             if (productName != null) {
-                Product product = new Product();
-                product.setName(request.getParameter("product_name"));
-                product.setId(Long.parseLong(request.getParameter("productId")));
-                product.setPhotoUrl(request.getParameter("photo_url"));
-                product.setDescription(request.getParameter("description"));
-                product.setCost(Integer.parseInt(request.getParameter("cost")));
-                product.setCount(Integer.parseInt(request.getParameter("count")));
-                product.setCountryId(Long.parseLong(request.getParameter("countryId")));
-                product.setProductCategoryId(Long.parseLong(request.getParameter("productCategoryId")));
-                product.setActive(true);
+                Product product = productFactory.fillProduct(request);
+                product.setId(Long.parseLong(request.getParameter(Constant.PRODUCT_ID)));
                 productDao.updateProduct(product);
                 response.sendRedirect(ConstantPageNamesJSPAndAction.HOME_SERVICE);
             } else {
-                Long localId=(Long)session.getAttribute("localId");
+                Long localId=(Long)session.getAttribute(Constant.LOCAL_ID);
                 List<Country> countries = countryDao.getAllCountriesByLocalId(localId);
-                request.setAttribute("countries",countries);
+                request.setAttribute(Constant.COUNTRIES,countries);
                 List<ProductCategory> productCategories= productCategoryDao.getAllProductCategoriesByLocalId(localId);
-                request.setAttribute("productCategories", productCategories);
+                request.setAttribute(Constant.PRODUCT_CATEGORIES, productCategories);
                 Product product = productDao.getProductById(Long.valueOf(request.getParameter(Constant.PRODUCT_ID)));
                 request.setAttribute(Constant.PRODUCT, product);
                 dispatcher = request.getRequestDispatcher(ConstantPageNamesJSPAndAction.UPDATE_PRODUCT_JSP);

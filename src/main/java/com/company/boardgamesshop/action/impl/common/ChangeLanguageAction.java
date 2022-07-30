@@ -14,9 +14,9 @@ public class ChangeLanguageAction implements Action {
     public void execute(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException, ParseException, SQLException {
         HttpSession session = request.getSession();
         String local = request.getParameter(Constant.LANGUAGE);
-        Long localId=Long.parseLong(request.getParameter("localId"));
+        Long localId=Long.parseLong(request.getParameter(Constant.LOCAL_ID));
         session.setAttribute(Constant.LANGUAGE, local);
-        session.setAttribute("localId",localId);
+        session.setAttribute(Constant.LOCAL_ID,localId);
         response.sendRedirect(ConstantPageNamesJSPAndAction.HOME_SERVICE);
     }
 }
