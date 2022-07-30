@@ -11,8 +11,8 @@ public class OrderDetailDaoImpl implements OrderDetailDao {
     private static final String INSERT_INTO_ORDER_ITEM = "INSERT into order_detail (order_id, product_id, count, cost) VALUES(?,?,?,?)";
     @Override
     public void createOrderDetail(OrderDetail orderDetail) {
-        ConnectionPool connectionPool=ConnectionPool.getConnPool();
-        Connection con=connectionPool.getConn();
+        ConnectionPool connectionPool=ConnectionPool.getInstance();
+        Connection con=connectionPool.getConnection();
         try( PreparedStatement preparedStatement = con.prepareStatement(INSERT_INTO_ORDER_ITEM)){
             preparedStatement.setLong(1, orderDetail.getOrderId());
             preparedStatement.setLong(2, orderDetail.getProductId());
@@ -23,6 +23,6 @@ public class OrderDetailDaoImpl implements OrderDetailDao {
             LOGGER.error(e);
         }
         finally {
-            connectionPool.freeConn(con);
+            connectionPool.returnConnection(con);
         }
     }}

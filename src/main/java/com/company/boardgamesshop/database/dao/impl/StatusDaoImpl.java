@@ -12,8 +12,8 @@ public class StatusDaoImpl implements StatusDao {
     @Override
     public Long getIdByStatusName(String statusName) {
         long id = 0;
-        ConnectionPool connectionPool=ConnectionPool.getConnPool();
-        Connection con=connectionPool.getConn();
+        ConnectionPool connectionPool=ConnectionPool.getInstance();
+        Connection con=connectionPool.getConnection();
         try(PreparedStatement preparedStatement = con.prepareStatement(SELECT_ID_BY_STATUS_NAME)){
             preparedStatement.setString(1, statusName);
             ResultSet rs = preparedStatement.executeQuery();
@@ -24,7 +24,7 @@ public class StatusDaoImpl implements StatusDao {
             LOGGER.error(e);
         }
         finally {
-            connectionPool.freeConn(con);
+            connectionPool.returnConnection(con);
         }
         return id;
     }}

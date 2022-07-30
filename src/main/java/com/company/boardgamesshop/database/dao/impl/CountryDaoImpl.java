@@ -16,8 +16,8 @@ public class CountryDaoImpl implements CountryDao {
     @Override
     public List<Country> getAllCountriesByLocalId(Long localId) {
         List<Country> countries =new ArrayList<>();
-        ConnectionPool connectionPool=ConnectionPool.getConnPool();
-        Connection con=connectionPool.getConn();
+        ConnectionPool connectionPool=ConnectionPool.getInstance();
+        Connection con=connectionPool.getConnection();
         try(PreparedStatement preparedStatement = con.prepareStatement(GET_ALL_COUNTRIES)){
             preparedStatement.setLong(1, localId);
             ResultSet rs = preparedStatement.executeQuery();
@@ -32,7 +32,7 @@ public class CountryDaoImpl implements CountryDao {
             LOGGER.error(e);
         }
         finally {
-            connectionPool.freeConn(con);
+            connectionPool.returnConnection(con);
         }
         return countries;
     }}

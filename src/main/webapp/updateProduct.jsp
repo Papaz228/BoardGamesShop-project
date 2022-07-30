@@ -155,19 +155,19 @@
         <h3><fmt:message key="label.createProductLabel"/></h3>
 
         <fieldset>
-            <input placeholder="<fmt:message key="label.product"/>" name="product_name" type="text" tabindex="1" required autofocus>
+            <input placeholder="<fmt:message key="label.product"/>" value="${product.getName()}" name="product_name" type="text" tabindex="1" required autofocus>
         </fieldset>
         <fieldset>
-            <textarea placeholder="<fmt:message key="label.descriptionProduct"/>" tabindex="2" name="description" required></textarea>
+            <input placeholder="<fmt:message key="label.descriptionProduct"/>" value="${product.getDescription()}" tabindex="2" name="description" required>
         </fieldset>
         <fieldset>
-            <textarea placeholder="<fmt:message key="label.photoUrl"/>" tabindex="3" name="photo_url" required></textarea>
+            <input placeholder="<fmt:message key="label.photoUrl"/>" value="${product.getPhotoUrl()}" tabindex="3" name="photo_url" required>
         </fieldset>
         <fieldset>
-            <input placeholder="<fmt:message key="label.cost"/>" type="number" tabindex="3" name="cost" required>
+            <input placeholder="<fmt:message key="label.cost"/>" value="${product.getCost()}" type="number" tabindex="3" name="cost" required>
         </fieldset>
         <fieldset>
-            <input placeholder="<fmt:message key="label.count"/>" type="number" tabindex="4" name="count" required>
+            <input placeholder="<fmt:message key="label.count"/>" value="${product.getCount()}" type="number" tabindex="4" name="count" required>
         </fieldset>
         <label>
             <select name="countryId" required>

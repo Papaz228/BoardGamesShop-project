@@ -1,8 +1,11 @@
 package com.company.boardgamesshop.action.impl.common;
 import com.company.boardgamesshop.action.Action;
+import com.company.boardgamesshop.database.dao.impl.ProductCategoryDaoImpl;
 import com.company.boardgamesshop.database.dao.impl.ProductDaoImpl;
+import com.company.boardgamesshop.database.dao.interfaces.ProductCategoryDao;
 import com.company.boardgamesshop.database.dao.interfaces.ProductDao;
 import com.company.boardgamesshop.entity.Product;
+import com.company.boardgamesshop.entity.ProductCategory;
 import com.company.boardgamesshop.entity.User;
 import com.company.boardgamesshop.util.constants.Constant;
 import com.company.boardgamesshop.util.constants.ConstantPageNamesJSPAndAction;
@@ -15,20 +18,35 @@ import java.io.IOException;
 import java.sql.SQLException;
 import java.text.ParseException;
 import java.util.List;
+import java.util.Objects;
+
 public class AddAllProductsToShopAction implements Action {
     private final ProductDao PRODUCT_DAO = new ProductDaoImpl();
+    private final ProductCategoryDao PRODUCT_CATEGORY_DAO=new ProductCategoryDaoImpl();
     @Override
     public void execute(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException, ParseException, SQLException {
         RequestDispatcher dispatcher;
         HttpSession session = request.getSession();
         User currentUser = (User) session.getAttribute(Constant.USER);
-        List<Product> products = PRODUCT_DAO.getAllProduct();
-
-        if(currentUser!=null && !currentUser.isAdmin()){
-            products.removeIf(pr -> !pr.isActive() || pr.getCount()==0);
+        if(currentUser!=null) {
+            Long localId= (Long) session.getAttribute("localId");
+            List<Product> products = PRODUCT_DAO.getAllProduct();
+            List<ProductCategory> productCategories = PRODUCT_CATEGORY_DAO.getAllProductCategoriesByLocalId(localId);
+            String productCategoryIdString=request.getParameter("productCategoryId");
+            if (productCategoryIdString!=null) {
+                Long productCategoryId=Long.parseLong(productCategoryIdString);
+                products.removeIf(pr -> !pr.isActive() || pr.getCount() == 0 || !Objects.equals(pr.getProductCategoryId(), productCategoryId));
+            }
+            else if(!currentUser.isAdmin()){
+                products.removeIf(pr -> !pr.isActive() || pr.getCount() == 0);
+            }
+            request.setAttribute("productCategories", productCategories);
+            request.setAttribute(Constant.PRODUCTS, products);
+            dispatcher = request.getRequestDispatcher(ConstantPageNamesJSPAndAction.HOME_JSP);
+            dispatcher.forward(request, response);
         }
-        request.setAttribute(Constant.PRODUCTS, products);
-        dispatcher = request.getRequestDispatcher(ConstantPageNamesJSPAndAction.HOME_JSP);
-        dispatcher.forward(request, response);
+        else {
+            response.sendRedirect(ConstantPageNamesJSPAndAction.LOGIN_SERVICE);
+        }
     }
 }

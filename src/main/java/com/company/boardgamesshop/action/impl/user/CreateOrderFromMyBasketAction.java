@@ -5,6 +5,8 @@ import com.company.boardgamesshop.database.dao.interfaces.*;
 import com.company.boardgamesshop.entity.*;
 import com.company.boardgamesshop.util.constants.Constant;
 import com.company.boardgamesshop.util.constants.ConstantPageNamesJSPAndAction;
+
+import javax.servlet.RequestDispatcher;
 import javax.servlet.ServletException;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
@@ -17,6 +19,9 @@ import java.text.ParseException;
 import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.util.List;
+
+import static com.company.boardgamesshop.validator.Validator.*;
+
 public class CreateOrderFromMyBasketAction implements Action {
     BasketDao basketDao = new BasketDaoImpl();
     ProductDao productDao = new ProductDaoImpl();
@@ -26,11 +31,31 @@ public class CreateOrderFromMyBasketAction implements Action {
     @Override
     public void execute(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException, ParseException, SQLException {
         HttpSession session = request.getSession();
+        RequestDispatcher dispatcher;
         User currentUser = (User) session.getAttribute(Constant.USER);
         if (currentUser == null) {
             response.sendRedirect(ConstantPageNamesJSPAndAction.LOGIN_SERVICE);
         }
-            Long userId = currentUser.getId();
+        Long userId = currentUser != null ? currentUser.getId() : null;
+        String bankCardCVV = request.getParameter("bankCardCVV");
+        String bankCardNumber = request.getParameter("bankCardNumber");
+        double totalPrice = Double.parseDouble(request.getParameter("totalCost"));
+        request.setAttribute(Constant.TOTAL_PRICE, totalPrice);
+        if (bankCardCVV == null) {
+            dispatcher = request.getRequestDispatcher(ConstantPageNamesJSPAndAction.ORDER_JSP);
+            dispatcher.forward(request, response);
+        } 
+        else if (!validateCardNumberWithRegex(bankCardNumber)) {
+            request.setAttribute(Constant.ERROR, "Incorrect card number format");
+            dispatcher = request.getRequestDispatcher(ConstantPageNamesJSPAndAction.ORDER_JSP);
+            dispatcher.forward(request, response);
+        } 
+        else if (!validateCVVWithRegex(bankCardCVV)) {
+            request.setAttribute(Constant.ERROR, "Incorrect CVV format");
+            dispatcher = request.getRequestDispatcher(ConstantPageNamesJSPAndAction.ORDER_JSP);
+            dispatcher.forward(request, response);
+        } 
+        else {
             Status status = new Status();
             Long localId = (Long) session.getAttribute("localId");
             status.setLocalId(localId);
@@ -43,13 +68,12 @@ public class CreateOrderFromMyBasketAction implements Action {
             }
             Order order = new Order();
             LocalDate now = LocalDate.now();
-            Date date=Date.valueOf(now);
+            Date date = Date.valueOf(now);
             order.setDateStart(date);
             order.setUserId(userId);
             order.setStatusId(status.getId());
             List<Long> productIdsInCart = basketDao.getProductsIdInBasket(userId);
-            Integer totalCost = Integer.parseInt(request.getParameter("totalCost"));
-            order.setTotalCost(totalCost);
+            order.setTotalCost(totalPrice);
             orderDao.createOrder(order);
             Long orderId = orderDao.takeLastID();
             if (orderId == null || orderId == 0) orderId = 1L;
@@ -68,5 +92,6 @@ public class CreateOrderFromMyBasketAction implements Action {
             }
             basketDao.deleteProductFromBasketByUserId(userId);
             response.sendRedirect(ConstantPageNamesJSPAndAction.HOME_SERVICE);
+        }
     }
 }

@@ -9,24 +9,24 @@
                     <div class="title-left">
                         <h3>Billing address</h3>
                     </div>
+
                     <form class="form-signin" method="post" action="createOrder">
 
                         <div class="mb-3">
                             <label for="country">Bank Card Number</label>
 
-                            <input type="text" class="form-control" id="country" placeholder="" name="bankCardNumber">
+                            <input type="text" class="form-control" id="country" placeholder="7777777777777777" name="bankCardNumber" required autofocus>
                         </div>
 
                         <div class="mb-3">
                             <label for="country">CVV</label>
 
-                            <input type="password" class="form-control" id="" placeholder="" name="bankCardCVV">
+                            <input type="password" class="form-control" id="" placeholder="***" name="bankCardCVV" required autofocus>
                         </div>
 
                             <input type="hidden" name="totalCost" value="<c:out value="${totalPrice}"/>">
                         <button name="button" value="sumbit" class="btn btn-outline-success my-2 my-sm-0"
                                 type="submit">Place Order</button>
-
                     </form>
                 </div>
             </div>

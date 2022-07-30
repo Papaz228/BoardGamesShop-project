@@ -29,16 +29,13 @@ public class MakeMyOrderAction implements Action {
         if(currentUser!=null) {
             long userId = currentUser.getId();
             List<Long> productIdsInCart = basketDao.getProductsIdInBasket(userId);
-            long totalPrice = 0;
-            List<Product> productsInCart = new ArrayList<>();
+            double totalPrice = 0.0;
             for (long productId : productIdsInCart) {
                 Product product = productDao.getProductById(productId);
                 Integer count = basketDao.countOfBasketByUserIdAndProductId(userId, product.getId());
                 product.setCount(count);
-                productsInCart.add(product);
-                totalPrice += (long) product.getCost() * product.getCount();
+                totalPrice += (double) product.getCost() * product.getCount();
             }
-            request.setAttribute(Constant.PRODUCT_IDS_IN_CART, productsInCart);
             request.setAttribute(Constant.TOTAL_PRICE, totalPrice);
             dispatcher = request.getRequestDispatcher(ConstantPageNamesJSPAndAction.ORDER_JSP);
             dispatcher.forward(request, response);

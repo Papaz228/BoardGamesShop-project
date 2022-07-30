@@ -158,19 +158,9 @@
 
     <form id="contact" action="createNewProductCategory" method="post" accept-charset="UTF-8">
         <h3><fmt:message key="button.createProductCategory"/></h3>
-
-        <fieldset>
-            <input placeholder="<fmt:message key="label.product"/>" name="name" type="text" tabindex="1" required autofocus>
-        </fieldset>
-
-
-               <fmt:message key="label.orders.orderedTime"/>
-                <fmt:message key="label.orders.orderStatus"/>
-
-
         <c:forEach items="${languages}" var="language">
 
-            <input name="category_name" type="text"  required autofocus>  ${language.getShortName()}
+            <input name="category_name" placeholder="${language.getShortName()}" type="text"  required autofocus> }
 
         </c:forEach>
 

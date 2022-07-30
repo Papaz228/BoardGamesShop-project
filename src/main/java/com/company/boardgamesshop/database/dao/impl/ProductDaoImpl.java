@@ -20,8 +20,8 @@ public class ProductDaoImpl implements ProductDao {
     @Override
     public Product getProductById(Long id) {
         Product product = null;
-        ConnectionPool connectionPool=ConnectionPool.getConnPool();
-        Connection con=connectionPool.getConn();
+        ConnectionPool connectionPool=ConnectionPool.getInstance();
+        Connection con=connectionPool.getConnection();
         try(PreparedStatement preparedStatement = con.prepareStatement(GET_PRODUCT)){
             preparedStatement.setLong(1, id);
             ResultSet rs = preparedStatement.executeQuery();
@@ -41,7 +41,7 @@ public class ProductDaoImpl implements ProductDao {
             LOGGER.error(e);
         }
         finally {
-            connectionPool.freeConn(con);
+            connectionPool.returnConnection(con);
         }
         return product;
     }
@@ -49,8 +49,8 @@ public class ProductDaoImpl implements ProductDao {
     public List<Product> getAllProduct() {
         List<Product> products =new ArrayList<>();
         Product product;
-        ConnectionPool connectionPool=ConnectionPool.getConnPool();
-        Connection con=connectionPool.getConn();
+        ConnectionPool connectionPool=ConnectionPool.getInstance();
+        Connection con=connectionPool.getConnection();
         try( PreparedStatement preparedStatement = con.prepareStatement(GET_ALL_PRODUCTS)){
             ResultSet rs = preparedStatement.executeQuery();
             while (rs.next()) {
@@ -70,14 +70,14 @@ public class ProductDaoImpl implements ProductDao {
             LOGGER.error(e);
         }
         finally {
-            connectionPool.freeConn(con);
+            connectionPool.returnConnection(con);
         }
         return products;
     }
     @Override
     public void updateProduct(Product product) {
-        ConnectionPool connectionPool=ConnectionPool.getConnPool();
-        Connection con=connectionPool.getConn();
+        ConnectionPool connectionPool=ConnectionPool.getInstance();
+        Connection con=connectionPool.getConnection();
         try(PreparedStatement preparedStatement = con.prepareStatement(UPDATE_PRODUCT)){
             preparedStatement.setString(1,product.getName());
             preparedStatement.setString(2,product.getDescription());
@@ -92,13 +92,13 @@ public class ProductDaoImpl implements ProductDao {
             LOGGER.error(e);
         }
         finally {
-            connectionPool.freeConn(con);
+            connectionPool.returnConnection(con);
         }
     }
     @Override
     public void createProduct(Product product) {
-        ConnectionPool connectionPool=ConnectionPool.getConnPool();
-        Connection con=connectionPool.getConn();
+        ConnectionPool connectionPool=ConnectionPool.getInstance();
+        Connection con=connectionPool.getConnection();
         try(PreparedStatement preparedStatement = con.prepareStatement(INSERT_PRODUCT)){
             preparedStatement.setString(1,product.getName());
             preparedStatement.setString(2,product.getDescription());
@@ -112,13 +112,13 @@ public class ProductDaoImpl implements ProductDao {
             LOGGER.error(e);
         }
         finally {
-            connectionPool.freeConn(con);
+            connectionPool.returnConnection(con);
         }
     }
     @Override
     public void deactivateProduct(Long productId, boolean isActive) {
-    ConnectionPool connectionPool=ConnectionPool.getConnPool();
-    Connection con=connectionPool.getConn();
+    ConnectionPool connectionPool=ConnectionPool.getInstance();
+    Connection con=connectionPool.getConnection();
         try(PreparedStatement preparedStatement = con.prepareStatement(DELETE_PRODUCT)){
             preparedStatement.setBoolean(1, isActive);
             preparedStatement.setLong(2,productId);
@@ -127,6 +127,6 @@ public class ProductDaoImpl implements ProductDao {
             LOGGER.error(e);
         }
         finally {
-            connectionPool.freeConn(con);
+            connectionPool.returnConnection(con);
         }
     }}

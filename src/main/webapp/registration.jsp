@@ -60,9 +60,9 @@
 
                 <input name="last_name" id="LastName" class="form-control setMargin" placeholder="<fmt:message key="label.last_name"/>" required
                        autofocus>
-                <input name="birthday" id="birthday" class="form-control setMargin" placeholder="<fmt:message key="label.birthday"/>" required
+                <input name="birthday" id="birthday" class="form-control setMargin" placeholder="<fmt:message key="label.birthday"/> yyyy-mm-dd" required
                        autofocus>
-                <input name="phone_number" id="phone_number" class="form-control setMargin" placeholder="<fmt:message key="label.phone_number"/>" required
+                <input name="phone_number" id="phone_number" class="form-control setMargin" placeholder="<fmt:message key="label.phone_number"/> 87075554433" required
                        autofocus>
                 <input type="email" class="form-control setMargin" placeholder="<fmt:message key="label.email"/>" name="email" required
                        autofocus>

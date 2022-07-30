@@ -16,8 +16,8 @@ public class LanguageDaoImpl implements LanguageDao {
     @Override
     public List<Language> getAllLanguages() {
         List<Language> languages =new ArrayList<>();
-        ConnectionPool connectionPool=ConnectionPool.getConnPool();
-        Connection con=connectionPool.getConn();
+        ConnectionPool connectionPool=ConnectionPool.getInstance();
+        Connection con=connectionPool.getConnection();
         try(PreparedStatement preparedStatement = con.prepareStatement(GET_ALL_LOCALS)){
             ResultSet rs = preparedStatement.executeQuery();
             while (rs.next()) {
@@ -31,7 +31,7 @@ public class LanguageDaoImpl implements LanguageDao {
             LOGGER.error(e);
         }
         finally {
-            connectionPool.freeConn(con);
+            connectionPool.returnConnection(con);
         }
         return languages;
     }}

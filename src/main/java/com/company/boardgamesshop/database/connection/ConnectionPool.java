@@ -1,72 +1,105 @@
 package com.company.boardgamesshop.database.connection;
+
+import org.apache.log4j.Logger;
+
+import java.io.IOException;
+import java.io.InputStream;
 import java.sql.Connection;
+import java.sql.Driver;
 import java.sql.DriverManager;
 import java.sql.SQLException;
-import java.util.Enumeration;
-import java.util.Vector;
-public class ConnectionPool {
-    private static final ConnectionPool POOL=new ConnectionPool();
-    private final String URL="jdbc:postgresql://localhost:5432/postgres?currentSchema=boardgames";
-    private final String USERNAME="postgres";
-    private final String PASSWORD="postgres";
-    private int maxConn=10;
-    private int curConn=0;
-    private Vector<Connection> freeConns=new Vector<Connection>();
-    private ConnectionPool(){}
-    public int getCurConn() {
-        return curConn;
-    }
-    public static ConnectionPool getConnPool(){
-        return POOL;
-    }
-    public synchronized Connection getConn(){
-        Connection conn=null;
-        if(freeConns.size()>0){
-            conn=freeConns.firstElement();
-            freeConns.removeElementAt(0);
-            try {
-                if(conn.isClosed()){
-                    conn=getConn();
-                }
-            } catch (SQLException e) {
-                e.printStackTrace();
-            }
-        }else if(curConn<maxConn){
-            conn=newConn();
-        }
-        if(conn!=null){
-            curConn++;
-        }
+import java.util.Properties;
+import java.util.concurrent.ArrayBlockingQueue;
+import java.util.concurrent.BlockingQueue;
 
-        return conn;
+public class ConnectionPool {
+
+    private final Logger log = Logger.getLogger(this.getClass().getName());
+    private String url;
+    private String user;
+    private String password;
+    private String driverDB;
+    private final Properties PROPERTIES = getProperties();
+    private final int maxConnection = Integer.parseInt(PROPERTIES.getProperty("db.maxConnection"));
+    private static ConnectionPool instance = null;
+    private final BlockingQueue<Connection> FREE_CONNECTIONS = new ArrayBlockingQueue<>(maxConnection);
+
+    private ConnectionPool() {
+        init();
     }
-    private Connection newConn(){
-        Connection conn=null;
+
+    private void init(){
+        setDataForConnection();
+        loadDrivers();
+        createConnections();
+    }
+
+    public static synchronized ConnectionPool getInstance() {
+        if (instance == null) {
+            instance = new ConnectionPool();
+        }
+        return instance;
+    }
+
+    private void setDataForConnection(){
+        this.url = PROPERTIES.getProperty("db.url");
+        this.password = PROPERTIES.getProperty("db.password");
+        this.user = PROPERTIES.getProperty("db.user");
+        this.driverDB = PROPERTIES.getProperty("db.driver");
+    }
+
+    private Properties getProperties(){
+        Properties properties = new Properties();
+        InputStream inputStream = ConnectionPool.class.getClassLoader().getResourceAsStream("connectionPool.properties");
         try {
-            Class.forName("org.postgresql.Driver");
-            conn= DriverManager.getConnection(URL,USERNAME,PASSWORD);
-        } catch (ClassNotFoundException | SQLException e) {
+            properties.load(inputStream);
+        } catch (IOException e) {
+            log.error(e);
+        }
+        return properties;
+    }
+
+    private void loadDrivers() {
+        try {
+            Driver driver = (Driver) Class.forName(driverDB).newInstance();
+        } catch (InstantiationException | ClassNotFoundException e) {
+            log.warn(e);
+            e.printStackTrace();
+        } catch (IllegalAccessException e) {
+            log.warn(e);
+        }
+    }
+
+    public synchronized Connection getConnection() {
+        Connection connection = null;
+        try {
+            connection = FREE_CONNECTIONS.take();
+        } catch (InterruptedException e) {
             e.printStackTrace();
         }
+        return connection;
+    }
 
-        return conn;
-    }
-    public  synchronized void freeConn(Connection conn) {
-        freeConns.addElement(conn);
-        curConn--;
-        notifyAll();
-    }
-    public void freeAllConns(){
-        Enumeration<Connection> conns=freeConns.elements();
-        while(conns.hasMoreElements()){
-            Connection conn=conns.nextElement();
+    private void createConnections(){
+        Connection connection;
+        while(FREE_CONNECTIONS.size() < maxConnection){
             try {
-                conn.close();
-            } catch (SQLException e) {
+                connection = DriverManager.getConnection(url, user, password);
+                FREE_CONNECTIONS.put(connection);
+            } catch (InterruptedException | SQLException e) {
+                log.warn(e);
                 e.printStackTrace();
             }
         }
-        freeConns.removeAllElements();
+    }
 
+    public synchronized void returnConnection(Connection connection){
+        if ( (connection != null) && (FREE_CONNECTIONS.size()<= maxConnection)) {
+            try {
+                FREE_CONNECTIONS.put(connection);
+            } catch (InterruptedException e) {
+                e.printStackTrace();
+            }
+        }
     }
 }

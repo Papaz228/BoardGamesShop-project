@@ -3,11 +3,14 @@ import com.company.boardgamesshop.action.Action;
 import com.company.boardgamesshop.action.impl.admin.*;
 import com.company.boardgamesshop.action.impl.common.*;
 import com.company.boardgamesshop.action.impl.user.*;
+import org.apache.log4j.Logger;
+
 import java.util.HashMap;
 import java.util.Map;
 public class FactoryAction {
     private static final Map<String, Action> SERVICE_MAP = new HashMap<>();
     private static final FactoryAction SERVICE_FACTORY = new FactoryAction();
+    private final Logger LOGGER = Logger.getLogger(this.getClass().getName());
     static {
         SERVICE_MAP.put("/registration", new RegistrationAction()) ;
         SERVICE_MAP.put("/login", new LoginAction());
@@ -35,12 +38,18 @@ public class FactoryAction {
 
     }
 
-    public Action getService(String request) throws ClassCastException, NullPointerException{
+    public Action getService(String request){
         Action action = SERVICE_MAP.get("/home");
-        for (Map.Entry<String, Action> pair : SERVICE_MAP.entrySet()) {
-            if (request.equalsIgnoreCase(pair.getKey())) {
-                action = SERVICE_MAP.get(pair.getKey());
+        try {
+            for (Map.Entry<String, Action> pair : SERVICE_MAP.entrySet()) {
+                if (request.equalsIgnoreCase(pair.getKey())) {
+                    action = SERVICE_MAP.get(pair.getKey());
+                }
             }
+        }
+        catch (NullPointerException | ClassCastException e){
+            LOGGER.error(e);
+            action = SERVICE_MAP.get("/home");
         }
         return action;
     }

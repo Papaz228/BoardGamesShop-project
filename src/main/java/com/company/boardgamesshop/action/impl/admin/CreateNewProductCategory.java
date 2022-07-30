@@ -23,17 +23,22 @@ import java.util.List;
 public class CreateNewProductCategory implements Action {
         ProductCategoryDao productCategoryDao=new ProductCategoryDaoImpl();
         LanguageDao languageDao =new LanguageDaoImpl();
-        List<Language> languages = null;
+        List<Language> languages;
         @Override
         public void execute(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException, ParseException, SQLException {
             RequestDispatcher dispatcher;
             HttpSession session = request.getSession();
             ProductCategory productCategory;
-            List<ProductCategory> productCategories=new ArrayList<>();
-            String productCategoryName = request.getParameter("category_name");
             User currentUser = (User) session.getAttribute(Constant.USER);
             if (currentUser.isAdmin()) {
-                if (productCategoryName != null) {
+            List<ProductCategory> productCategories=new ArrayList<>();
+            String productCategoryName = request.getParameter("category_name");
+                if (productCategoryName == null) {
+                    languages = languageDao.getAllLanguages();
+                    request.setAttribute("languages", languages);
+                    dispatcher = request.getRequestDispatcher(ConstantPageNamesJSPAndAction.CREATE_NEW_CATEGORY_JSP);
+                    dispatcher.forward(request, response);
+                } else {
                     List<String> categoryNames = Arrays.asList(request.getParameterValues("category_name"));
                     for (int i=0;i<categoryNames.size();i++){
                         productCategory = new ProductCategory();
@@ -43,11 +48,6 @@ public class CreateNewProductCategory implements Action {
                     }
                     productCategoryDao.createAll(productCategories);
                     response.sendRedirect(ConstantPageNamesJSPAndAction.CREATE_PRODUCT_ACTION);
-                } else {
-                    languages = languageDao.getAllLanguages();
-                    request.setAttribute("locals", languages);
-                    dispatcher = request.getRequestDispatcher(ConstantPageNamesJSPAndAction.CREATE_NEW_CATEGORY_JSP);
-                    dispatcher.forward(request, response);
                 }
             }
             else {

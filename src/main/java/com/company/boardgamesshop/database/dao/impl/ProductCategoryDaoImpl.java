@@ -16,8 +16,8 @@ public class ProductCategoryDaoImpl implements ProductCategoryDao {
     private static final String GET_ALL_PRODUCT_CATEGORIES = "SELECT * FROM product_category WHERE local_id = ?";
     @Override
     public void create(ProductCategory productCategory)  {
-        ConnectionPool connectionPool=ConnectionPool.getConnPool();
-        Connection con=connectionPool.getConn();
+        ConnectionPool connectionPool=ConnectionPool.getInstance();
+        Connection con=connectionPool.getConnection();
         try(PreparedStatement preparedStatement = con.prepareStatement(INSERT_PRODUCT_CATEGORY)){
             preparedStatement.setString(1,productCategory.getCategoryName());
             preparedStatement.setLong(2,productCategory.getLocalId());
@@ -26,13 +26,13 @@ public class ProductCategoryDaoImpl implements ProductCategoryDao {
             LOGGER.error(e);
         }
         finally {
-            connectionPool.freeConn(con);
+            connectionPool.returnConnection(con);
         }}
     @Override
     public List<ProductCategory> getAllProductCategoriesByLocalId(Long localId) {
         List<ProductCategory> productCategories =new ArrayList<>();
-        ConnectionPool connectionPool=ConnectionPool.getConnPool();
-        Connection con=connectionPool.getConn();
+        ConnectionPool connectionPool=ConnectionPool.getInstance();
+        Connection con=connectionPool.getConnection();
         try(PreparedStatement preparedStatement = con.prepareStatement(GET_ALL_PRODUCT_CATEGORIES)){
             preparedStatement.setLong(1, localId);
             ResultSet rs = preparedStatement.executeQuery();
@@ -47,14 +47,14 @@ public class ProductCategoryDaoImpl implements ProductCategoryDao {
             LOGGER.error(e);
         }
         finally {
-            connectionPool.freeConn(con);
+            connectionPool.returnConnection(con);
         }
         return productCategories;
     }
     @Override
     public void createAll(List<ProductCategory> productCategories) {
-        ConnectionPool connectionPool=ConnectionPool.getConnPool();
-        Connection con=connectionPool.getConn();
+        ConnectionPool connectionPool=ConnectionPool.getInstance();
+        Connection con=connectionPool.getConnection();
         try{
             for(ProductCategory productCategory: productCategories) {
                 PreparedStatement preparedStatement = con.prepareStatement(INSERT_PRODUCT_CATEGORY);
@@ -68,7 +68,7 @@ public class ProductCategoryDaoImpl implements ProductCategoryDao {
             LOGGER.error(e);
         }
         finally {
-            connectionPool.freeConn(con);
+            connectionPool.returnConnection(con);
         }
     }}
 

@@ -22,8 +22,8 @@ public class BasketDaoImpl implements BasketDao {
     @Override
 
     public void addProductToBasket(Basket basket) {
-        ConnectionPool connectionPool = ConnectionPool.getConnPool();
-        Connection con = connectionPool.getConn();
+        ConnectionPool connectionPool = ConnectionPool.getInstance();
+        Connection con = connectionPool.getConnection();
         try(PreparedStatement preparedStatement = con.prepareStatement(INSERT_PRODUCT_INTO_CART)){
             preparedStatement.setLong(1, basket.getProductId());
             preparedStatement.setLong(2, basket.getUserId());
@@ -34,12 +34,12 @@ public class BasketDaoImpl implements BasketDao {
               LOGGER.error(e);
             }
         finally {
-            connectionPool.freeConn(con);
+            connectionPool.returnConnection(con);
         }}
     @Override
     public List<Long> getProductsIdInBasket(Long userId) {
-        ConnectionPool connectionPool = ConnectionPool.getConnPool();
-        Connection con=connectionPool.getConn();
+        ConnectionPool connectionPool = ConnectionPool.getInstance();
+        Connection con=connectionPool.getConnection();
         List<Long> productsIds = null;
         try(PreparedStatement preparedStatement = con.prepareStatement(GET_PRODUCTS_FROM_CART_BY_USER_ID)){
             productsIds = new ArrayList<>();
@@ -53,14 +53,14 @@ public class BasketDaoImpl implements BasketDao {
             LOGGER.error(e);
         }
         finally {
-            connectionPool.freeConn(con);
+            connectionPool.returnConnection(con);
         }
         return productsIds;
     }
     @Override
     public Integer countOfBasketByUserIdAndProductId(Long userId,Long productId){
-        ConnectionPool connectionPool = ConnectionPool.getConnPool();
-        Connection con=connectionPool.getConn();
+        ConnectionPool connectionPool = ConnectionPool.getInstance();
+        Connection con=connectionPool.getConnection();
         int count=0;
         try(PreparedStatement preparedStatement=con.prepareStatement(GET_COUNT_FROM_BASKET_BY_USER_ID)) {
             preparedStatement.setLong(1, userId);
@@ -73,14 +73,14 @@ public class BasketDaoImpl implements BasketDao {
             LOGGER.error(e);
         }
         finally {
-            connectionPool.freeConn(con);
+            connectionPool.returnConnection(con);
         }
         return count;
     }
     @Override
     public void deleteProductInBasket(Long productId, Long userId) {
-        ConnectionPool connectionPool = ConnectionPool.getConnPool();
-        Connection con=connectionPool.getConn();
+        ConnectionPool connectionPool = ConnectionPool.getInstance();
+        Connection con=connectionPool.getConnection();
             try (PreparedStatement preparedStatement = con.prepareStatement(DELETE_PRODUCT_FROM_CART)) {
                 preparedStatement.setLong(1, productId);
                 preparedStatement.setLong(2, userId);
@@ -88,14 +88,14 @@ public class BasketDaoImpl implements BasketDao {
             } catch (Exception e) {
                 LOGGER.error(e);
             } finally {
-                connectionPool.freeConn(con);
+                connectionPool.returnConnection(con);
             }
         }
     @Override
     public List<Basket> getAllFromBasket(Long productId) {
         List<Basket> baskets =new ArrayList<>();
-        ConnectionPool connectionPool=ConnectionPool.getConnPool();
-        Connection con=connectionPool.getConn();
+        ConnectionPool connectionPool=ConnectionPool.getInstance();
+        Connection con=connectionPool.getConnection();
         try (PreparedStatement preparedStatement = con.prepareStatement(GET_ALL_FROM_CART)){
             preparedStatement.setLong(1,productId);
             ResultSet rs = preparedStatement.executeQuery();
@@ -111,14 +111,14 @@ public class BasketDaoImpl implements BasketDao {
             LOGGER.error(e);
         }
         finally {
-            connectionPool.freeConn(con);
+            connectionPool.returnConnection(con);
         }
         return baskets;
     }
     @Override
     public void deleteProductFromBasketByUserId(Long userId) {
-        ConnectionPool connectionPool=ConnectionPool.getConnPool();
-        Connection con=connectionPool.getConn();
+        ConnectionPool connectionPool=ConnectionPool.getInstance();
+        Connection con=connectionPool.getConnection();
         try( PreparedStatement preparedStatement = con.prepareStatement(DELETE_PRODUCTS_FROM_CART_BY_USER)){
             preparedStatement.setLong(1,userId);
             preparedStatement.executeUpdate();
@@ -126,13 +126,13 @@ public class BasketDaoImpl implements BasketDao {
             LOGGER.error(e);
         }
         finally {
-            connectionPool.freeConn(con);
+            connectionPool.returnConnection(con);
         }
     }
     @Override
     public void updateProductCountInBasketByUserIdAndProductId(Long userId, Long productId, Integer count) {
-        ConnectionPool connectionPool=ConnectionPool.getConnPool();
-        Connection con=connectionPool.getConn();
+        ConnectionPool connectionPool=ConnectionPool.getInstance();
+        Connection con=connectionPool.getConnection();
         try (PreparedStatement preparedStatement = con.prepareStatement(UPDATE_PRODUCT_COUNT_IN_BASKET_BY_USER_AND_PRODUCT_ID)) {
             preparedStatement.setLong(1, count);
             preparedStatement.setLong(2, userId);
@@ -142,7 +142,7 @@ public class BasketDaoImpl implements BasketDao {
             LOGGER.error(e);
         }
         finally {
-            connectionPool.freeConn(con);
+            connectionPool.returnConnection(con);
         }
     }
 }

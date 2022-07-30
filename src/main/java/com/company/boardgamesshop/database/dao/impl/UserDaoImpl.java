@@ -20,8 +20,8 @@ public class UserDaoImpl implements UserDao {
     private static final String CHANGE_PASSWORD = "UPDATE users SET password = ? WHERE id = ?";
     @Override
     public void addUser(User user) {
-        ConnectionPool connectionPool=ConnectionPool.getConnPool();
-        Connection con=connectionPool.getConn();
+        ConnectionPool connectionPool=ConnectionPool.getInstance();
+        Connection con=connectionPool.getConnection();
         try(PreparedStatement preparedStatement = con.prepareStatement(INSERT_INTO_USERS)) {
             preparedStatement.setString(1, user.getFirstName());
             preparedStatement.setString(2, user.getLastName());
@@ -36,13 +36,13 @@ public class UserDaoImpl implements UserDao {
             LOGGER.error(e);
         }
         finally {
-            connectionPool.freeConn(con);
+            connectionPool.returnConnection(con);
         }
     }
     @Override
     public User getUserByLoginPassword(String login, String password) {
-        ConnectionPool connectionPool=ConnectionPool.getConnPool();
-        Connection con=connectionPool.getConn();
+        ConnectionPool connectionPool=ConnectionPool.getInstance();
+        Connection con=connectionPool.getConnection();
         User user=null;
         try(PreparedStatement preparedStatement = con.prepareStatement(GET_USER_BY_LOGIN_PASSWORD)) {
             preparedStatement.setString(1, login);
@@ -64,15 +64,15 @@ public class UserDaoImpl implements UserDao {
             LOGGER.error(e);
         }
         finally {
-            connectionPool.freeConn(con);
+            connectionPool.returnConnection(con);
         }
         return user;
     }
     @Override
     public boolean isEmailExist(String email) {
         boolean isExist = false;
-        ConnectionPool connectionPool=ConnectionPool.getConnPool();
-        Connection con=connectionPool.getConn();
+        ConnectionPool connectionPool=ConnectionPool.getInstance();
+        Connection con=connectionPool.getConnection();
         try( PreparedStatement preparedStatement = con.prepareStatement(CHECK_LOGIN)){
             preparedStatement.setString(1, email);
             ResultSet resultSet = preparedStatement.executeQuery();
@@ -83,15 +83,15 @@ public class UserDaoImpl implements UserDao {
             LOGGER.error(e);
         }
         finally {
-            connectionPool.freeConn(con);
+            connectionPool.returnConnection(con);
         }
         return isExist;
     }
     @Override
     public List<User> getUsers() {
         List<User> users = new ArrayList<>();
-        ConnectionPool connectionPool=ConnectionPool.getConnPool();
-        Connection con=connectionPool.getConn();
+        ConnectionPool connectionPool=ConnectionPool.getInstance();
+        Connection con=connectionPool.getConnection();
         try(PreparedStatement preparedStatement = con.prepareStatement(GET_ALL_USERS)) {
             ResultSet resultSet = preparedStatement.executeQuery();
             while (resultSet.next()) {
@@ -109,14 +109,14 @@ public class UserDaoImpl implements UserDao {
             LOGGER.error(e);
         }
         finally {
-            connectionPool.freeConn(con);
+            connectionPool.returnConnection(con);
         }
         return users;
     }
     @Override
     public void bannedUser(Long userId,boolean isBanned) {
-        ConnectionPool connectionPool=ConnectionPool.getConnPool();
-        Connection con=connectionPool.getConn();
+        ConnectionPool connectionPool=ConnectionPool.getInstance();
+        Connection con=connectionPool.getConnection();
         try( PreparedStatement preparedStatement = con.prepareStatement(UPDATE_USER_ACTIVITY)){
             preparedStatement.setBoolean(1,isBanned);
             preparedStatement.setLong(2,userId);
@@ -125,13 +125,13 @@ public class UserDaoImpl implements UserDao {
             LOGGER.error(e);
         }
         finally {
-            connectionPool.freeConn(con);
+            connectionPool.returnConnection(con);
         }
     }
     @Override
     public void changePassword(Long userId, String newPassword){
-        ConnectionPool connectionPool=ConnectionPool.getConnPool();
-        Connection con=connectionPool.getConn();
+        ConnectionPool connectionPool=ConnectionPool.getInstance();
+        Connection con=connectionPool.getConnection();
         try(PreparedStatement preparedStatement=con.prepareStatement(CHANGE_PASSWORD)){
             preparedStatement.setString(1,newPassword);
             preparedStatement.setLong(2, userId);
@@ -141,7 +141,7 @@ public class UserDaoImpl implements UserDao {
             LOGGER.error(e);
         }
         finally {
-            connectionPool.freeConn(con);
+            connectionPool.returnConnection(con);
         }
     }
 }

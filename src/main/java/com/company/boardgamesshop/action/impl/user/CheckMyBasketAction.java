@@ -45,8 +45,12 @@ public class CheckMyBasketAction implements Action {
                         continue;
                     }
                     productCount=product.getCount();
-                    Integer count = basketDao.countOfBasketByUserIdAndProductId(userId, product.getId());
-                    product.setCount(count);
+                    Integer countInBasket = basketDao.countOfBasketByUserIdAndProductId(userId, product.getId());
+                    if(productCount < countInBasket) {
+                        basketDao.updateProductCountInBasketByUserIdAndProductId(userId, productId, productCount);
+                        countInBasket=productCount;
+                    }
+                    product.setCount(countInBasket);
                     productsInCart.add(product);
                     sumOfPrice += (double) product.getCost() * product.getCount();
                 }

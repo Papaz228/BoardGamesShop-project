@@ -12,7 +12,7 @@
                         <thead>
                         <tr>
                             <th><fmt:message key="label.emailUser"/></th>
-                            <th><fmt:message key="label.orders.orderedTime"/></th>
+                            <th><fmt:message key="label.orders.orderedDate"/></th>
                             <th><fmt:message key="label.orders.orderStatus"/></th>
 
 

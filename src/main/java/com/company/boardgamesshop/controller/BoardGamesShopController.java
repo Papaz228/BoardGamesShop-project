@@ -20,7 +20,7 @@ public class BoardGamesShopController extends HttpServlet {
         try {
             Action action = factoryAction.getService(path);
             action.execute(request, response);
-        } catch (ParseException | SQLException | ServletException | IOException  | NullPointerException | ClassCastException e) {
+        } catch (ParseException | SQLException | ServletException | IOException e) {
             LOGGER.error(e);
         }
     }

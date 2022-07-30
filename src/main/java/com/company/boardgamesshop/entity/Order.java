@@ -3,7 +3,7 @@ import java.sql.Date;
 
 public class Order {
     private Long id;
-    private Integer totalCost;
+    private double totalCost;
     private Date dateStart;
     private Date dateFinish;
     private Long userId;
@@ -15,10 +15,10 @@ public class Order {
     public void setId(Long id) {
         this.id = id;
     }
-    public Integer getTotalCost() {
+    public double getTotalCost() {
         return totalCost;
     }
-    public void setTotalCost(Integer totalCost) {
+    public void setTotalCost(double totalCost) {
         this.totalCost = totalCost;
     }
     public Date getDateStart() {

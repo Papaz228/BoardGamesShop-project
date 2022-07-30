@@ -19,10 +19,10 @@ public class OrderDaoImpl implements OrderDao {
     private static final String SELECT_USER_ORDER_STATUS="SELECT orders.id, orders.user_id, orders.status_id, orders.date_start, orders.total_cost, status.name, users.email, status.local_id FROM orders INNER JOIN status ON orders.status_id=status.id INNER JOIN users ON orders.user_id=users.id";
     @Override
     public void createOrder(Order order) {
-        ConnectionPool connectionPool = ConnectionPool.getConnPool();
-        Connection con = connectionPool.getConn();
+        ConnectionPool connectionPool = ConnectionPool.getInstance();
+        Connection con = connectionPool.getConnection();
         try (PreparedStatement preparedStatement = con.prepareStatement(INSERT_INTO_ORDER)) {
-            preparedStatement.setInt(1, order.getTotalCost());
+            preparedStatement.setDouble(1, order.getTotalCost());
             preparedStatement.setDate(2,  order.getDateStart());
             preparedStatement.setLong(3, order.getUserId());
             preparedStatement.setLong(4, order.getStatusId());
@@ -30,13 +30,13 @@ public class OrderDaoImpl implements OrderDao {
         } catch (Exception e) {
             LOGGER.error(e);
         } finally {
-            connectionPool.freeConn(con);
+            connectionPool.returnConnection(con);
         }}
     @Override
     public Long takeLastID() {
         long lastId = 0;
-        ConnectionPool connectionPool = ConnectionPool.getConnPool();
-        Connection con = connectionPool.getConn();
+        ConnectionPool connectionPool = ConnectionPool.getInstance();
+        Connection con = connectionPool.getConnection();
         try (PreparedStatement preparedStatement = con.prepareStatement(SELECT_LAST_ID_FROM_ORDER)) {
             ResultSet rs = preparedStatement.executeQuery();
             while (rs.next()) {
@@ -45,15 +45,15 @@ public class OrderDaoImpl implements OrderDao {
         } catch (Exception e) {
             LOGGER.error(e);
         } finally {
-            connectionPool.freeConn(con);
+            connectionPool.returnConnection(con);
         }
         return lastId;
     }
     @Override
     public ArrayList<ArrayList<String>> getFromOrdersAndUsersAndStatus() {
         ArrayList<ArrayList<String>> orders =new ArrayList<>();
-        ConnectionPool connectionPool = ConnectionPool.getConnPool();
-        Connection con = connectionPool.getConn();
+        ConnectionPool connectionPool = ConnectionPool.getInstance();
+        Connection con = connectionPool.getConnection();
         try(PreparedStatement preparedStatement = con.prepareStatement(SELECT_USER_ORDER_STATUS)){
             ResultSet rs = preparedStatement.executeQuery();
             while (rs.next()) {
@@ -68,14 +68,14 @@ public class OrderDaoImpl implements OrderDao {
         } catch (Exception e) {
             LOGGER.error(e);
         } finally {
-            connectionPool.freeConn(con);
+            connectionPool.returnConnection(con);
         }
         return orders;
     }
     @Override
     public void changeOrderStatus(Long orderId, Long statusId) {
-        ConnectionPool connectionPool = ConnectionPool.getConnPool();
-        Connection con = connectionPool.getConn();
+        ConnectionPool connectionPool = ConnectionPool.getInstance();
+        Connection con = connectionPool.getConnection();
         try (PreparedStatement preparedStatement = con.prepareStatement(UPDATE_STATUS_ORDER)) {
             preparedStatement.setLong(1, statusId);
             preparedStatement.setLong(2, orderId);
@@ -83,13 +83,13 @@ public class OrderDaoImpl implements OrderDao {
         } catch (Exception e) {
             LOGGER.error(e);
         } finally {
-            connectionPool.freeConn(con);
+            connectionPool.returnConnection(con);
         }}
     @Override
     public List<Order> getOrderByUserId(Long userId) {
         List<Order> orders = new ArrayList<>();
-        ConnectionPool connectionPool = ConnectionPool.getConnPool();
-        Connection con = connectionPool.getConn();
+        ConnectionPool connectionPool = ConnectionPool.getInstance();
+        Connection con = connectionPool.getConnection();
         try (PreparedStatement preparedStatement = con.prepareStatement(SELECT_ORDERS_BY_USER_ID)) {
             preparedStatement.setLong(1, userId);
             ResultSet rs = preparedStatement.executeQuery();
@@ -106,7 +106,7 @@ public class OrderDaoImpl implements OrderDao {
         } catch (Exception e) {
             LOGGER.error(e);
         } finally {
-            connectionPool.freeConn(con);
+            connectionPool.returnConnection(con);
         }
         return orders;
     }}

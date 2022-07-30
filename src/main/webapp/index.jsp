@@ -3,5 +3,5 @@
 <html>
 <body>
 </body>
-<jsp:forward page="home.jsp"/>
+<jsp:forward page="login.jsp"/>
 </html>
