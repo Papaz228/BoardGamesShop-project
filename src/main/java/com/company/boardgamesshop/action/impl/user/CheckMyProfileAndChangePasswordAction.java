@@ -25,7 +25,7 @@ public class CheckMyProfileAndChangePasswordAction implements Action {
         String password = request.getParameter(Constant.PASSWORD);
         if(currentUser!=null) {
             if (password != null) {
-                if (!validatePasswordWithRegex(request.getParameter(Constant.PASSWORD))) {
+                if (validatePasswordWithRegex(request.getParameter(Constant.PASSWORD))) {
                     String newPassword = request.getParameter(Constant.PASSWORD);
                     String securedPassword = DigestUtils.md5Hex(newPassword);
                     userDao.changePassword(currentUser.getId(), securedPassword);
