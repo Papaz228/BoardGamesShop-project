@@ -1,4 +1,5 @@
 package com.company.boardgamesshop.action.impl.user;
+
 import com.company.boardgamesshop.action.Action;
 import com.company.boardgamesshop.database.dao.impl.*;
 import com.company.boardgamesshop.database.dao.interfaces.*;
@@ -14,13 +15,12 @@ import javax.servlet.http.HttpSession;
 import java.io.IOException;
 import java.sql.Date;
 import java.sql.SQLException;
-import java.sql.Timestamp;
 import java.text.ParseException;
 import java.time.LocalDate;
-import java.time.LocalDateTime;
 import java.util.List;
 
-import static com.company.boardgamesshop.validator.Validator.*;
+import static com.company.boardgamesshop.validator.Validator.validateCVVWithRegex;
+import static com.company.boardgamesshop.validator.Validator.validateCardNumberWithRegex;
 
 public class CreateOrderFromMyBasketAction implements Action {
     BasketDao basketDao = new BasketDaoImpl();
@@ -28,6 +28,7 @@ public class CreateOrderFromMyBasketAction implements Action {
     StatusDao statusDao = new StatusDaoImpl();
     OrderDao orderDao = new OrderDaoImpl();
     OrderDetailDao orderItemDao = new OrderDetailDaoImpl();
+
     @Override
     public void execute(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException, ParseException, SQLException {
         HttpSession session = request.getSession();
@@ -44,18 +45,15 @@ public class CreateOrderFromMyBasketAction implements Action {
         if (bankCardCVV == null) {
             dispatcher = request.getRequestDispatcher(ConstantPageNamesJSPAndAction.ORDER_JSP);
             dispatcher.forward(request, response);
-        } 
-        else if (!validateCardNumberWithRegex(bankCardNumber)) {
+        } else if (!validateCardNumberWithRegex(bankCardNumber)) {
             request.setAttribute(Constant.ERROR, Constant.ERROR_CARD_FORMAT);
             dispatcher = request.getRequestDispatcher(ConstantPageNamesJSPAndAction.ORDER_JSP);
             dispatcher.forward(request, response);
-        } 
-        else if (!validateCVVWithRegex(bankCardCVV)) {
+        } else if (!validateCVVWithRegex(bankCardCVV)) {
             request.setAttribute(Constant.ERROR, Constant.ERROR_CVV_FORMAT);
             dispatcher = request.getRequestDispatcher(ConstantPageNamesJSPAndAction.ORDER_JSP);
             dispatcher.forward(request, response);
-        } 
-        else {
+        } else {
             Status status = new Status();
             Long localId = (Long) session.getAttribute(Constant.LOCAL_ID);
             status.setLocalId(localId);

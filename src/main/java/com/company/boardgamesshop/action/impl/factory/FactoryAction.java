@@ -1,4 +1,5 @@
 package com.company.boardgamesshop.action.impl.factory;
+
 import com.company.boardgamesshop.action.Action;
 import com.company.boardgamesshop.action.impl.admin.*;
 import com.company.boardgamesshop.action.impl.common.*;
@@ -7,12 +8,13 @@ import org.apache.log4j.Logger;
 
 import java.util.HashMap;
 import java.util.Map;
+
 public class FactoryAction {
     private static final Map<String, Action> SERVICE_MAP = new HashMap<>();
     private static final FactoryAction SERVICE_FACTORY = new FactoryAction();
-    private final Logger LOGGER = Logger.getLogger(this.getClass().getName());
+
     static {
-        SERVICE_MAP.put("/registration", new RegistrationAction()) ;
+        SERVICE_MAP.put("/registration", new RegistrationAction());
         SERVICE_MAP.put("/login", new LoginAction());
         SERVICE_MAP.put("/home", new AddAllProductsToShopAction());
         SERVICE_MAP.put("/product", new GetOneProductAction());
@@ -38,7 +40,13 @@ public class FactoryAction {
 
     }
 
-    public Action getService(String request){
+    private final Logger LOGGER = Logger.getLogger(this.getClass().getName());
+
+    public static FactoryAction getInstance() {
+        return SERVICE_FACTORY;
+    }
+
+    public Action getService(String request) {
         Action action = SERVICE_MAP.get("/home");
         try {
             for (Map.Entry<String, Action> pair : SERVICE_MAP.entrySet()) {
@@ -46,14 +54,10 @@ public class FactoryAction {
                     action = SERVICE_MAP.get(pair.getKey());
                 }
             }
-        }
-        catch (NullPointerException | ClassCastException e){
+        } catch (NullPointerException | ClassCastException e) {
             LOGGER.error(e);
             action = SERVICE_MAP.get("/home");
         }
         return action;
-    }
-    public static FactoryAction getInstance() {
-        return SERVICE_FACTORY;
     }
 }

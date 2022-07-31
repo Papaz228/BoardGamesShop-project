@@ -17,18 +17,18 @@ import java.text.ParseException;
 
 public class UpdateProductCountInBasket implements Action {
     BasketDao basketDao = new BasketDaoImpl();
+
     @Override
     public void execute(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException, ParseException, SQLException {
         HttpSession session = request.getSession();
         User currentUser = (User) session.getAttribute(Constant.USER);
-        if (currentUser!=null) {
+        if (currentUser != null) {
             Long userId = currentUser.getId();
             Integer count = Integer.parseInt(request.getParameter(Constant.CHANGED_PRODUCT_COUNT));
             Long productId = Long.parseLong(request.getParameter(Constant.PRODUCT_ID));
             basketDao.updateProductCountInBasketByUserIdAndProductId(userId, productId, count);
             response.sendRedirect(ConstantPageNamesJSPAndAction.MY_BASKET);
-        }
-        else {
+        } else {
             response.sendRedirect(ConstantPageNamesJSPAndAction.LOGIN_SERVICE);
         }
     }

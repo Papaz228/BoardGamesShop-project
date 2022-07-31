@@ -14,24 +14,18 @@ import java.util.concurrent.BlockingQueue;
 
 public class ConnectionPool {
 
+    private static ConnectionPool instance = null;
     private final Logger log = Logger.getLogger(this.getClass().getName());
+    private final Properties PROPERTIES = getProperties();
+    private final int maxConnection = Integer.parseInt(PROPERTIES.getProperty("db.maxConnection"));
+    private final BlockingQueue<Connection> FREE_CONNECTIONS = new ArrayBlockingQueue<>(maxConnection);
     private String url;
     private String user;
     private String password;
     private String driverDB;
-    private final Properties PROPERTIES = getProperties();
-    private final int maxConnection = Integer.parseInt(PROPERTIES.getProperty("db.maxConnection"));
-    private static ConnectionPool instance = null;
-    private final BlockingQueue<Connection> FREE_CONNECTIONS = new ArrayBlockingQueue<>(maxConnection);
 
     private ConnectionPool() {
         init();
-    }
-
-    private void init(){
-        setDataForConnection();
-        loadDrivers();
-        createConnections();
     }
 
     public static synchronized ConnectionPool getInstance() {
@@ -41,14 +35,20 @@ public class ConnectionPool {
         return instance;
     }
 
-    private void setDataForConnection(){
+    private void init() {
+        setDataForConnection();
+        loadDrivers();
+        createConnections();
+    }
+
+    private void setDataForConnection() {
         this.url = PROPERTIES.getProperty("db.url");
         this.password = PROPERTIES.getProperty("db.password");
         this.user = PROPERTIES.getProperty("db.user");
         this.driverDB = PROPERTIES.getProperty("db.driver");
     }
 
-    private Properties getProperties(){
+    private Properties getProperties() {
         Properties properties = new Properties();
         InputStream inputStream = ConnectionPool.class.getClassLoader().getResourceAsStream("connectionPool.properties");
         try {
@@ -80,9 +80,9 @@ public class ConnectionPool {
         return connection;
     }
 
-    private void createConnections(){
+    private void createConnections() {
         Connection connection;
-        while(FREE_CONNECTIONS.size() < maxConnection){
+        while (FREE_CONNECTIONS.size() < maxConnection) {
             try {
                 connection = DriverManager.getConnection(url, user, password);
                 FREE_CONNECTIONS.put(connection);
@@ -93,8 +93,8 @@ public class ConnectionPool {
         }
     }
 
-    public synchronized void returnConnection(Connection connection){
-        if ( (connection != null) && (FREE_CONNECTIONS.size()<= maxConnection)) {
+    public synchronized void returnConnection(Connection connection) {
+        if ((connection != null) && (FREE_CONNECTIONS.size() <= maxConnection)) {
             try {
                 FREE_CONNECTIONS.put(connection);
             } catch (InterruptedException e) {

@@ -1,10 +1,12 @@
 package com.company.boardgamesshop.action.impl.admin;
+
 import com.company.boardgamesshop.action.Action;
+import com.company.boardgamesshop.database.dao.impl.OrderDaoImpl;
+import com.company.boardgamesshop.database.dao.interfaces.OrderDao;
 import com.company.boardgamesshop.entity.User;
 import com.company.boardgamesshop.util.constants.Constant;
 import com.company.boardgamesshop.util.constants.ConstantPageNamesJSPAndAction;
-import com.company.boardgamesshop.database.dao.impl.OrderDaoImpl;
-import com.company.boardgamesshop.database.dao.interfaces.OrderDao;
+
 import javax.servlet.RequestDispatcher;
 import javax.servlet.ServletException;
 import javax.servlet.http.HttpServletRequest;
@@ -14,19 +16,21 @@ import java.io.IOException;
 import java.sql.SQLException;
 import java.text.ParseException;
 import java.util.ArrayList;
+
 public class ListOfOrdersForAdminAction implements Action {
     OrderDao orderDao = new OrderDaoImpl();
+
     @Override
     public void execute(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException, ParseException, SQLException {
         HttpSession session = request.getSession();
         RequestDispatcher dispatcher;
-        User currentUser = (User)session.getAttribute(Constant.USER);
-        if(currentUser.isAdmin()){
+        User currentUser = (User) session.getAttribute(Constant.USER);
+        if (currentUser.isAdmin()) {
             ArrayList<ArrayList<String>> orders = orderDao.getFromOrdersAndUsersAndStatus();
             request.setAttribute(Constant.ORDERS, orders);
             dispatcher = request.getRequestDispatcher(ConstantPageNamesJSPAndAction.ORDERS_ADMIN_JSP);
             dispatcher.forward(request, response);
-        }else {
+        } else {
             response.sendRedirect(ConstantPageNamesJSPAndAction.LOGIN_SERVICE);
         }
     }

@@ -1,4 +1,5 @@
 package com.company.boardgamesshop.validator;
+
 import com.company.boardgamesshop.entity.User;
 
 import java.text.ParseException;
@@ -13,15 +14,16 @@ public class Validator {
     private static final String CVV_REGEX = "^[0-9]{3}$";
     private static final String DIGITS_REGEX = "^[0-9]{1,11}$";
     private static final SimpleDateFormat format = new SimpleDateFormat("yyyy-MM-dd");
-    public static boolean validateBirthdayWithRegex(String birthday){
+
+    public static boolean validateBirthdayWithRegex(String birthday) {
         try {
             format.parse(birthday);
             return true;
-        }
-        catch(ParseException e){
+        } catch (ParseException e) {
             return false;
         }
     }
+
     public static boolean checkAccess(User user) {
         boolean isAccess = false;
         boolean isActivity = user.isBanned();
@@ -30,6 +32,7 @@ public class Validator {
         }
         return isAccess;
     }
+
     public static boolean validateMailWithRegex(String login) {
         return login.matches(MAIL_REGEX);
     }
@@ -57,10 +60,4 @@ public class Validator {
     public static boolean validateDigitWithRegex(String price) {
         return price.matches(DIGITS_REGEX);
     }
-
-
-
-
-
-
 }
