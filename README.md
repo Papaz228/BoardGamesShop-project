@@ -1,5 +1,5 @@
 # BoardGamesShop-project
-![DIAG](https://user-images.githubusercontent.com/74819372/182015030-137ead5e-ab08-488f-9f52-fcf0c03a4b18.png)
+![image](https://user-images.githubusercontent.com/74819372/182015101-7c02d63c-c58e-4180-8a23-4b588b1e74cd.png)
 
 ADMIN: 
 EMAIL: admin@gmail.com
