@@ -1,7 +1,4 @@
-
 <%@ include file="header.jsp" %>
-
-
 <div class="cart-box-main">
     <div class="container">
         <div class="row">
@@ -14,15 +11,11 @@
                             <th><fmt:message key="label.emailUser"/></th>
                             <th><fmt:message key="label.orders.orderedDate"/></th>
                             <th><fmt:message key="label.orders.orderStatus"/></th>
-
-
-
                         </tr>
                         </thead>
                         <tbody>
-                        <c:forEach var = "order" items="${orders}">
+                        <c:forEach var="order" items="${orders}">
                             <tr>
-
                                 <td class="thumbnail-img">
                                     <a href="orderDetail?orderId=${order.get(0)}">
                                             ${order.get(2)}
@@ -38,34 +31,30 @@
                                             ${order.get(3)}
                                     </a>
                                 </td>
-
                                 <form action="changeStatus" method="post">
-                                    <input type="hidden" name="orderId" value="<c:out value="${order.get(0)}"/>" />
+                                    <input type="hidden" name="orderId" value="<c:out value="${order.get(0)}"/>"/>
                                     <c:if test="${order.get(4)==1}">
-                                    <input type="hidden" name="statusId" value=3 />
+                                        <input type="hidden" name="statusId" value=3/>
                                     </c:if>
                                     <c:if test="${order.get(4)==2}">
-                                        <input type="hidden" name="statusId" value=6 />
+                                        <input type="hidden" name="statusId" value=6/>
                                     </c:if>
-
                                     <td>
-                                    <button class="btn btn-danger">complete</button></td>
+                                        <button class="btn btn-danger">complete</button>
+                                    </td>
                                 </form>
-
                                 <form action="changeStatus" method="post">
-                                    <input type="hidden" name="orderId" value="<c:out value="${order.get(0)}"/>" />
+                                    <input type="hidden" name="orderId" value="<c:out value="${order.get(0)}"/>"/>
                                     <c:if test="${order.get(4)==1}">
-                                        <input type="hidden" name="statusId" value=4 />
+                                        <input type="hidden" name="statusId" value=4/>
                                     </c:if>
                                     <c:if test="${order.get(4)==2}">
-                                        <input type="hidden" name="statusId" value=7 />
+                                        <input type="hidden" name="statusId" value=7/>
                                     </c:if>
-
                                     <td>
-                                        <button class="btn btn-danger">abort</button></td>
+                                        <button class="btn btn-danger">abort</button>
+                                    </td>
                                 </form>
-
-
                             </tr>
                         </c:forEach>
                         </tbody>

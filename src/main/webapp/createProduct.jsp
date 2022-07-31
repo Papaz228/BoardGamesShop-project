@@ -155,13 +155,16 @@
         <h3><fmt:message key="label.createProductLabel"/></h3>
 
         <fieldset>
-            <input placeholder="<fmt:message key="label.product"/>" name="product_name" type="text" tabindex="1" required autofocus>
+            <input placeholder="<fmt:message key="label.product"/>" name="product_name" type="text" tabindex="1"
+                   required autofocus>
         </fieldset>
         <fieldset>
-            <textarea placeholder="<fmt:message key="label.descriptionProduct"/>" tabindex="2" name="description" required></textarea>
+            <textarea placeholder="<fmt:message key="label.descriptionProduct"/>" tabindex="2" name="description"
+                      required></textarea>
         </fieldset>
         <fieldset>
-            <textarea placeholder="<fmt:message key="label.photoUrl"/>" tabindex="3" name="photo_url" required></textarea>
+            <textarea placeholder="<fmt:message key="label.photoUrl"/>" tabindex="3" name="photo_url"
+                      required></textarea>
         </fieldset>
         <fieldset>
             <input placeholder="<fmt:message key="label.cost"/>" type="number" tabindex="3" name="cost" required>
@@ -177,23 +180,22 @@
                 </c:forEach>
             </select>
         </label>
-
         <br/><br/>
         <label>
             <select name="productCategoryId" required>
                 Select country for product
-            <c:forEach items="${productCategories}" var="productCategory">
-                <option value="${productCategory.getId()}"
-                        <c:if test="${productCategory.getId() eq selectedCatId}">selected="selected"</c:if>
-                >
-                        ${productCategory.getCategoryName()}
-                </option>
-            </c:forEach>
+                <c:forEach items="${productCategories}" var="productCategory">
+                    <option value="${productCategory.getId()}"
+                            <c:if test="${productCategory.getId() eq selectedCatId}">selected="selected"</c:if>
+                    >
+                            ${productCategory.getCategoryName()}
+                    </option>
+                </c:forEach>
             </select>
         </label>
         <fieldset>
-            <button name="submit" type="submit" id="contact-submit" data-submit="...Sending"><fmt:message key="button.submit"/></button>
+            <button name="submit" type="submit" id="contact-submit" data-submit="...Sending"><fmt:message
+                    key="button.submit"/></button>
         </fieldset>
-
     </form>
 </div>

@@ -150,24 +150,27 @@
     </style>
 </head>
 <div class="container">
-
     <form id="contact" action="updateProduct" method="post">
         <h3><fmt:message key="label.createProductLabel"/></h3>
-
         <fieldset>
-            <input placeholder="<fmt:message key="label.product"/>" value="${product.getName()}" name="product_name" type="text" tabindex="1" required autofocus>
+            <input placeholder="<fmt:message key="label.product"/>" value="${product.getName()}" name="product_name"
+                   type="text" tabindex="1" required autofocus>
         </fieldset>
         <fieldset>
-            <input placeholder="<fmt:message key="label.descriptionProduct"/>" value="${product.getDescription()}" tabindex="2" name="description" required>
+            <input placeholder="<fmt:message key="label.descriptionProduct"/>" value="${product.getDescription()}"
+                   tabindex="2" name="description" required>
         </fieldset>
         <fieldset>
-            <input placeholder="<fmt:message key="label.photoUrl"/>" value="${product.getPhotoUrl()}" tabindex="3" name="photo_url" required>
+            <input placeholder="<fmt:message key="label.photoUrl"/>" value="${product.getPhotoUrl()}" tabindex="3"
+                   name="photo_url" required>
         </fieldset>
         <fieldset>
-            <input placeholder="<fmt:message key="label.cost"/>" value="${product.getCost()}" type="number" tabindex="3" name="cost" required>
+            <input placeholder="<fmt:message key="label.cost"/>" value="${product.getCost()}" type="number" tabindex="3"
+                   name="cost" required>
         </fieldset>
         <fieldset>
-            <input placeholder="<fmt:message key="label.count"/>" value="${product.getCount()}" type="number" tabindex="4" name="count" required>
+            <input placeholder="<fmt:message key="label.count"/>" value="${product.getCount()}" type="number"
+                   tabindex="4" name="count" required>
         </fieldset>
         <label>
             <select name="countryId" required>
@@ -177,7 +180,6 @@
                 </c:forEach>
             </select>
         </label>
-
         <br/><br/>
         <label>
             <select name="productCategoryId" required>
@@ -191,11 +193,11 @@
                 </c:forEach>
             </select>
         </label>
-        <input type="hidden" name="productId" value="<c:out value="${product.getId()}"/>" />
+        <input type="hidden" name="productId" value="<c:out value="${product.getId()}"/>"/>
 
         <fieldset>
-            <button name="submit" type="submit" id="contact-submit" data-submit="...Sending"><fmt:message key="button.submit"/></button>
+            <button name="submit" type="submit" id="contact-submit" data-submit="...Sending"><fmt:message
+                    key="button.submit"/></button>
         </fieldset>
-
     </form>
 </div>
