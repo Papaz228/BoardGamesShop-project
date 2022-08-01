@@ -2,7 +2,7 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-    <title>Create Product</title>
+    <title>Update Product Category</title>
     <style>
         @import url(https://fonts.googleapis.com/css?family=Roboto:400,300,600,400italic);
 
@@ -152,38 +152,14 @@
     </style>
 </head>
 <div class="container">
-
-    <form id="contact" action="createProduct" method="post">
-        <h3><fmt:message key="label.createProductLabel"/></h3>
-
-        <fieldset>
-            <input placeholder="<fmt:message key="label.product"/>" name="product_name" type="text" tabindex="1"
-                   required autofocus>
-        </fieldset>
-        <fieldset>
-            <textarea placeholder="<fmt:message key="label.descriptionProduct"/>" tabindex="2" name="description"
-                      required></textarea>
-        </fieldset>
-        <fieldset>
-            <textarea placeholder="<fmt:message key="label.photoUrl"/>" tabindex="3" name="photo_url"
-                      required></textarea>
-        </fieldset>
-        <fieldset>
-            <input placeholder="<fmt:message key="label.cost"/>" type="number" tabindex="3" name="cost" required>
-        </fieldset>
-        <fieldset>
-            <input placeholder="<fmt:message key="label.count"/>" type="number" tabindex="4" name="count" required>
-        </fieldset>
-        <label>
-            <select name="countryId" required>
-                Select country for product
-                <c:forEach items="${countries}" var="country">
-                    <option value="${country.getId()}">${country.getName()}</option>
-                </c:forEach>
-            </select>
-        </label>
+    <form id="contact" action="updateProductCategory" method="post">
+        <h3><fmt:message key="label.updateProductCategory"/></h3>
         <br/><br/>
         <label>
+            <fieldset>
+                <input placeholder="<fmt:message key="label.productCategoryName"/>" name="category_name"
+                       type="text" tabindex="1" required autofocus>
+            </fieldset>
             <select name="productCategoryId" required>
                 Select country for product
                 <c:forEach items="${productCategories}" var="productCategory">

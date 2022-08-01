@@ -2,8 +2,10 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
+    <title>Update Product</title>
     <style>
         @import url(https://fonts.googleapis.com/css?family=Roboto:400,300,600,400italic);
+
         * {
             margin: 0;
             padding: 0;

@@ -25,6 +25,9 @@ import java.sql.SQLException;
 import java.text.ParseException;
 import java.util.List;
 
+import static com.company.boardgamesshop.validator.Validator.validateDigitWithRegex;
+import static com.company.boardgamesshop.validator.Validator.validateNameWithRegex;
+
 public class UpdateProductAction implements Action {
     ProductDao productDao = new ProductDaoImpl();
     CountryDao countryDao = new CountryDaoImpl();
@@ -37,25 +40,38 @@ public class UpdateProductAction implements Action {
         HttpSession session = request.getSession();
         User currentUser = (User) session.getAttribute(Constant.USER);
         String productName = request.getParameter(Constant.PRODUCT_NAME);
-        if (currentUser.isAdmin()) {
-            if (productName != null) {
-                Product product = productFactory.fillProduct(request);
-                product.setId(Long.parseLong(request.getParameter(Constant.PRODUCT_ID)));
-                productDao.updateProduct(product);
-                response.sendRedirect(ConstantPageNamesJSPAndAction.HOME_SERVICE);
-            } else {
-                Long localId = (Long) session.getAttribute(Constant.LOCAL_ID);
-                List<Country> countries = countryDao.getAllCountriesByLocalId(localId);
-                request.setAttribute(Constant.COUNTRIES, countries);
-                List<ProductCategory> productCategories = productCategoryDao.getAllProductCategoriesByLocalId(localId);
-                request.setAttribute(Constant.PRODUCT_CATEGORIES, productCategories);
-                Product product = productDao.getProductById(Long.valueOf(request.getParameter(Constant.PRODUCT_ID)));
-                request.setAttribute(Constant.PRODUCT, product);
-                dispatcher = request.getRequestDispatcher(ConstantPageNamesJSPAndAction.UPDATE_PRODUCT_JSP);
-                dispatcher.forward(request, response);
-            }
-        } else {
+        boolean checkErrors = true;
+        if (!currentUser.isAdmin()) {
             response.sendRedirect(ConstantPageNamesJSPAndAction.LOGIN_SERVICE);
+            checkErrors = false;
+        } else if (productName == null) {
+            checkErrors = false;
+        } else if (validateNameWithRegex(request.getParameter(Constant.PRODUCT_NAME))) {
+            request.setAttribute(Constant.ERROR, Constant.ERROR_FIRST_NAME_FORMAT);
+            checkErrors = false;
+        } else if (validateDigitWithRegex(request.getParameter(Constant.COST_TABLE))) {
+            request.setAttribute(Constant.ERROR, Constant.ERROR_COST_FORMAT);
+            checkErrors = false;
+        } else if (validateDigitWithRegex(request.getParameter(Constant.COUNT_TABLE))) {
+            request.setAttribute(Constant.ERROR, Constant.ERROR_COUNT_FORMAT);
+            checkErrors = false;
         }
+        if (checkErrors) {
+            Product newProduct = productFactory.fillProduct(request);
+            newProduct.setId(Long.parseLong(request.getParameter(Constant.PRODUCT_ID)));
+            productDao.updateProduct(newProduct);
+            response.sendRedirect(ConstantPageNamesJSPAndAction.HOME_SERVICE);
+        } else {
+            Long localId = (Long) session.getAttribute(Constant.LOCAL_ID);
+            List<Country> countries = countryDao.getAllCountriesByLocalId(localId);
+            request.setAttribute(Constant.COUNTRIES, countries);
+            List<ProductCategory> productCategories = productCategoryDao.getAllProductCategoriesByLocalId(localId);
+            request.setAttribute(Constant.PRODUCT_CATEGORIES, productCategories);
+            Product product = productDao.getProductById(Long.valueOf(request.getParameter(Constant.PRODUCT_ID)));
+            request.setAttribute(Constant.PRODUCT, product);
+            dispatcher = request.getRequestDispatcher(ConstantPageNamesJSPAndAction.UPDATE_PRODUCT_JSP);
+            dispatcher.forward(request, response);
+        }
+
     }
 }

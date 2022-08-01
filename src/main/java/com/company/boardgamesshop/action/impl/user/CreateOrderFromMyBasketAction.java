@@ -45,11 +45,11 @@ public class CreateOrderFromMyBasketAction implements Action {
         if (bankCardCVV == null) {
             dispatcher = request.getRequestDispatcher(ConstantPageNamesJSPAndAction.ORDER_JSP);
             dispatcher.forward(request, response);
-        } else if (!validateCardNumberWithRegex(bankCardNumber)) {
+        } else if (validateCardNumberWithRegex(bankCardNumber)) {
             request.setAttribute(Constant.ERROR, Constant.ERROR_CARD_FORMAT);
             dispatcher = request.getRequestDispatcher(ConstantPageNamesJSPAndAction.ORDER_JSP);
             dispatcher.forward(request, response);
-        } else if (!validateCVVWithRegex(bankCardCVV)) {
+        } else if (validateCVVWithRegex(bankCardCVV)) {
             request.setAttribute(Constant.ERROR, Constant.ERROR_CVV_FORMAT);
             dispatcher = request.getRequestDispatcher(ConstantPageNamesJSPAndAction.ORDER_JSP);
             dispatcher.forward(request, response);
@@ -58,11 +58,12 @@ public class CreateOrderFromMyBasketAction implements Action {
             Long localId = (Long) session.getAttribute(Constant.LOCAL_ID);
             status.setLocalId(localId);
             if (localId == 1) {
-                status.setId(statusDao.getIdByStatusName("Pending"));
-                status.setName("Pending");
+
+                status.setId(statusDao.getIdByStatusName(Constant.ENG_STATUS_PENDING));
+                status.setName(Constant.ENG_STATUS_PENDING);
             } else {
-                status.setId(statusDao.getIdByStatusName("Выполняется"));
-                status.setName("Выполняется");
+                status.setId(statusDao.getIdByStatusName(Constant.RU_STATUS_PENDING));
+                status.setName(Constant.RU_STATUS_PENDING);
             }
             Order order = new Order();
             LocalDate now = LocalDate.now();

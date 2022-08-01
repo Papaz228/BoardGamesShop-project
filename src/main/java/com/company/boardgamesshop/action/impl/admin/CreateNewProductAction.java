@@ -49,24 +49,24 @@ public class CreateNewProductAction implements Action {
         } else if (validateNameWithRegex(request.getParameter(Constant.PRODUCT_NAME))) {
             request.setAttribute(Constant.ERROR, Constant.ERROR_FIRST_NAME_FORMAT);
             checkErrors = false;
-        } else if (!validateDigitWithRegex(request.getParameter(Constant.COST_TABLE))) {
+        } else if (validateDigitWithRegex(request.getParameter(Constant.COST_TABLE))) {
             request.setAttribute(Constant.ERROR, Constant.ERROR_COST_FORMAT);
             checkErrors = false;
 
-        } else if (!validateDigitWithRegex(request.getParameter(Constant.COUNT_TABLE))) {
+        } else if (validateDigitWithRegex(request.getParameter(Constant.COUNT_TABLE))) {
             request.setAttribute(Constant.ERROR, Constant.ERROR_COUNT_FORMAT);
             checkErrors = false;
         }
-        Long localId = (Long) session.getAttribute(Constant.LOCAL_ID);
-        List<Country> countries = countryDao.getAllCountriesByLocalId(localId);
-        request.setAttribute(Constant.COUNTRIES, countries);
-        List<ProductCategory> productCategories = productCategoryDao.getAllProductCategoriesByLocalId(localId);
-        request.setAttribute(Constant.PRODUCT_CATEGORIES, productCategories);
         if (checkErrors) {
             Product newProduct = productFactory.fillProduct(request);
             productDao.createProduct(newProduct);
             response.sendRedirect(ConstantPageNamesJSPAndAction.HOME_SERVICE);
         } else {
+            Long localId = (Long) session.getAttribute(Constant.LOCAL_ID);
+            List<Country> countries = countryDao.getAllCountriesByLocalId(localId);
+            request.setAttribute(Constant.COUNTRIES, countries);
+            List<ProductCategory> productCategories = productCategoryDao.getAllProductCategoriesByLocalId(localId);
+            request.setAttribute(Constant.PRODUCT_CATEGORIES, productCategories);
             dispatcher = request.getRequestDispatcher(ConstantPageNamesJSPAndAction.CREATE_PRODUCT_JSP);
             dispatcher.forward(request, response);
         }

@@ -20,4 +20,5 @@ public class ConstantPageNamesJSPAndAction {
     public static final String CREATE_NEW_CATEGORY_JSP = "createNewProductCategory.jsp";
     public static final String UPDATE_PRODUCT_JSP = "updateProduct.jsp";
     public static final String MY_PROFILE_JSP = "myProfile.jsp";
+    public static final String UPDATE_PRODUCT_CATEGORY_JSP = "updateProductCategory.jsp";
 }

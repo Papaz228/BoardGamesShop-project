@@ -92,6 +92,11 @@
                                                                     href="createNewProductCategory"><fmt:message
                                                     key="button.createProductCategory"/></a></div>
                                         </li>
+                                        <li>
+                                            <div class="form-sh"><a class="btn btn-lg"
+                                                                    href="updateProductCategory"><fmt:message
+                                                    key="label.updateProductCategory"/></a></div>
+                                        </li>
                                     </c:if>
                                 </ul>
                             </div>

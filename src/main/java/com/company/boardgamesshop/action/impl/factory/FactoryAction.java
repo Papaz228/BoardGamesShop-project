@@ -37,7 +37,7 @@ public class FactoryAction {
         SERVICE_MAP.put("/myProfile", new CheckMyProfileAndChangePasswordAction());
         SERVICE_MAP.put("/createNewProductCategory", new CreateNewProductCategory());
         SERVICE_MAP.put("/updateProductCountInBasket", new UpdateProductCountInBasket());
-
+        SERVICE_MAP.put("/updateProductCategory", new UpdateProductCategoryAction());
     }
 
     private final Logger LOGGER = Logger.getLogger(this.getClass().getName());

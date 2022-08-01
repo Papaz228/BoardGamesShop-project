@@ -31,7 +31,7 @@ public class RegistrationAction implements Action {
         if (email == null) {
             dispatcher = request.getRequestDispatcher(ConstantPageNamesJSPAndAction.REGISTRATION_JSP);
             dispatcher.forward(request, response);
-        } else if (!validateMailWithRegex(email)) {
+        } else if (validateMailWithRegex(email)) {
             request.setAttribute(Constant.ERROR, Constant.ERROR_EMAIL_FORMAT);
             dispatcher = request.getRequestDispatcher(ConstantPageNamesJSPAndAction.REGISTRATION_JSP);
             dispatcher.forward(request, response);
@@ -47,11 +47,11 @@ public class RegistrationAction implements Action {
             request.setAttribute(Constant.ERROR, Constant.ERROR_LAST_NAME_FORMAT);
             dispatcher = request.getRequestDispatcher(ConstantPageNamesJSPAndAction.REGISTRATION_JSP);
             dispatcher.forward(request, response);
-        } else if (!validatePhoneWithRegex(request.getParameter(Constant.PHONE_NUMBER_TABLE))) {
+        } else if (validatePhoneWithRegex(request.getParameter(Constant.PHONE_NUMBER_TABLE))) {
             request.setAttribute(Constant.ERROR, Constant.ERROR_PHONE_NUMBER_FORMAT);
             dispatcher = request.getRequestDispatcher(ConstantPageNamesJSPAndAction.REGISTRATION_JSP);
             dispatcher.forward(request, response);
-        } else if (!validateBirthdayWithRegex(request.getParameter(Constant.BIRTHDAY_TABLE))) {
+        } else if (validateBirthdayWithRegex(request.getParameter(Constant.BIRTHDAY_TABLE))) {
             request.setAttribute(Constant.ERROR, Constant.ERROR_BIRTHDAY_FORMAT);
             dispatcher = request.getRequestDispatcher(ConstantPageNamesJSPAndAction.REGISTRATION_JSP);
             dispatcher.forward(request, response);

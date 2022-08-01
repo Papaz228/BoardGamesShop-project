@@ -18,9 +18,9 @@ public class Validator {
     public static boolean validateBirthdayWithRegex(String birthday) {
         try {
             format.parse(birthday);
-            return true;
-        } catch (ParseException e) {
             return false;
+        } catch (ParseException e) {
+            return true;
         }
     }
 
@@ -34,7 +34,7 @@ public class Validator {
     }
 
     public static boolean validateMailWithRegex(String login) {
-        return login.matches(MAIL_REGEX);
+        return !login.matches(MAIL_REGEX);
     }
 
     public static boolean validatePasswordWithRegex(String password) {
@@ -45,19 +45,19 @@ public class Validator {
         return !name.matches(NAME_REGEX);
     }
 
-    public static boolean validatePhoneWithRegex(String name) {
-        return name.matches(PHONE_REGEX);
+    public static boolean validatePhoneWithRegex(String phoneNumber) {
+        return !phoneNumber.matches(PHONE_REGEX);
     }
 
     public static boolean validateCardNumberWithRegex(String cardNumber) {
-        return cardNumber.matches(CARD_NUMBER_REGEX);
+        return !cardNumber.matches(CARD_NUMBER_REGEX);
     }
 
     public static boolean validateCVVWithRegex(String cvv) {
-        return cvv.matches(CVV_REGEX);
+        return !cvv.matches(CVV_REGEX);
     }
 
     public static boolean validateDigitWithRegex(String price) {
-        return price.matches(DIGITS_REGEX);
+        return !price.matches(DIGITS_REGEX);
     }
 }

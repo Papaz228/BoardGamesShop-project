@@ -15,23 +15,9 @@ import java.util.List;
 
 public class ProductCategoryDaoImpl implements ProductCategoryDao {
     private static final String INSERT_PRODUCT_CATEGORY = "INSERT INTO product_category (local_id, category_name) VALUES(?,?)";
+    private static final String UPDATE_PRODUCT_CATEGORY = "UPDATE product_category SET category_name = ?, local_id = ? WHERE id = ?";
     private static final String GET_ALL_PRODUCT_CATEGORIES = "SELECT * FROM product_category WHERE local_id = ?";
     private final Logger LOGGER = LogManager.getLogger(this.getClass().getName());
-
-    @Override
-    public void create(ProductCategory productCategory) {
-        ConnectionPool connectionPool = ConnectionPool.getInstance();
-        Connection con = connectionPool.getConnection();
-        try (PreparedStatement preparedStatement = con.prepareStatement(INSERT_PRODUCT_CATEGORY)) {
-            preparedStatement.setString(1, productCategory.getCategoryName());
-            preparedStatement.setLong(2, productCategory.getLocalId());
-            preparedStatement.executeUpdate();
-        } catch (Exception e) {
-            LOGGER.error(e);
-        } finally {
-            connectionPool.returnConnection(con);
-        }
-    }
 
     @Override
     public List<ProductCategory> getAllProductCategoriesByLocalId(Long localId) {
@@ -68,6 +54,22 @@ public class ProductCategoryDaoImpl implements ProductCategoryDao {
                 preparedStatement.executeUpdate();
                 preparedStatement.close();
             }
+        } catch (Exception e) {
+            LOGGER.error(e);
+        } finally {
+            connectionPool.returnConnection(con);
+        }
+    }
+
+    @Override
+    public void updateProductCategory(ProductCategory productCategory) {
+        ConnectionPool connectionPool = ConnectionPool.getInstance();
+        Connection con = connectionPool.getConnection();
+        try (PreparedStatement preparedStatement = con.prepareStatement(UPDATE_PRODUCT_CATEGORY)) {
+            preparedStatement.setString(1, productCategory.getCategoryName());
+            preparedStatement.setLong(2, productCategory.getLocalId());
+            preparedStatement.setLong(3, productCategory.getId());
+            preparedStatement.executeUpdate();
         } catch (Exception e) {
             LOGGER.error(e);
         } finally {
