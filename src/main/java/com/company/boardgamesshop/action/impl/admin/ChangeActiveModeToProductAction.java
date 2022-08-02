@@ -19,7 +19,7 @@ import java.sql.SQLException;
 import java.text.ParseException;
 import java.util.List;
 
-public class ChangeActiveModeToProduct implements Action {
+public class ChangeActiveModeToProductAction implements Action {
     ProductDao productDao = new ProductDaoImpl();
     BasketDao cartDao = new BasketDaoImpl();
 

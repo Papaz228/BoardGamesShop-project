@@ -15,10 +15,10 @@ import java.util.concurrent.BlockingQueue;
 public class ConnectionPool {
 
     private static ConnectionPool instance = null;
-    private final Logger log = Logger.getLogger(this.getClass().getName());
+    private final Logger LOGGER = Logger.getLogger(this.getClass().getName());
     private final Properties PROPERTIES = getProperties();
-    private final int maxConnection = Integer.parseInt(PROPERTIES.getProperty("db.maxConnection"));
-    private final BlockingQueue<Connection> FREE_CONNECTIONS = new ArrayBlockingQueue<>(maxConnection);
+    private final int MAX_CONNECTION = Integer.parseInt(PROPERTIES.getProperty("db.maxConnection"));
+    private final BlockingQueue<Connection> FREE_CONNECTIONS = new ArrayBlockingQueue<>(MAX_CONNECTION);
     private String url;
     private String user;
     private String password;
@@ -54,7 +54,7 @@ public class ConnectionPool {
         try {
             properties.load(inputStream);
         } catch (IOException e) {
-            log.error(e);
+            LOGGER.error(e);
         }
         return properties;
     }
@@ -63,10 +63,10 @@ public class ConnectionPool {
         try {
             Driver driver = (Driver) Class.forName(driverDB).newInstance();
         } catch (InstantiationException | ClassNotFoundException e) {
-            log.warn(e);
+            LOGGER.warn(e);
             e.printStackTrace();
         } catch (IllegalAccessException e) {
-            log.warn(e);
+            LOGGER.warn(e);
         }
     }
 
@@ -82,19 +82,19 @@ public class ConnectionPool {
 
     private void createConnections() {
         Connection connection;
-        while (FREE_CONNECTIONS.size() < maxConnection) {
+        while (FREE_CONNECTIONS.size() < MAX_CONNECTION) {
             try {
                 connection = DriverManager.getConnection(url, user, password);
                 FREE_CONNECTIONS.put(connection);
             } catch (InterruptedException | SQLException e) {
-                log.warn(e);
+                LOGGER.warn(e);
                 e.printStackTrace();
             }
         }
     }
 
     public synchronized void returnConnection(Connection connection) {
-        if ((connection != null) && (FREE_CONNECTIONS.size() <= maxConnection)) {
+        if ((connection != null) && (FREE_CONNECTIONS.size() <= MAX_CONNECTION)) {
             try {
                 FREE_CONNECTIONS.put(connection);
             } catch (InterruptedException e) {

@@ -30,14 +30,14 @@ public class CheckMyProfileAndChangePasswordAction implements Action {
         String password = request.getParameter(Constant.PASSWORD);
         if (currentUser != null) {
             if (password != null) {
-                if (validatePasswordWithRegex(request.getParameter(Constant.PASSWORD))) {
+                if (!validatePasswordWithRegex(request.getParameter(Constant.PASSWORD))) {
                     String newPassword = request.getParameter(Constant.PASSWORD);
                     String securedPassword = DigestUtils.md5Hex(newPassword);
                     userDao.changePassword(currentUser.getId(), securedPassword);
-                    response.sendRedirect("home");
+                    response.sendRedirect(ConstantPageNamesJSPAndAction.HOME_SERVICE);
                 } else {
                     request.setAttribute(Constant.ERROR, Constant.ERROR_PASSWORD_FORMAT);
-                    request.setAttribute("user", currentUser);
+                    request.setAttribute(Constant.USER, currentUser);
                     dispatcher = request.getRequestDispatcher(ConstantPageNamesJSPAndAction.MY_PROFILE_JSP);
                     dispatcher.forward(request, response);
                 }

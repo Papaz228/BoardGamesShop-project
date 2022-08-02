@@ -23,7 +23,7 @@ import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
 
-public class CreateNewProductCategory implements Action {
+public class CreateNewProductCategoryAction implements Action {
     ProductCategoryDao productCategoryDao = new ProductCategoryDaoImpl();
     LanguageDao languageDao = new LanguageDaoImpl();
     List<Language> languages;

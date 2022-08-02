@@ -15,7 +15,7 @@ import java.io.IOException;
 import java.sql.SQLException;
 import java.text.ParseException;
 
-public class UpdateProductCountInBasket implements Action {
+public class UpdateProductCountInBasketAction implements Action {
     BasketDao basketDao = new BasketDaoImpl();
 
     @Override

@@ -13,11 +13,11 @@ public class Validator {
     private static final String CARD_NUMBER_REGEX = "^[0-9]{16}$";
     private static final String CVV_REGEX = "^[0-9]{3}$";
     private static final String DIGITS_REGEX = "^[0-9]{1,11}$";
-    private static final SimpleDateFormat format = new SimpleDateFormat("yyyy-MM-dd");
+    private static final SimpleDateFormat FORMAT = new SimpleDateFormat("yyyy-MM-dd");
 
     public static boolean validateBirthdayWithRegex(String birthday) {
         try {
-            format.parse(birthday);
+            FORMAT.parse(birthday);
             return false;
         } catch (ParseException e) {
             return true;

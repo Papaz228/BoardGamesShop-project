@@ -23,7 +23,7 @@ public class FactoryAction {
         SERVICE_MAP.put("/deleteProductFromCart", new DeleteProductFromMyBasketAction());
         SERVICE_MAP.put("/createProduct", new CreateNewProductAction());
         SERVICE_MAP.put("/updateProduct", new UpdateProductAction());
-        SERVICE_MAP.put("/deactivateProduct", new ChangeActiveModeToProduct());
+        SERVICE_MAP.put("/deactivateProduct", new ChangeActiveModeToProductAction());
         SERVICE_MAP.put("/allUsers", new CheckAllUsersAction());
         SERVICE_MAP.put("/banUser", new BanUserAction());
         SERVICE_MAP.put("/unbanUser", new UnbanUserAction());
@@ -35,8 +35,8 @@ public class FactoryAction {
         SERVICE_MAP.put("/changeLanguage", new ChangeLanguageAction());
         SERVICE_MAP.put("/order", new MakeMyOrderAction());
         SERVICE_MAP.put("/myProfile", new CheckMyProfileAndChangePasswordAction());
-        SERVICE_MAP.put("/createNewProductCategory", new CreateNewProductCategory());
-        SERVICE_MAP.put("/updateProductCountInBasket", new UpdateProductCountInBasket());
+        SERVICE_MAP.put("/createNewProductCategory", new CreateNewProductCategoryAction());
+        SERVICE_MAP.put("/updateProductCountInBasket", new UpdateProductCountInBasketAction());
         SERVICE_MAP.put("/updateProductCategory", new UpdateProductCategoryAction());
     }
 
