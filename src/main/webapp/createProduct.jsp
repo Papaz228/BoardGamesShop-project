@@ -175,7 +175,7 @@
             <input placeholder="<fmt:message key="label.count"/>" type="number" tabindex="4" name="count" required>
         </fieldset>
         <label>
-            <select name="countryId" required>
+            <select name="country_id" required>
                 Select country for product
                 <c:forEach items="${countries}" var="country">
                     <option value="${country.getId()}">${country.getName()}</option>

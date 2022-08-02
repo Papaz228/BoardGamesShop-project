@@ -53,7 +53,7 @@ public class Constant {
     public static final String TOTAL_COST_TABLE = "total_cost";
     public static final String STATUS_ID_TABLE = "status_id";
     public static final String PRODUCT_CATEGORY_NAME_TABLE = "category_name";
-    public static final String COUNTRY_ID_TABLE = "country_Id";
+    public static final String COUNTRY_ID_TABLE = "country_id";
     public static final String PRODUCT_CATEGORY_ID_TABLE = "product_Category_Id";
     public static final String IS_ACTIVE_TABLE = "is_active";
     public static final String PHOTO_URL_TABLE = "photo_url";

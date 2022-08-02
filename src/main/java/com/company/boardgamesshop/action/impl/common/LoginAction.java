@@ -33,7 +33,7 @@ public class LoginAction implements Action {
         } else {
             String securedPassword = DigestUtils.md5Hex(password);
             User user = USER_DAO.getUserByLoginPassword(login, securedPassword);
-            if (user == null) {
+            if (user == null || user.isBanned()) {
                 request.setAttribute(Constant.ERROR, Constant.ERROR_USER_BLOCKED);
                 dispatcher = request.getRequestDispatcher(ConstantPageNamesJSPAndAction.LOGIN_JSP);
                 dispatcher.forward(request, response);

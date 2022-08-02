@@ -136,7 +136,7 @@ CREATE TABLE product (
                          country_id int8 NOT NULL,
                          product_category_id int8 NOT NULL,
                          is_active bool NOT NULL,
-                         photo_url varchar(100) NULL,
+                         photo_url varchar(200) NULL,
                          CONSTRAINT product_pk PRIMARY KEY (id),
                          CONSTRAINT product_country_id_fk FOREIGN KEY (country_id) REFERENCES country(id),
                          CONSTRAINT product_product_category_id_fk FOREIGN KEY (product_category_id) REFERENCES product_category(id) ON DELETE SET DEFAULT ON UPDATE SET DEFAULT

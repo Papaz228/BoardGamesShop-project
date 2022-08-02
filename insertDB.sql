@@ -16,9 +16,12 @@ INSERT INTO country (local_id, name) VALUES (1, 'Kazakhstan');
 INSERT INTO country (local_id, name) VALUES (1, 'USA');
 INSERT INTO country (local_id, name) VALUES (2, 'Казахстан');
 INSERT INTO country (local_id, name) VALUES (2, 'США');
-INSERT INTO product (name, description, cost, count, country_id, product_category_id, is_active, photo_url) VALUES ('Манчкин', 'Любимая РПГ', 2500, 4, 3, 2, true, 'http://www.sargona.ru/components/com_virtuemart/shop_image/product/munchkin_101.jpg');
+INSERT INTO product (name, description, cost, count, country_id, product_category_id, is_active, photo_url) VALUES ('Манчкин', 'Любимая РПГ', 2500, 4, 3, 4, true, 'http://www.sargona.ru/components/com_virtuemart/shop_image/product/munchkin_101.jpg');
 INSERT INTO product (name, description, cost, count, country_id, product_category_id, is_active, photo_url) VALUES ('Runebound', 'Very good strategy', 5000, 10, 2, 1, true, 'https://m.media-amazon.com/images/I/81JaIrVIKfL._AC_SL1000_.jpg');
 INSERT INTO product (name, description, cost, count, country_id, product_category_id, is_active, photo_url) VALUES ('Рунебаунд', 'Топовая стратегическая игра', 5000, 2, 4, 2, true, 'https://www.mirf.ru/wp-content/uploads/2016/10/board_box.jpg');
+INSERT INTO product (name, description, cost, count, country_id, product_category_id, is_active, photo_url) VALUES ('Монополия', 'Лучшая в мире', 15000, 2, 3, 6, true, 'https://images.satu.kz/125924660_w640_h640_nastolnaya-igra-monopoliya.jpg');
+INSERT INTO product (name, description, cost, count, country_id, product_category_id, is_active, photo_url) VALUES ('Agricola', 'Popular economic game', 20000, 12, 2, 5, true, 'https://cf.geekdo-images.com/h1dXXGGcCjaGdCip6Q_oGQ__opengraph/img/zElaLxY7UdyAYR2hWjJsF8TYh1E=/fit-in/1200x630/filters:strip_icc()/pic6786604.jpg');
+
 
 INSERT INTO users (first_name, last_name, birthday, phone_number, email, password, is_admin, is_banned) VALUES ('user1', 'userSurname', '2002-05-06', '87006052002', 'alansun2002@gmail.com', 'c2dddb24a7582413f0de22c682295cce', false, false);
 INSERT INTO users (first_name, last_name, birthday, phone_number, email, password, is_admin, is_banned) VALUES ('user2', 'userSurname', '2002-06-07', '87073206040', 'student@gm.com', 'cffe03bc22389ffc1bc8609968f3addf', false, false);

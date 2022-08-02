@@ -66,7 +66,7 @@ public class OrderDaoImpl implements OrderDao {
             while (rs.next()) {
                 ArrayList<String> order = new ArrayList<>();
                 order.add(String.valueOf(rs.getLong(Constant.ID)));
-                order.add(String.valueOf(rs.getTimestamp(Constant.DATE_START_TABLE)));
+                order.add(String.valueOf(rs.getDate(Constant.DATE_START_TABLE)));
                 order.add(rs.getString(Constant.EMAIL));
                 order.add(rs.getString(Constant.NAME));
                 order.add(rs.getString(Constant.LOCAL_ID_TABLE));
