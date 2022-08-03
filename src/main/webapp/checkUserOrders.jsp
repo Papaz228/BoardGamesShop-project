@@ -34,10 +34,10 @@
                                 <form action="changeStatus" method="post">
                                     <input type="hidden" name="orderId" value="<c:out value="${order.get(0)}"/>"/>
                                     <c:if test="${order.get(4)==1}">
-                                        <input type="hidden" name="statusId" value=2/>
+                                        <input type="hidden" name="statusId" value=2 />
                                     </c:if>
                                     <c:if test="${order.get(4)==2}">
-                                        <input type="hidden" name="statusId" value=5/>
+                                        <input type="hidden" name="statusId" value=5 />
                                     </c:if>
                                     <td>
                                         <button class="btn btn-danger">complete</button>
@@ -46,10 +46,10 @@
                                 <form action="changeStatus" method="post">
                                     <input type="hidden" name="orderId" value="<c:out value="${order.get(0)}"/>"/>
                                     <c:if test="${order.get(4)==1}">
-                                        <input type="hidden" name="statusId" value=3/>
+                                        <input type="hidden" name="statusId" value=3 />
                                     </c:if>
                                     <c:if test="${order.get(4)==2}">
-                                        <input type="hidden" name="statusId" value=6/>
+                                        <input type="hidden" name="statusId" value=6 />
                                     </c:if>
                                     <td>
                                         <button class="btn btn-danger">abort</button>
